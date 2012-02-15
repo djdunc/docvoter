@@ -63,26 +63,49 @@
     <div id="wrapper">
     <!-- EYEBROW NAVIGATION -->
 	<div id="eyebrow-navigation">
-	    <div class="container_4 clearfix">
-	    <div class="float_right">
-	    <!-- <a href="http://www.driversofchange.com">driversofchange.com</a> -->
-		<a href="index.php?do=admin" class="settings">My account</a>
-		<?php if (empty($_SESSION['user'])){?>
-		    <a href="index.php?do=login" class="signout">Sign In</a>
-		<?php }else { ?>
-		    <a href="index.php?do=logout" class="signout">Sign Out</a>
-		<?php } ?>
+	    <div class="container_4">
+        <div class="grid-wrap">
+            <div class="grid_2">
+	        <a class="home" href="<?php echo BASE_URL;?>"><span class="tab">vote</span><span>drivers of change</span></a>
+	        </div>
+	        <div class="grid_2 align_right">
+	            <div class="user_nav">
+	        <a href="<?php echo BASE_URL;?>">home</a> | 
+    		<?php if (empty($_SESSION['user'])){?>
+    		    <a href="index.php?do=login" class="signout">sign in</a>
+    		<?php }else { ?>
+    		    <a href="index.php"<?php if($page == 'dash'){ echo(" class=\"active\"");} ?>>dashboard</a> |
+    		    <a href="index.php?do=logout" class="signout">sign out</a>
+    		<?php } ?>
+    		</div>
+		    </div>
 		</div>
 		</div>
 	</div>	
-<!-- BEGIN HEADER --> 		
-<div id="header" class="container_4">
-	<div class="header-wrap clearfix">
-		<!-- LOGO -->
-		<div id="logo" class="">
-		<h1><a href="index.php"><img alt="drivers of change" src="assets/images/logo.png" /></a></h1>
-	    </div>
-	   <?php include_once(VIEW_PATH.'partials/main_navigation.php'); ?>
+<!-- BEGIN HEADER -->	
+<div id="header">
+    <div class="container_4">
+	<div class="grid-wrap clearfix">
+	    <?php //if we are not on admin
+	     if($page!='dash' && $page!='issues' && $page!='events' && $page!='decks'){ ?>
+		<h1 class="grid_2">
+		    <a href="<?php echo BASE_URL;?>"><span class="org"><?php echo $_SESSION['org']?></span>
+		<?php echo $_SESSION['event_name']; ?></a>
+		</h1>
+      <div class="grid_2">
+        <?php include_once(VIEW_PATH.'partials/main_navigation.php'); ?>
+	  </div>
+	  <?php //admin nav
+	  } else{?>
+	      <h1 class="grid_2"><span class="org"><?php echo ($_SESSION['user_name'] ); ?>&nbsp;</span><a href="<?php echo BASE_URL;?>">Dashboard</a>
+  		</h1>
+  		<div class="grid_2">
+  		    <ul id="main-navigation">
+         		<li><a href="index.php?do=decks"<?php if($page == 'decks'){ echo(" class=\"active\"");} ?>>decks</a></li><li><a href="index.php?do=events"<?php if($page == 'events'){ echo(" class=\"active\"");} ?>>events</a></li><li class="last"><a href="index.php?do=issues"<?php if($page == 'issues'){ echo(" class=\"active\"");} ?>>issues</a></li>
+         	</ul>
+         </div>
+	  <?php }?>
+	</div>
 	</div>
 	<!-- END HEADER -->
 </div>
