@@ -9,11 +9,11 @@ $(document).ready(function() {
 <div class="container_4">
     <div id="page-heading" class="clearfix">
     	<div class="page-wrap">
-		<h2>Dashboard</h2>
+		<h2>About</h2>
     </div>
 </div>
 </div>
 <div class="container_4">
-	[DASH]
+	[ABOUT]
 </div>
 <!-- END CONTAINER -->

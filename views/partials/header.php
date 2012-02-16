@@ -71,12 +71,14 @@
 	        <div class="grid_2 align_right">
 	            <div class="user_nav">
 	        <a href="<?php echo BASE_URL;?>">home</a> | 
-    		<?php if (empty($_SESSION['user'])){?>
+    		<?php if (!is('user')): ?>
     		    <a href="index.php?do=login" class="signout">sign in</a>
-    		<?php }else { ?>
-    		    <a href="index.php"<?php if($page == 'dash'){ echo(" class=\"active\"");} ?>>dashboard</a> |
+    		<?php else: ?>
+    		    <?php if(is('admin')): ?>
+    		    <a href="index.php?do=events"<?php if(in_array($page,$admin_pages)){ echo(" class=\"active\"");} ?>>admin</a> |
+    		    <?php endif; ?>
     		    <a href="index.php?do=logout" class="signout">sign out</a>
-    		<?php } ?>
+    		<?php endif; ?>
     		</div>
 		    </div>
 		</div>
@@ -85,27 +87,32 @@
 <!-- BEGIN HEADER -->	
 <div id="header">
     <div class="container_4">
-	<div class="grid-wrap clearfix">
-	    <?php //if we are not on admin
-	     if($page!='dash' && $page!='issues' && $page!='events' && $page!='decks'){ ?>
-		<h1 class="grid_2">
-		    <a href="<?php echo BASE_URL;?>"><span class="org"><?php echo $_SESSION['org']?></span>
-		<?php echo $_SESSION['event_name']; ?></a>
-		</h1>
-      <div class="grid_2">
-        <?php include_once(VIEW_PATH.'partials/main_navigation.php'); ?>
-	  </div>
-	  <?php //admin nav
-	  } else{?>
-	      <h1 class="grid_2"><span class="org"><?php echo ($_SESSION['user_name'] ); ?>&nbsp;</span><a href="<?php echo BASE_URL;?>">Dashboard</a>
-  		</h1>
-  		<div class="grid_2">
-  		    <ul id="main-navigation">
-         		<li><a href="index.php?do=decks"<?php if($page == 'decks'){ echo(" class=\"active\"");} ?>>decks</a></li><li><a href="index.php?do=events"<?php if($page == 'events'){ echo(" class=\"active\"");} ?>>events</a></li><li class="last"><a href="index.php?do=issues"<?php if($page == 'issues'){ echo(" class=\"active\"");} ?>>issues</a></li>
-         	</ul>
-         </div>
-	  <?php }?>
-	</div>
+		<div class="grid-wrap clearfix">
+		<?php
+		    //if we are not on admin
+		    if(!in_array($page, $admin_pages)) {
+		?>
+		    <h1 class="grid_2">
+		        <a href="<?php echo BASE_URL;?>">
+		            <span class="org"><?php if(isset($_SESSION['org']))echo $_SESSION['org']?></span>
+			        <?php if(isset($_SESSION['event']))echo $_SESSION['event_name']; ?>
+			    </a>
+		    </h1>
+	        <div class="grid_2">
+	            <?php include_once(VIEW_PATH.'partials/main_navigation.php'); ?>
+		    </div>
+		<?php //admin nav
+		    } else {
+		?>
+		    <h1 class="grid_2"><span class="org"><?php if(isset($_SESSION['user'])) echo $_SESSION['user_name']; ?>&nbsp;</span><a href="<?php echo BASE_URL;?>">Dashboard</a>
+	  		</h1>
+	  		<div class="grid_2">
+	  		    <ul id="main-navigation">
+	         		<li><a href="index.php?do=decks"<?php if($page == 'decks'){ echo(" class=\"active\"");} ?>>decks</a></li><li><a href="index.php?do=events"<?php if($page == 'events'){ echo(" class=\"active\"");} ?>>events</a></li><li class="last"><a href="index.php?do=issues"<?php if($page == 'issues'){ echo(" class=\"active\"");} ?>>issues</a></li>
+	         	</ul>
+	        </div>
+		<?php }?>
+		</div>
 	</div>
 	<!-- END HEADER -->
 </div>

@@ -12,10 +12,14 @@ function setup($data=array()) {
 	global $steep;
     global $steep_cols;
     global $event;
+    global $admin_pages;
 	
     //define steep category names
 	$steep = array (1=>"social", 2=>"technological", 3=>"economic", 4=>"environmental", 5=>"political");
 	$steep_cols = array (1=>"39B1D9", 2=>"A681B2", 3=>"F69220", 4=>"8BC53F", 5=>"EC2027");
+	
+	//set admin pages
+	$admin_pages = array('decks','deck','events','event','issues','issue');
 	
 	//OAuth
     $_SESSION['oauth'] = new OAuth(PRIVATE_KEY, SECRET, OAUTH_SIG_METHOD_HMACSHA1);
@@ -24,9 +28,9 @@ function setup($data=array()) {
 /**
  * Checks $_SESSION to see if user is logged in. Forces login if not
  */
-function login() {
+function login($data=null) {
     if(empty($_SESSION['user']) || !$_SESSION['user']->id) {
-        view('login');
+        view('login', $data);
         die;
     }
 }
@@ -123,7 +127,7 @@ function view($page="home", $data=array()) {
 function show_error($h1, $body, $type="404"){
     $page="error";
     isset($h1) ? $message_h1 = $h1 :$message_h1 = "Sorry, the page you requested can't be found.";
-    isset($body) ? $message_body = $body :$message_body = "Tere might be a typing error in the address, or you clicked an out-of date link. You can try: <ul><li>Retype the address</li><li>Go back to the <a href=\"".BASE_URL."\">homepage</a></li></ul><small>404 error</small>";
+    isset($body) ? $message_body = $body :$message_body = "There might be a typing error in the address, or you clicked an out-of date link. You can try: <ul><li>Retype the address</li><li>Go back to the <a href=\"".BASE_URL."\">homepage</a></li></ul><small>404 error</small>";
     switch($type){
         case '503':
         header("503 Service Unavailable");

@@ -16,6 +16,7 @@ define('ADMIN_EMAIL','');
 define('PRIVATE_KEY', '');
 define('SECRET','');
 // ** App settings ** //
+define('DEFAULT_PAGE','about');
 define('DEFAULT_EVENT_ID',1);
 define('SUPERADMIN_GROUP_ID',1);
 define('ADMIN_GROUP_ID',2);

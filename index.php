@@ -5,18 +5,27 @@ require_once 'includes/functions.php';
 
 //requested page
 $page = get('do');
-if(!$page) $page = 'dash';
+if(!$page) $page = DEFAULT_PAGE;
 
 //setup
-setup(array('page'=>$page));
+setup(
+    array('page'=>$page)
+);
 
 //set up data assoc array to pass variables to view
 $data = array(
+    'admin_pages'=>$admin_pages
 );
 	
 //set up ref page
 if($page != "login")
     $_SESSION['ref_page'] = $page;
+
+//force login and check admin for admin pages (defined in functions->setup())
+if(in_array($page,$admin_pages)) {
+	login($data);
+	allow('admin');
+}
 	
 //do required page
 switch($page) {
@@ -27,21 +36,15 @@ switch($page) {
 	        exit;
 	    break;
     case 'login':
-            view('login');
+            view('login', $data);
         break;
     case 'decks':
-            login();
-            allow(is('admin'));
-
             $data['decks'] = callAPI("deck", array(), 'obj');
             $data['steep'] = $steep;
             
             view('decks', $data);
         break;
     case 'deck':
-            login();
-            allow(is('admin'));
-            
             $deck_id = get('deck');
             if (isset($deck_id)) {
                 $deck = callAPI("deck/get?id=$deck_id", array(), 'obj');
@@ -59,34 +62,34 @@ switch($page) {
             view('deck', $data);
         break;
     case 'events':
-    	    login();
-            allow(is('admin'));
+    	    $data['events'] = callAPI("event", array('include_owner'=>true,'include_card_count'=>true), 'obj');
             view('events',$data);
         break;
     case 'event':
-    	    login();
-            allow(is('admin'));
+    	    $collections = callAPI('collection', array(), 'obj');
+    	    foreach($collections as $collection) {
+    	    	foreach($collection->categories as $category) {
+    	    	    $data['collections'][$collection->name][$category->id] = $category->name;	
+    	    	}
+    	    }
        	    view('event',$data);
         break;
     case 'issues':
-    	    login();
-            allow(is('admin'));
             view('issues',$data);
         break;
     case 'issue':
-    	    login();
-            allow(is('admin'));
             view('issue',$data);
         break;
     case 'issue_add':
+    	    allow('user');
             view('issue_add',$data);
         break;
     case 'vote':
     	    view('vote',$data);
         break;
-    case 'dash':
+    case 'about':
     default:
             $_SESSION['ref_page'] = "";
-            view('dash', $data);
+            view('about', $data);
 }
 ?>

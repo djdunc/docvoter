@@ -1,5 +1,9 @@
-<?php 
-$ref_page = $_SESSION['ref_page'];
+<?php
+if(isset($_SESSION['ref_page'])) { 
+    $ref_page = $_SESSION['ref_page'];
+} else {
+	$ref_page = DEFAULT_PAGE;
+}
  if (isset($_SESSION['from_reg'])){
      $from_reg = $_SESSION['from_reg'];
      unset($_SESSION['from_reg']);
