@@ -68,8 +68,12 @@ switch($page) {
     case 'event':
     	    $collections = callAPI('collection', array(), 'obj');
     	    foreach($collections as $collection) {
+    	    	$data['collections'][$collection->id] = array(
+    	    	    'name'=>$collection->name,
+    	    	    'categories'=>array()
+    	    	);
     	    	foreach($collection->categories as $category) {
-    	    	    $data['collections'][$collection->name][$category->id] = $category->name;	
+    	    	    $data['collections'][$collection->id]['categories'][$category->id] = $category->name;	
     	    	}
     	    }
        	    view('event',$data);
