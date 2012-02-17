@@ -591,6 +591,9 @@ ul#main-navigation {
 .panel table.styled tbody tr.odd td {
 	background-color: #f8f8f8;
 }
+.panel table.styled tbody tr:hover td{
+	background-color: #ffffd7;
+}
 
 .panel table.styled thead tr .headerSortUp {
 	background-image: url(../images/asc.png), -webkit-gradient(linear,left bottom,left top,color-stop(0, #d5dcdf),color-stop(1, #E3E9EB));
@@ -648,14 +651,15 @@ div.pager input {
 }
 
 div.pager .pagesize {
-	width: 60px;
+	width: 61px;
 	vertical-align: super;
 }
 
 div.pager .chzn-container {
 	margin: 0 7px 0 0;
-	min-width: 58px;
-	vertical-align: top;
+	min-width: 61px;
+vertical-align: top;
+	text-align: center;
 }
 
 div.pager .pagedisplay {
@@ -1077,9 +1081,9 @@ form.styled label input.file {
 	right: 0;
 }
 
-form.styled select {
+/*form.styled select {
 	width: 100%;
-}
+}*/
 
 form.styled .chzn-single span {
 	position: relative;

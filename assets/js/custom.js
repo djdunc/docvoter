@@ -53,13 +53,14 @@ $(document).ready(function() {
 	
 	try {
 		$('.tablesorter')
-		.tablesorter({headers: {0:{sorter: false},3:{sorter: false}}, widthFixed: true, widgets: ['zebra']}) 
+		.tablesorter({dateFormat: 'dd/mm/yyyy',headers: {5:{sorter: false}}, widthFixed: true, widgets: ['zebra']})
 	    .tablesorterPager({container: $("#table-pager-1")});
 		$('.tablesorter2')
 		.tablesorter({headers: {0:{sorter: false},3:{sorter: false}}, widthFixed: true, widgets: ['zebra']}) 
 	    .tablesorterPager({container: $("#table-pager-2")});
 	    
-	    $(".pagesize").chosen();
+	    //$(".pagesize").chosen();
+	     $(".pagesize").chosen({ disable_search_threshold : 10 });
 	    
 	    $('.checkall').click(function(){
 	    	$(this).parents('table:eq(0)').find(':checkbox').attr('checked', this.checked);
@@ -253,7 +254,7 @@ $(document).ready(function() {
    	// http://harvesthq.github.com/chosen/
 
 	try {
-   		$('form.styled').find('.chosen').chosen();
+   		$('form.styled').find('.chosen').chosen({disable_search_threshold : 10});
    	}
    	catch(err){
    		// Error stuff here
@@ -421,6 +422,7 @@ function resizeChosenWidths(){
 		$(this).find('.chzn-drop').width(containerWidth - 2);
 		var searchWidth = $(this).find('.chzn-search').width();
 		$(this).find('.chzn-search input').width(searchWidth - 26);
+		
 	});
 }
 
