@@ -4,28 +4,16 @@ EDIT OR CREATE IF NO EVENT IS SET
 
 <?php //var_dump($collections);?>
 
-<?php
-
-$params = "event/get";
-if(!is('super')) $params.="&owner=".$_SESSION['user']->id;
-
-?>
-
 <script type="text/javascript">
-$.ajax("includes/callAPI?action=<?php echo $params; ?>", {
+$.ajax("includes/callAPI?action=event/get&id=3", {
     success: function(data){
-        try {
-            var data = $.parseJSON(data);
-            //
-            // DO STUFF HERE. DATA CONTAINS THE OBJECT REQUESTED
-            //
-        } catch (err) {
-            //
-            // ERROR. data SHOULD CONTAIN DESCRIPTION OF WHAT WENT WRONG
-            //
-            // displayAlertMessage(data);
-        }
+        var data; try { data = $.parseJSON(data); } catch (err) { data = data; }
+
+        //do stuff with data here
+        //data either contains requested object or error string
+        console.log(data);
+        
     },
-    error: function(data){ console.log(data); }
+    error: function(data){ /*console.log(data);*/ }
 });
 </script>
