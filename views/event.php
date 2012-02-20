@@ -4,8 +4,15 @@ EDIT OR CREATE IF NO EVENT IS SET
 
 <?php //var_dump($collections);?>
 
+<?php
+
+$params = "event/get";
+if(!is('super')) $params.="&owner=".$_SESSION['user']->id;
+
+?>
+
 <script type="text/javascript">
-$.ajax("includes/callAPI?action=event/get&id=3&include_card_count=1", {
+$.ajax("includes/callAPI?action=<?php echo $params; ?>", {
     success: function(data){
         try {
             var data = $.parseJSON(data);

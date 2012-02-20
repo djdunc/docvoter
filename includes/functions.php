@@ -76,6 +76,7 @@ function is($role='admin', $object=null) {
                     $auth = true;
                 }
                 //NOTE: no break, falls through to superadmin
+        case 'super':
 		case 'superadmin':
                 if(isset($_SESSION['user'])
                     && $_SESSION['user']->group_id == SUPERADMIN_GROUP_ID
