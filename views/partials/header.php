@@ -108,7 +108,7 @@
 	  		</h1>
 	  		<div class="grid_2">
 	  		    <ul id="main-navigation">
-	         		<li><a href="index.php?do=events"<?php if($page == 'events'||$page == 'event'){ echo(" class=\"active\"");} ?>>events</a></li><li><a href="index.php?do=decks"<?php if($page == 'decks'||$page == 'deck'){ echo(" class=\"active\"");} ?>>decks</a></li><li class="last"><a href="index.php?do=issues"<?php if($page == 'issues'){ echo(" class=\"active\"");} ?>>issues</a></li>
+	         		<li><a href="index.php?do=events"<?php if($page == 'events'||$page == 'event'){ echo(" class=\"active\"");} ?>>events</a></li><li class="last"><a href="index.php?do=decks"<?php if($page == 'decks'||$page == 'deck'){ echo(" class=\"active\"");} ?>>decks</a></li>
 	         	</ul>
 	        </div>
 		<?php }?>

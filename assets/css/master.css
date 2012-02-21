@@ -1085,6 +1085,8 @@ form.styled label input.file {
 	width: 100%;
 }*/
 
+form.styled .chzn-single {
+}
 form.styled .chzn-single span {
 	position: relative;
 	font-weight: normal;
@@ -1115,6 +1117,21 @@ form.styled.login label span.error {
 	font-style: normal;
 }
 
+.list-col {
+	display: inline-block;
+	width: 33%;
+}
+
+.panel .content{
+	
+}
+.panel .category{
+	color: #fff;
+	font-size: 15px;
+	font-weight: bold;
+	padding: .3em;
+	cursor: pointer;
+}
 .progress-bar {
 	display: block;
 	position: relative;
@@ -1637,6 +1654,32 @@ label.file-holder {
 
 .political {
 	background-color: #EC2027!important;
+}
+.social,.technological,.economic,.environmental,.political{
+	color: #fff!important;
+}
+
+.social-50,.technological-50,.economic-50,.environmental-50,.political-50{
+	color: #333!important;
+}
+.social-50 {
+	background-color: #a5d7ee!important;
+}
+
+.technological-50 {
+	background-color: #d1c0da!important;
+}
+
+.economic-50 {
+	background-color: #f8c97f!important;
+}
+
+.environmental-50 {
+	background-color: #c9e27f!important;
+}
+
+.political-50 {
+	background-color: #f19490!important;
 }
 
 #add-card #question.social {

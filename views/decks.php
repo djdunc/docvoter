@@ -52,7 +52,7 @@ $(document).ready(function() {
 						<?php foreach ($decks as $deck){?>
 						<tr> 
 							<td><a href="index.php?do=deck&id=<?php echo $deck->id ?>"><?php echo $deck->name ?></a></td> 
-							<td class="center"></td> 
+							<td class="center"><?php echo $deck->card_count ?></td> 
 							<td class="center"><?php echo(date( "d-m-Y", $deck->ctime)); ?></td>
 							<td class="center options-row"><a class="icon-button edit" title="edit deck" href="index.php?do=deck&id=<?php echo $deck->id ?>">Edit</a><a class="icon-button send" title="send details" href="mailto:?subject=<?php echo $deck->name; ?> Drivers of Change&amp;body=Link: <?php echo urlencode(BASE_URL.'index.php?do=deck&id='.$deck->id); ?>">Send details</a><a class="icon-button link" title="view Deck" href="<?php echo(BASE_URL.'index.php?Deck='.$deck->id);?>">View Deck</a></td> 
 						</tr>
