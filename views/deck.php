@@ -53,7 +53,7 @@
 		<?php foreach($steep as $cat_id=>$cat_name): ?>
 		<div class="panel">
 		    <div class="category <?php echo $cat_name?>"><?php echo $cat_name?></div>
-		    <div class="lod" style="display:none">includes/callAPI.php?action=card/get&category=<?php echo $cat_id?>&owner=1</div>
+		    <div class="lod" style="display:none">includes/callAPI.php?action=card/get&category_id=<?php echo $cat_id?>&owner=1</div>
 		</div>        
 		<?php endforeach; ?>
 	</div>

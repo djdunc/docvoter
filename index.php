@@ -45,12 +45,12 @@ switch($page) {
             view('decks', $data);
         break;
     case 'deck':
-            $deck_id = get('deck');
+            $deck_id = get('id');
             if (isset($deck_id)) {
                 $deck = callAPI("deck/get?id=$deck_id", array(), 'obj');
                 if (empty($deck) || !$deck->id) {
 	                //404 error
-	                show_error("Sorry, the deck you have requested does not exist.", "Make sure that you have the correct URL and that the owner hasn't deleted it. You can create your own deck <a href=\"index.php?do=deck_new\">here</a>.");
+	                show_error("Sorry, the deck you have requested does not exist.", "Make sure that you have the correct URL and that the owner hasn't deleted it. You can create your own deck <a href=\"index.php?do=deck\">here</a>.");
 	            }
 
 	            $deck_cards = callAPI("card", array('deck_id'=>$deck_id), 'obj');
@@ -70,6 +70,19 @@ switch($page) {
             view('events',$data);
         break;
     case 'event':
+    	    $event_id = get('id');
+            if (isset($event_id)) {
+                $event = callAPI("event/get?id=$event_id", array(), 'obj');
+                if (empty($event) || !$event->id) {
+                    //404 error
+                    show_error("Sorry, the event you have requested does not exist.", "Make sure that you have the correct URL and that the owner hasn't deleted it. You can create your own event <a href=\"index.php?do=event\">here</a>.");
+                }
+
+                $event_cards = callAPI("card", array('event_id'=>$event_id), 'obj');
+                
+                $data['event'] = $event;
+                $data['event_cards'] = $event_cards;
+            }
     	    $collections = callAPI('collection', array(), 'obj');
     	    foreach($collections as $collection) {
     	    	$data['collections'][$collection->id] = array(
