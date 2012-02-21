@@ -140,16 +140,27 @@
     var edit_event = <?php echo($edit_event_id);?>;
     var owner = <?php echo $_SESSION['user']->id;?>;
     //setup datepickers
+    function milsToSecs(picker, altField){
+        var date = picker.datepicker('getDate');
+        var epoch = date.valueOf() / 1000;
+        altField.val(epoch);
+    }
 	$( "#startpicker" ).datepicker({
 	  dateFormat: 'dd/mm/yy',
       altField: '#start',
-      altFormat: '@'
+      altFormat: '@',
+      onSelect: function(dateText, inst) {
+          milsToSecs($(this),$('#start'));
+          }
     });
     $( "#endpicker" ).datepicker({
       dateFormat: 'dd/mm/yy',
       altField: '#end',
       beforeShow: customRange,
-      altFormat: '@'
+      altFormat: '@',
+      onSelect: function(dateText, inst) {
+         milsToSecs($(this),$('#end'));
+        }
     });
     //start second one always from first date
     function customRange(a) {  
@@ -166,14 +177,17 @@
     }
     //if adding event edit_event == 0
     if (edit_event != 0){
-        var action = 'controller=event&action=put&id='+edit_event;
+        var action = 'controller=api&action=event/put&id='+edit_event;
         var dstart = $.datepicker.parseDate('@', '<?php if(isset($edit_event)){echo($edit_event->start);}?>000');
         var dend = $.datepicker.parseDate('@', '<?php if(isset($edit_event)){echo($edit_event->end);}?>000');
         $('#startpicker').datepicker('setDate', dstart);
+        milsToSecs($('#startpicker'),$('#start'));
         $('#endpicker').datepicker('setDate', dend);
+         milsToSecs($('#endpicker'),$('#end'));
     } else{
-        var action = 'controller=event&action=post&owner='+owner;
+        var action = 'controller=api&action=event/post&owner='+owner;
         $('#startpicker').datepicker('setDate', new Date());
+        milsToSecs($('#startpicker'),$('#start'));
     }
     
     $("#event").validate({
@@ -218,10 +232,10 @@
     $("#save").click(function() {
       if($("#event").valid()){
           $(window).unbind("beforeunload");
-         // alert(action+'&'+$("#event").serialize());    
+         //alert(action+'&'+$("#event").serialize());    
           $.post('includes/callAPI.php', action+'&'+$("#event").serialize(), function(data) {
-               displayAlertMessage(data);
-         }).error(function() { alert("There was an error saving your event, please try again later."); })
+                       displayAlertMessage(data);
+           }).error(function() { alert("There was an error saving your event, please try again later."); })
       }
       return false;
     });
