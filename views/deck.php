@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.0/themes/base/jquery-ui.css" type="text/css" media="all" />
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
 <!--	Load the "Chosen" stylesheet. -->
@@ -115,3 +116,10 @@
 	<?php }?>
  </div>
 </div>
+=======
+[DECK]
+
+EDIT OR CREATE IF NO DECK IS SET
+
+<?php var_dump($cards); ?>
+>>>>>>> 63c4ddcde1b30f865a767d3566f1ba4846f7fd62
