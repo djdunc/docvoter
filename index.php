@@ -59,8 +59,9 @@ switch($page) {
                 $data['deck_cards'] = $deck_cards;
             }
             
-            $cards = callAPI("card?limit=-1&tag_id=3", array(), 'obj');
-            $data['cards'] = $cards;
+            //$cards = callAPI("card?limit=-1&tag_id=3", array(), 'obj');
+            //$data['cards'] = $cards;
+            $data['steep'] = $steep;
             
             view('deck', $data);
         break;
