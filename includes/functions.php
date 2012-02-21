@@ -154,6 +154,28 @@ function get($key) {
 }
 
 /**
+ * Used to retrive nice name from user object
+ * @param PHPFrame_User $owner
+ */
+function get_name($owner) {
+	$name = "Anon";
+	
+	if($owner && is_object($owner) && $owner->username) {
+		$name = $owner->username; 
+	
+	    if($owner->first_name && !$owner->last_name) {
+	    	$name = $owner->first_name;
+	    } elseif($owner->first_name && $owner->last_name) {
+	    	$name = $owner->first_name." ".$owner->last_name;
+	    } elseif($owner->last_name) {
+	    	$name = $owner->last_name;
+	    }
+	}
+	
+    return $name;
+}
+
+/**
  * Used to make secure OAuth calls to API
  * @param String $query_url     Query as URL to make to API. e.g. "card/get"
  *                              Could contain parameters e.g. ?id=1
