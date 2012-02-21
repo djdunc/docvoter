@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php //var_dump($collections);?>
 <!--	Load the "Chosen" stylesheet. -->
 <link rel="stylesheet" href="assets/js/chosen/chosen.css" type="text/css" media="screen" />
@@ -271,11 +270,3 @@
         }
    }
 //]]></script>
-=======
-[EVENT]
-
-EDIT OR CREATE IF NO EVENT IS SET
-
-<?php var_dump($collections);?>
-<?php var_dump($decks);?>
->>>>>>> 63c4ddcde1b30f865a767d3566f1ba4846f7fd62
