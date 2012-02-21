@@ -44,11 +44,11 @@
 							<textarea class="textarea l editable" name="description" id="description" rows="2" cols="1"><?php if(isset($edit_event)){echo($edit_event->description);}?></textarea>
 						</label>
 						<!-- Collection -->
-    					<label class="align-left" for="categories">
+    					<label class="align-left" for="collection_id">
     					    
 							<span>Driver categories</span>
-							<select class="chosen" name="categories">  
-							    <?php foreach ($collections as $key=>$collection){ echo('<option value='.$key.'>'.$collection['name'].'</option>');}?>
+							<select class="chosen" name="collection_id">  
+							    <?php foreach ($collections as $key=>$collection){ echo('<option value='.$key.'>'.$collection['name'].'</option>');} //TODO add collections under once is selected ?>
 							</select>
 						</label>
 						<!-- date -->
@@ -65,22 +65,22 @@
 						<!-- Tick box -->
 						<div class="non-label-section">
 						    <p class="check-pair">
+						         <input type="hidden" name="auto_close" value="false" />
                                 <label>
-                                    <input type="hidden" name="auto_close" value="false" />
                                     <input type="checkbox" name="auto_close" value="true" <?php if(isset($edit_event) && $edit_event->auto_close){echo 'checked';}?> class="editable" /> Close event automatically after end date</label></p>
-							  <p class="check-pair">
-							      <label>
-							    <input type="hidden" name="allow_anon" value="false" />
-							    <input type="checkbox" name="allow_anon" value="true" <?php if(isset($edit_event) && $edit_event->allow_anon){echo 'checked';}?> class="editable" />
-							    Allow anonymous card submissions
-							    </label>
-							</p>
 							 <p class="check-pair">
+							     <input type="hidden" name="auto_publish" value="false" />
  							      <label>
- 							    <input type="hidden" name="auto_publish" value="false" />
 							    <input type="checkbox" name="auto_publish" value="true" <?php if(isset($edit_event) && $edit_event->auto_publish){echo 'checked';}?> class="editable" />
-							    Auto-publish submitted cards
+							    Auto-publish submitted drivers
 							</label>
+							</p>
+							<p class="check-pair">  
+							    <input type="hidden" name="allow_anon" value="false" />
+							    <label>
+							    <input type="checkbox" name="allow_anon" value="true" <?php if(isset($edit_event) && $edit_event->allow_anon){echo 'checked';}?> class="editable" />
+							    Include voter survey
+							    </label>
 							</p>
 						</div>
 						<!-- Pass Field -->
@@ -94,12 +94,26 @@
 						<div class="non-label-section">
 						    <p class="button medium disabled" id="fakesave">Save</p>
 						    <input type="button" id="save" class="button medium blue" value="Save" style="display:none" />
-							<a href="index.php?do=admin" class="button medium">Cancel</a>
+							<a href="index.php?do=events" class="button medium">Cancel</a>
 						</div>
 					
 					</fieldset>
 				</form>
 			</div>
+		</div>
+		<div class="panel form">
+		    <h2 class="cap">Select Deck</h2>
+    		<div class="content">
+    		    List of decks here
+    		    <!-- Buttons -->
+				<div class="non-label-section">
+				    <p class="button medium disabled" id="fakesave">Save</p>
+				    <input type="button" id="save" class="button medium blue" value="Save" style="display:none" />
+					<a href="index.php?do=admin" class="button medium">Cancel</a>
+				</div>
+    		</div>
+    	</div>
+		    
 		</div>
 	</div>
 	
@@ -113,50 +127,6 @@
     			</div>
 		</div>
 	</div>
-	<?php if (isset($event_cards)){?>
-	<div class="grid_4">
-	    <div class="panel">	
-	        <h2 class="cap">Event cards</h2>
-			<!-- gallery -->
-			<div class="content gallery">
-				<div class="gallery-wrap">
-					<div class="gallery-pager">
-						<?php foreach (array_reverse($event_cards) as $card) { ?>
-						<!-- GALLERY ITEM -->
-						<div class="gallery-item">
-							<a class="clue" title="<?php echo $card->name; ?>" href="index.php?do=view&card_id=<?php echo $card->id ?>"><img src="<?php if (isset($card->card_front)){ echo (UPLOADS_URL."fronts/".$card->card_front."_t.jpg");}?>" alt="" /></a>
-						</div>
-						<!-- END GALLERY ITEM -->
-						<?php unset($card); } ?>
-					</div>
-				</div>
-			
-				<!-- The gallery pagination/options area. -->
-				<div class="pager">
-				
-					<!-- Gallery options - these should probably become active once you've checked an image or more. -->
-					<!-- <div class="gallery-options">
-					                       <a class="button red small" href="#">Delete</a>
-					                       <a class="button blue small" href="#">Edit</a>
-					                   </div> -->
-					
-					<!-- Gallery pagination -->
-					<form action="">
-						<a class="button small first"><img src="assets/images/table_pager_first.png" alt="First" /></a>
-						<a class="button small prev"><img src="assets/images/table_pager_previous.png" alt="Previous" /></a>
-						<input type="text" class="pagedisplay" disabled="disabled" />
-						<a class="button small next"><img src="assets/images/table_pager_next.png" alt="Next" /></a>
-						<a class="button small last"><img src="assets/images/table_pager_last.png" alt="Last" /></a>
-					</form>
-				</div>
-			
-			</div>
-			<!-- END CONTENT -->
-			
-		</div>
-		<!-- END PANEL -->
-	</div>
-	<?php }?>
  </div>
 </div>
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.0/themes/base/jquery-ui.css" type="text/css" media="all" />
@@ -168,7 +138,7 @@
     var formChanged = false;
     var baseurl = "<?php echo BASE_URL; ?>";
     var edit_event = <?php echo($edit_event_id);?>;
-    var owner = <?php echo $_SESSION['user_id'];?>;
+    var owner = <?php echo $_SESSION['user']->id;?>;
     //setup datepickers
 	$( "#startpicker" ).datepicker({
 	  dateFormat: 'dd/mm/yy',
@@ -227,7 +197,7 @@
          handleFormChanged();
     });
     
-    //automatically apend url on name change
+    //automatically apend url on name change TODO: no need for this can add on save
     $('#name').keyup(function () {
      var value = $(this).val();
      $('#url').val(baseurl + value);
@@ -243,14 +213,15 @@
      }
     });
     
+    
     //bind save button
     $("#save").click(function() {
       if($("#event").valid()){
           $(window).unbind("beforeunload");
-          //alert(action+'&'+$("#event").serialize());    
-           $.post('includes/load.php', action+'&'+$("#event").serialize(), function(data) {
-                displayAlertMessage(data);
-             }).error(function() { alert("There was an error saving your event, please try again later."); })
+          alert(action+'&'+$("#event").serialize());    
+          // $.post('includes/callAPI.php', action+'&'+$("#event").serialize(), function(data) {
+          //                 displayAlertMessage(data);
+          //          }).error(function() { alert("There was an error saving your event, please try again later."); })
       }
       return false;
     });
