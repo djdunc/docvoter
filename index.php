@@ -59,6 +59,9 @@ switch($page) {
                 $data['deck_cards'] = $deck_cards;
             }
             
+            $cards = callAPI("card?limit=-1&tag_id=3", array(), 'obj');
+            $data['cards'] = $cards;
+            
             view('deck', $data);
         break;
     case 'events':
@@ -76,6 +79,7 @@ switch($page) {
     	    	    $data['collections'][$collection->id]['categories'][$category->id] = $category->name;	
     	    	}
     	    }
+    	    $data['decks'] =  callAPI('deck?include_card_count=1', array(), 'obj');
        	    view('event',$data);
         break;
     case 'issues':
