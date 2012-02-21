@@ -49,18 +49,9 @@ $(document).ready(function() {
 						</tr> 
 					</thead> 
 					<tbody> 
-						<?php foreach ($events as $event){?>
-						<?php 
-						//@TODO = maybe make this a function, we propably will use it again
-						$owner = $event->owner_user; 
-						if (isset($owner->first_name)||isset($owner->last_name)){
-						    $owner_name = $owner->last_name;
-						    if (isset($owner->first_name)){
-						        $owner_name = $owner->first_name." ".$owner->last_name;
-						    }
-						} else{
-						    $owner_name = $owner->username;
-						}
+						<?php
+						    foreach ($events as $event):
+						        $owner_name = get_name($event->owner_user);
 						?>
 						<tr> 
 							<td><a href="index.php?do=event&id=<?php echo $event->id ?>"><?php echo $event->name ?></a></td> 
@@ -70,7 +61,10 @@ $(document).ready(function() {
 							<td class="center"><?php if($event->end!=0){echo(date( "d-m-Y", $event->end));}?></td> 
 							<td class="center options-row"><a class="icon-button edit" title="edit event" href="index.php?do=event&id=<?php echo $event->id ?>">Edit</a><a class="icon-button send" title="send details" href="mailto:?subject=<?php echo $event->name; ?> Drivers of Change&amp;body=Link: <?php echo urlencode(BASE_URL.'index.php?event='.$event->id); ?> <?php if($event->password!=''){ echo("Secret Code:".$event->password);} ?>">Send details</a><a class="icon-button link" title="view event" href="<?php echo(BASE_URL.'index.php?event='.$event->id);?>">View event</a></td> 
 						</tr>
-						<?php unset($event); } ?>
+						<?php
+						    endforeach;
+						    unset($event);
+						?>
 					</tbody> 
 					
 				</table>
