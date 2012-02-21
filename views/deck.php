@@ -50,13 +50,12 @@
 			</div>
 		</div>
 		 <h2>Cards</h2>
-		 <?php //foreach ($steep as $cat){?>
+		<?php foreach($steep as $cat_id=>$cat_name): ?>
 		<div class="panel">
-		    <h2 class="cap">Social</h2>
-			<div class="content">
-			</div>
-		</div>
-		<?php //}?>
+		    <div class="cap category_<?php echo $cat_name?>"><?php echo $cat_name?></div>
+		    <div class="lod" style="display:none">includes/callAPI.php?action=card/get&category=<?php echo $cat_id?>&owner=1</div>
+		</div>        
+		<?php endforeach; ?>
 	</div>
 	
 	<!-- END FORM STYLING -->
@@ -115,3 +114,31 @@
 	<?php }?>
  </div>
 </div>
+
+<script>
+$(document).ready(function(){
+	$('.panel .cap').click(function(){
+		var $placeholder = $(this).next();
+
+		if($placeholder.hasClass('lod')) {
+			$.ajax($placeholder.html().replace(/&amp;/g,'&'), {
+	            success: function(data){
+	                var data; try { data = $.parseJSON(data); } catch (err) { data = data; }
+	                //build markup
+	                var cards = "";
+	                for(var index in data) {
+		                cards += "<input type='checkbox' id='"+data[index].id+"' value='"+data[index].name+"' />"+data[index].name;
+	                }
+	                cards = "<div class='content'>"+cards+"</div>";
+	                //replace lod placeholder with markup 
+	                $placeholder.replaceWith(cards);
+	            },
+	            error: function(data){ /*alert(data);*/ }
+	        });
+	        $placeholder.html("loading...");
+		}
+
+		$(this).next().toggle();
+	});
+});
+</script>
