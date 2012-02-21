@@ -104,13 +104,23 @@
 		<div class="panel form">
 		    <h2 class="cap">Select Deck</h2>
     		<div class="content">
-    		    List of decks here
+    		    <form id="deck" class="styled">
+    		    <fieldset>
+    		    <div style="overflow:hidden;"><?php //var_dump($data['decks']);?>
+    		    <?php foreach($data['decks'] as $deck){
+    		        echo('<div style="overflow:hidden; white-space:nowrap;
+                    float:left;width:30%;"><label><input type="radio" name="deck_id" value="'.$deck->id.'"> '.$deck->name."</label></div>");
+    		    }
+    		    ?>
+    		    </div>
+    		    <br />
     		    <!-- Buttons -->
-				<div class="non-label-section">
-				    <p class="button medium disabled" id="fakesave">Save</p>
-				    <input type="button" id="save" class="button medium blue" value="Save" style="display:none" />
+				<div>
+				    <input type="button" id="save-deck" class="button medium blue" value="Create event cards" />
 					<a href="index.php?do=admin" class="button medium">Cancel</a>
 				</div>
+				</fieldset>
+				</form>
     		</div>
     	</div>
 		    
@@ -232,10 +242,27 @@
     $("#save").click(function() {
       if($("#event").valid()){
           $(window).unbind("beforeunload");
-         //alert(action+'&'+$("#event").serialize());    
           $.post('includes/callAPI.php', action+'&'+$("#event").serialize(), function(data) {
-                       displayAlertMessage(data);
+              var saved_event = eval(jQuery.parseJSON(data));
+              alert(data);
+              if (saved_event.id){
+                  edit_event = saved_event.id;
+                  displayAlertMessage("Event saved!");
+              } else{
+                   displayAlertMessage(data);
+              }
            }).error(function() { alert("There was an error saving your event, please try again later."); })
+      }
+      return false;
+    });
+    //bind deck button
+    $("#save-deck").click(function() {
+      if($("#deck").valid()){
+          var d_action = 'controller=api&action=eventcard/post&event_id='+edit_event;
+         alert(d_action+'&'+$("#deck").serialize());    
+          $.post('includes/callAPI.php', d_action+'&'+$("#deck").serialize(), function(data) {
+                        displayAlertMessage(data);
+          }).error(function() { alert("There was an error saving your event, please try again later."); })
       }
       return false;
     });
