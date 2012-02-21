@@ -78,7 +78,7 @@ switch($page) {
                     show_error("Sorry, the event you have requested does not exist.", "Make sure that you have the correct URL and that the owner hasn't deleted it. You can create your own deck <a href=\"index.php?do=event\">here</a>.");
                 }
 
-                $event_cards = callAPI("card", array('event_id'=>$evnet_id), 'obj');
+                $event_cards = callAPI("card", array('event_id'=>$event_id), 'obj');
                 
                 $data['event'] = $event;
                 $data['event_cards'] = $event_cards;
