@@ -53,7 +53,7 @@
 		<?php foreach($steep as $cat_id=>$cat_name): ?>
 		<div class="panel">
 		    <div class="category <?php echo $cat_name?>"><?php echo $cat_name?></div>
-		    <div class="lod" style="display:none">includes/callAPI.php?action=card/get&category=<?php echo $cat_id?>&owner=1</div>
+		    <div class="lod" style="display:none">includes/callAPI.php?action=card/get&&category_id=<?php echo $cat_id?>&owner=1</div>
 		</div>        
 		<?php endforeach; ?>
 	</div>
@@ -68,50 +68,6 @@
     			</div>
 		</div>
 	</div>
-	<?php if (isset($deck_cards)){?>
-	<div class="grid_4">
-	    <div class="panel">	
-	        <h2 class="cap">Event cards</h2>
-			<!-- gallery -->
-			<div class="content gallery">
-				<div class="gallery-wrap">
-					<div class="gallery-pager">
-						<?php foreach (array_reverse($deck_cards) as $card) { ?>
-						<!-- GALLERY ITEM -->
-						<div class="gallery-item">
-							<a class="clue" title="<?php echo $card->name; ?>" href="index.php?do=view&card_id=<?php echo $card->id ?>"><img src="<?php if (isset($card->card_front)){ echo (UPLOADS_URL."fronts/".$card->card_front."_t.jpg");}?>" alt="" /></a>
-						</div>
-						<!-- END GALLERY ITEM -->
-						<?php unset($card); } ?>
-					</div>
-				</div>
-			
-				<!-- The gallery pagination/options area. -->
-				<div class="pager">
-				
-					<!-- Gallery options - these should probably become active once you've checked an image or more. -->
-					<!-- <div class="gallery-options">
-					                       <a class="button red small" href="#">Delete</a>
-					                       <a class="button blue small" href="#">Edit</a>
-					                   </div> -->
-					
-					<!-- Gallery pagination -->
-					<form action="">
-						<a class="button small first"><img src="assets/images/table_pager_first.png" alt="First" /></a>
-						<a class="button small prev"><img src="assets/images/table_pager_previous.png" alt="Previous" /></a>
-						<input type="text" class="pagedisplay" disabled="disabled" />
-						<a class="button small next"><img src="assets/images/table_pager_next.png" alt="Next" /></a>
-						<a class="button small last"><img src="assets/images/table_pager_last.png" alt="Last" /></a>
-					</form>
-				</div>
-			
-			</div>
-			<!-- END CONTENT -->
-			
-		</div>
-		<!-- END PANEL -->
-	</div>
-	<?php }?>
  </div>
 </div>
 
@@ -181,7 +137,7 @@
                     //build markup
                     var cards = "";
                     for(var index in data) {
-                        cards += "<input type='checkbox' id='"+data[index].id+"' value='"+data[index].name+"' />"+data[index].name;
+                        cards += "<div class='list-col'><label><input type='checkbox' id='"+data[index].id+"' value='"+data[index].name+"' /> "+data[index].name+"</label></div>";
                     }
                     cards = "<div class='content'>"+cards+"</div>";
                     //replace lod placeholder with markup 
