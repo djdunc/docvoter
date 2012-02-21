@@ -52,7 +52,7 @@
 		 <h2>Cards</h2>
 		<?php foreach($steep as $cat_id=>$cat_name): ?>
 		<div class="panel">
-		    <div class="cap category_<?php echo $cat_name?>"><?php echo $cat_name?></div>
+		    <div class="category <?php echo $cat_name?>"><?php echo $cat_name?></div>
 		    <div class="lod" style="display:none">includes/callAPI.php?action=card/get&category=<?php echo $cat_id?>&owner=1</div>
 		</div>        
 		<?php endforeach; ?>
@@ -170,11 +170,12 @@
       return false;
     });
 
-    $('.panel .cap').click(function(){
+    $('.panel .category').click(function(){
         var $placeholder = $(this).next();
 
         if($placeholder.hasClass('lod')) {
-            $.ajax($placeholder.html().replace(/&amp;/g,'&'), {
+            $.ajax({
+                url: $placeholder.html().replace(/&amp;/g,'&'),
                 success: function(data){
                     var data; try { data = $.parseJSON(data); } catch (err) { data = data; }
                     //build markup
