@@ -48,7 +48,7 @@
     					    
 							<span>Driver categories</span>
 							<select class="chosen" name="collection_id">  
-							    <?php foreach ($collections as $key=>$collection){ echo('<option value='.$key.'>'.$collection['name'].'</option>');} //TODO add collections under once is selected ?>
+							    <?php foreach ($collections as $key=>$collection){ echo('<option value='.$key.'>'.$collection['name'].'</option>');} //TODO add collections under once is selecte?>
 							</select>
 						</label>
 						<!-- date -->
@@ -218,10 +218,10 @@
     $("#save").click(function() {
       if($("#event").valid()){
           $(window).unbind("beforeunload");
-          alert(action+'&'+$("#event").serialize());    
-          // $.post('includes/callAPI.php', action+'&'+$("#event").serialize(), function(data) {
-          //                 displayAlertMessage(data);
-          //          }).error(function() { alert("There was an error saving your event, please try again later."); })
+         // alert(action+'&'+$("#event").serialize());    
+          $.post('includes/callAPI.php', action+'&'+$("#event").serialize(), function(data) {
+               displayAlertMessage(data);
+         }).error(function() { alert("There was an error saving your event, please try again later."); })
       }
       return false;
     });
