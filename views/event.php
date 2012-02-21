@@ -108,8 +108,7 @@
     		    <fieldset>
     		    <div style="overflow:hidden;"><?php //var_dump($data['decks']);?>
     		    <?php foreach($data['decks'] as $deck){
-    		        echo('<div style="overflow:hidden; white-space:nowrap;
-                    float:left;width:30%;"><label><input type="radio" name="deck_id" value="'.$deck->id.'"> '.$deck->name."</label></div>");
+    		        echo('<div class="list-col"><label><input type="radio" name="deck_id" value="'.$deck->id.'"> '.$deck->name."</label></div>");
     		    }
     		    ?>
     		    </div>
@@ -258,10 +257,14 @@
     //bind deck button
     $("#save-deck").click(function() {
       if($("#deck").valid()){
-          var d_action = 'controller=api&action=eventcard/post&event_id='+edit_event;
+          var d_action = 'action=eventcards/post&event_id='+edit_event;
          alert(d_action+'&'+$("#deck").serialize());    
           $.post('includes/callAPI.php', d_action+'&'+$("#deck").serialize(), function(data) {
-                        displayAlertMessage(data);
+             if (data==''){
+                 displayAlertMessage("Cards added!");
+             } else{
+                 displayAlertMessage(data);
+             }
           }).error(function() { alert("There was an error saving your event, please try again later."); })
       }
       return false;
