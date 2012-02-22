@@ -20,6 +20,7 @@ $data = array(
 //set up ref page
 if($page != "login")
     $_SESSION['ref_page'] = $page;
+    $_SESSION['ref_query'] = $_SERVER['QUERY_STRING'];
 
 //force login and check admin for admin pages (defined in functions->setup())
 if(in_array($page,$admin_pages)) {
@@ -78,7 +79,7 @@ switch($page) {
                     show_error("Sorry, the event you have requested does not exist.", "Make sure that you have the correct URL and that the owner hasn't deleted it. You can create your own event below:");
                 }
 
-                $event_cards = callAPI("card", array('event_id'=>$event_id), 'obj');
+                $event_cards = callAPI("card", array('event_id'=>$event_id,'include_owner'=>1), 'obj');
                 
                 $data['event'] = $event;
                 $data['event_cards'] = $event_cards;
@@ -122,10 +123,26 @@ switch($page) {
             view('card',$data);
         break;
     case 'vote':
+            $event_id = get('id');
+            if (isset($event_id)) {
+                $event = callAPI("event/get?id=$event_id&include_owner=1", array(), 'obj');
+                if (empty($event) || !$event->id) {
+                    //404 error
+                    show_error("Sorry, the event you have requested does not exist.", "Make sure that you have the correct URL and that the owner hasn't deleted it. You can create your own event below:");
+                }
+
+                $event_cards = callAPI("card", array('event_id'=>$event_id), 'obj');
+                $votes = callAPI("vote", array('event_id'=>$event_id), 'obj');
+                
+                $data['event'] = $event;
+                $data['event_cards'] = $event_cards;
+                $data['votes'] = $votes;
+            }
     	    view('vote',$data);
         break;
     case 'about':
     default:
+    	    $data['events'] = callAPI("event", array('include_owner'=>true,'include_card_count'=>true), 'obj');
             $_SESSION['ref_page'] = "";
             view('about', $data);
 }

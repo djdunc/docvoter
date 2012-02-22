@@ -4,6 +4,10 @@ if(isset($_SESSION['ref_page'])) {
 } else {
 	$ref_page = DEFAULT_PAGE;
 }
+if(isset($_SESSION['ref_query'])) {
+	$ref_query = $_SESSION['ref_query'];
+}
+
  if (isset($_SESSION['from_reg'])){
      $from_reg = $_SESSION['from_reg'];
      unset($_SESSION['from_reg']);
@@ -17,7 +21,7 @@ if(isset($_SESSION['ref_page'])) {
 /* <![CDATA[ */
 var formChanged = false;
 var baseurl = "<?php echo BASE_URL; ?>";
-var ref = "<?php echo $ref_page; ?>";
+var ref = "<?php echo $ref_query; ?>";
 var from_reg = "<?php echo $from_reg; ?>"
 var action = 'controller=user&action=get&';
 $(document).ready(function() {
@@ -52,7 +56,7 @@ $(document).ready(function() {
           $.post('includes/load_login.php', action+$("#loginform").serialize(), function(data) {
               try {
                   var user = jQuery.parseJSON(data);
-                  window.location.href = baseurl+"index.php?do="+ref;
+                  window.location.href = baseurl+"index.php?"+ref;
               } catch (err) {
             	  displayAlertMessage(data);//todo display real json error
                   $('#login').show();
