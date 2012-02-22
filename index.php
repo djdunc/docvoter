@@ -99,16 +99,7 @@ switch($page) {
        	    view('event',$data);
         break;
     case 'card':
-            $card_id = get('id');
-            if (isset($card_id)) {
-                $card = callAPI("card/get?id=$card_id", array(), 'obj');
-                if (empty($card) || !$card->id) {
-                    //404 error
-                    show_error("Sorry, the card you have requested does not exist.", "Make sure that you have the correct URL and that the owner hasn't deleted it. You can create your own card <a href=\"index.php?do=card\">here</a>.");
-                }
-
-                $data['card'] = $card;
-            }
+    	    allow('user');
             $collections = callAPI('collection', array(), 'obj');
             foreach($collections as $collection) {
                 $data['collections'][$collection->id] = array(
@@ -119,7 +110,29 @@ switch($page) {
                     $data['collections'][$collection->id]['categories'][$category->id] = $category->name;   
                 }
             }
-    	    allow('user');
+            $event_id = get('event_id');
+            if(isset($event_id)) {
+            	$event = callAPI("event/get?id=$event_id", array(), 'obj');
+                if (empty($event) || !$event->id) {
+                    //404 error
+                    show_error("Sorry, the event you have requested does not exist.", "Make sure that you have the correct URL and that the owner hasn't deleted it. You can create your own event <a href=\"index.php?do=event\">here</a>.");
+                }
+                
+                $data['event_categories'] = $data['collections'][$event->collection_id];
+                $data['event_id'] = $event_id;
+                $data['event'] = $event;
+            }
+    	    $card_id = get('id');
+            if (isset($card_id)) {
+                $card = callAPI("card/get?id=$card_id", array('include_owner'=>1), 'obj');
+                if (empty($card) || !$card->id) {
+                    //404 error
+                    show_error("Sorry, the card you have requested does not exist.", "Make sure that you have the correct URL and that the owner hasn't deleted it. You can create your own card <a href=\"index.php?do=card\">here</a>.");
+                }
+
+                $data['card'] = $card;
+            }
+            $data['user'] = $_SESSION['user'];
             view('card',$data);
         break;
     case 'vote':

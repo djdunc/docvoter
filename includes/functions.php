@@ -105,6 +105,7 @@ function is($role='admin', $object=null) {
  * @param array $data   assoc array containing any data required by view 
  */
 function view($page="home", $data=array()) {
+//var_dump(array_keys($data));	
 	//generate read-only varaibles passed via $data assoc array in local scope
     foreach($data as $key=>$value) {
     	$$key = $value;
