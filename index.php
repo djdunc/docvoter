@@ -40,7 +40,7 @@ switch($page) {
             view('login', $data);
         break;
     case 'decks':
-            $data['decks'] = callAPI("deck", array(), 'obj');
+            $data['decks'] = callAPI("deck", array('include_card_count'=>1), 'obj');
             $data['steep'] = $steep;
             
             view('decks', $data);
