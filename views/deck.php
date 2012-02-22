@@ -73,8 +73,6 @@
 <link rel="stylesheet" href="assets/js/chosen/chosen.css" type="text/css" media="screen" />
 <!--	Load the Chosen script.-->
 <script src="assets/js/chosen/chosen.jquery.js" type="text/javascript"></script>
-<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.0/themes/base/jquery-ui.css" type="text/css" media="all" />
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
 <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
 <?php if(!isset($edit_deck_id)){$edit_deck_id=0;} ?>
 <script type="text/javascript">//<![CDATA[

@@ -321,6 +321,7 @@ ul#main-navigation {
 .title-crumbs {
 	display: block;
 	font-size: 11px;
+	padding-top: 5px;
 }
 
 .pad-h1 {
@@ -981,22 +982,10 @@ form.styled {
 	margin-top: .5em;
 }
 
-.red, .error, span.error {
-	color: red;
-}
-
 form.styled label.error, label.error {
 	display: block;
 	padding-top: .5em;
 	padding-bottom: 0;
-}
-
-span.error {
-	
-}
-
-div.error {
-	display: none;
 }
 
 form.styled label.align-left, form.styled .non-label-section {
@@ -1115,6 +1104,18 @@ form.styled.login label span.error {
 	margin-left: 90px;
 	font-weight: normal;
 	font-style: normal;
+}
+
+.red, .error, span.error {
+	color: red;
+}
+
+span.error {
+	
+}
+
+div.error {
+	display: none;
 }
 
 .list-col {

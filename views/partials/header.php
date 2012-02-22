@@ -104,11 +104,11 @@
 		<?php //admin nav
 		    } else {
 		?>
-		    <h1 class="grid_2"><span class="org"><?php if(isset($_SESSION['user'])) echo $_SESSION['user_name']; ?>&nbsp;</span><a href="<?php echo BASE_URL;?>">Dashboard</a>
+		    <h1 class="grid_2"><span class="org"><?php if(isset($_SESSION['user'])) echo $_SESSION['user_name']; ?>&nbsp;</span><a href="<?php echo BASE_URL;?>index.php?do=events">Dashboard</a>
 	  		</h1>
 	  		<div class="grid_2">
 	  		    <ul id="main-navigation">
-	         		<li><a href="index.php?do=events"<?php if($page == 'events'||$page == 'event'){ echo(" class=\"active\"");} ?>>events</a></li><li class="last"><a href="index.php?do=decks"<?php if($page == 'decks'||$page == 'deck'){ echo(" class=\"active\"");} ?>>decks</a></li>
+	         		<li><a href="index.php?do=events"<?php if($page == 'events'||$page == 'event'||$page == 'card'){ echo(" class=\"active\"");} ?>>events</a></li><li class="last"><a href="index.php?do=decks"<?php if($page == 'decks'||$page == 'deck'){ echo(" class=\"active\"");} ?>>decks</a></li>
 	         	</ul>
 	        </div>
 		<?php }?>
