@@ -254,7 +254,7 @@ $(document).ready(function() {
    	// http://harvesthq.github.com/chosen/
 
 	try {
-   		$('form.styled').find('.chosen').chosen({disable_search_threshold : 10});
+   		$('form.styled').find('.chosen').chosen({disable_search_threshold : 5});
    	}
    	catch(err){
    		// Error stuff here

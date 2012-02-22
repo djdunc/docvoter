@@ -1,43 +1,10 @@
-<?php //var_dump($collections);?>
-<!--	Load the Tablesorter script. -->
-<script src="assets/js/jquery.tablesorter.min.js" type="text/javascript"></script>
-<script src="assets/js/jquery.tablesorter.pager.js" type="text/javascript"></script>
-<!--	Load the "Chosen" stylesheet. -->
-<link rel="stylesheet" href="assets/js/chosen/chosen.css" type="text/css" media="screen" />
-<!--	Load the Chosen script.-->
-<script src="assets/js/chosen/chosen.jquery.js" type="text/javascript"></script>
-<script type="text/javascript">
-// add parser through the tablesorter addParser method 
-    $.tablesorter.addParser({ 
-        // set a unique id 
-        id: 'steep-parser', 
-        is: function(s) { 
-            // return false so this parser is not auto detected 
-            return false; 
-        }, 
-        format: function(s) { 
-            // format your data for normalization 
-            return s.toLowerCase().replace(/social/,0).replace(/technological/,1).replace(/economic/,2).replace(/environmental/,3).replace(/political/,4); 
-        }, 
-        // set type, either numeric or text 
-        type: 'numeric' 
-    });
-$(document).ready(function() {
-    $('#cards').tablesorter({dateFormat: 'ddmmyyyy', widthFixed: true, widgets: ['zebra'],sortList:[[3,1]],headers: { 
-          1: { sorter: "steep-parser" },
-         // 4: { sorter: "shortDate"}, // set day first format 
-          4: { sorter: false}
-        }})
-    .tablesorterPager({container: $("#table-pager-1")});
-    $("#deck-select").chosen();
-});
-</script>
+<?php //var_dump($event);?>
 <!-- BEGIN PAGE BREADCRUMBS/TITLE -->
 <div class="container_4">
 	<div id="page-heading" class="clearfix">
 	    <div class="grid-wrap">
     		<div class="grid_2 title-crumbs">
-    		       <h2>Add event</h2>
+    		       <h2>Event details</h2>
     		</div>
     		<div class="grid_2 align_right">
     				<a href="index.php?do=events" class="button medium">Back to events list</a>
@@ -141,38 +108,41 @@ $(document).ready(function() {
     			</div>
 		</div>
 	</div>
-	<div class="grid_3">
-        <div id="deck-panel" class="panel form" <?php if(!isset($event)){echo("style='display:none';");} ?>>
+	<?php if(isset($event) && empty($data['event_cards'])){?>
+
+	<div class="grid_3" id="deck-panel">
+        <div class="panel" <?php if(!isset($event)){echo("style='display:none';");} ?>>
         	<div class="content no-cap clearfix">
-    		    <form id="deck" class="styled">
-    		    <fieldset style="width:70%; float:left; padding-top:1px; padding-right:8px;">
-    		        <label class="align-left" for="deck_id" style="border:none">
-    		           <span>Add cards from Deck</span>
-    		        <select name="deck_id" id="deck-select">
-    		    <?php foreach($data['decks'] as $deck){
-    		        echo('<option value="'.$deck->id.'"> '.$deck->name."</option>");
-    		    }
-    		    ?>
-    		    	</select>
-    		    	</label>
+    		    <form id="deck">
+    		    <fieldset>
+    		           <h3>Add cards from Deck</h3>
+    		        <div>
+    		        <?php foreach($data['decks'] as $deck){
+                          echo("<span class='list-col'><label><input type='checkbox' name='deck_id'  value=".$deck->id.'"> '.$deck->name."</label></span>");
+                      } ?>
+    		          </div>
     		    <!-- Buttons -->
 				</fieldset>
-				 <span style="float:left;"><input type="button" id="save-deck" class="button small blue" value="Add cards" /></span>
+				<div class='m-top'>
+				 <input type="button" id="save-deck" class="button small blue" value="Add cards" />
+				 </div>
 				</form>
     		</div>
         </div>
     </div>
-	</div>
-	</div>
-    <div class="container_4">
-    <div class="grid-wrap">
-        <div class="grid_4 title-crumbs">
-        <h3>Event Cards</h3>
-         </div>
-        	<?php if(isset($event) && !empty($data['event_cards'])){
-    		    //var_dump($data['event_cards']);?>
-    		<div class="grid_4">
-			<div class="panel">
+    <?php } ?>
+    <?php if(isset($event) && !empty($data['event_cards'])){
+    //var_dump($data['event_cards']);?>
+     <div class="clearfix">
+    		<div class="grid_2 title-crumbs">
+    		       <h3>Event Cards</h3>
+    		</div>
+    		<div class="grid_2 align_right">
+    				<a href="index.php?do=card&event_id=<?php echo $event->id;?>" class="button medium">Add a new card</a>
+    		</div>
+    </div>
+    <div class="grid_4">
+		<div class="panel">
 			<div class="content no-cap">
 		    <table id="cards" class="styled"> 
 				<thead> 
@@ -191,7 +161,7 @@ $(document).ready(function() {
 						?>
 					<tr> 
 						<td><a href="index.php?do=event&id=<?php echo $card->id ?>"><?php echo $card->name ?></a></td> 
-						<td class="center <?php echo $data['steep'][$card->category_tag_id].'-50'; ?>"><?php echo $data['steep'][$card->category_tag_id]; ?></td> 
+						<td class="center <?php echo $data['steep'][$card->category_tag_id].'-b'; ?>"><?php echo $data['steep'][$card->category_tag_id]; ?></td> 
 						<td class="center"><?php echo $owner_name ?></td> 
 						<td class="center"><?php echo(date( "d-m-Y", $card->ctime)); ?></td>
 						<td class="center options-row"><a class="icon-button edit" title="edit event" href="index.php?do=issue&id=<?php echo $card->id ?>">Edit</a></td> 
@@ -220,16 +190,47 @@ $(document).ready(function() {
 					<a class="button small last"><img src="assets/images/table_pager_last.png" alt="Last" /></a>
 				</form>
 			</div>
-			</div>
 		</div>
-			<?php	}?>
-		</div>
-    	</div>
- </div>
+	</div>
+	<?php	}?>
+</div>
 </div>
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.0/themes/base/jquery-ui.css" type="text/css" media="all" />
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/jquery-ui.min.js"></script>
 <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
+<!--	Load the Tablesorter script. -->
+<script src="assets/js/jquery.tablesorter.min.js" type="text/javascript"></script>
+<script src="assets/js/jquery.tablesorter.pager.js" type="text/javascript"></script>
+<!--	Load the "Chosen" stylesheet. -->
+<link rel="stylesheet" href="assets/js/chosen/chosen.css" type="text/css" media="screen" />
+<!--	Load the Chosen script.-->
+<script src="assets/js/chosen/chosen.jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+// add parser through the tablesorter addParser method 
+    $.tablesorter.addParser({ 
+        // set a unique id 
+        id: 'steep-parser', 
+        is: function(s) { 
+            // return false so this parser is not auto detected 
+            return false; 
+        }, 
+        format: function(s) { 
+            // format your data for normalization 
+            return s.toLowerCase().replace(/social/,0).replace(/technological/,1).replace(/economic/,2).replace(/environmental/,3).replace(/political/,4); 
+        }, 
+        // set type, either numeric or text 
+        type: 'numeric' 
+    });
+$(document).ready(function() {
+    $('#cards').tablesorter({dateFormat: 'ddmmyyyy', widthFixed: true, widgets: ['zebra'],sortList:[[3,1]],headers: { 
+          1: { sorter: "steep-parser" },
+         // 4: { sorter: "shortDate"}, // set day first format 
+          4: { sorter: false}
+        }})
+    .tablesorterPager({container: $("#table-pager-1")});
+    $("#deck-select").chosen();
+});
+</script>
 <?php if(isset($event)){$edit_event_id=$event->id;}else{$edit_event_id=0;} ?>
 <script type="text/javascript">//<![CDATA[
     $(document).ready(function() {
@@ -249,6 +250,7 @@ $(document).ready(function() {
       altFormat: '@',
       onSelect: function(dateText, inst) {
           milsToSecs($(this),$('#start'));
+          handleFormChanged();
           }
     });
     $( "#endpicker" ).datepicker({
@@ -258,6 +260,7 @@ $(document).ready(function() {
       altFormat: '@',
       onSelect: function(dateText, inst) {
          milsToSecs($(this),$('#end'));
+         handleFormChanged();
         }
     });
     //start second one always from first date
@@ -276,12 +279,16 @@ $(document).ready(function() {
     //if adding event edit_event == 0
     if (edit_event != 0){
         var action = 'controller=api&action=event/put&id='+edit_event;
-        var dstart = $.datepicker.parseDate('@', '<?php if(isset($edit_event)){echo($event->start);}?>000');
-        var dend = $.datepicker.parseDate('@', '<?php if(isset($edit_event)){echo($event->end);}?>000');
-        $('#startpicker').datepicker('setDate', dstart);
-        milsToSecs($('#startpicker'),$('#start'));
-        $('#endpicker').datepicker('setDate', dend);
-         milsToSecs($('#endpicker'),$('#end'));
+        var dstart = '<?php if(isset($event)){echo($event->start);}?>';
+        var dend = '<?php if(isset($event)){echo($event->end);}?>';
+        if (dstart!='0'){
+            $('#startpicker').datepicker('setDate', $.datepicker.parseDate('@',dstart+'000'));
+            milsToSecs($('#startpicker'),$('#start'));
+        }
+        if (dend!='0'){
+            $('#endpicker').datepicker('setDate', $.datepicker.parseDate('@',dend+'000'));
+            milsToSecs($('#endpicker'),$('#end'));
+        }  
     } else{
         var action = 'controller=api&action=event/post&eventtype=2&owner='+owner;
         $('#startpicker').datepicker('setDate', new Date());
@@ -289,7 +296,7 @@ $(document).ready(function() {
     }
     
     $("#event").validate({
-        rules: { name: "required", startpicker:"required"},
+        rules: { name: "required", start:"required"},
         messages: { name: "Event name is required", startpicker: "Please enter a start date"}
     });
     
@@ -309,11 +316,6 @@ $(document).ready(function() {
          handleFormChanged();
     });
     
-    //automatically apend url on name change TODO: no need for this can add on save
-    $('#name').keyup(function () {
-     var value = $(this).val();
-     $('#url').val(baseurl + value);
-    });
     
     //set value of private on password change
     $('#password').keyup(function() {
@@ -347,11 +349,11 @@ $(document).ready(function() {
     //bind deck button
     $("#save-deck").click(function() {
       if($("#deck").valid()){
-          var d_action = 'action=eventcards/post&event_id='+edit_event;
-         alert(d_action+'&'+$("#deck").serialize());    
+          var d_action = 'action=eventcards/post&event_id='+edit_event;   
           $.post('includes/callAPI.php', d_action+'&'+$("#deck").serialize(), function(data) {
              if (data==''){
-                 displayAlertMessage("Cards added!");
+                 //redirect to show cards
+                 window.location.href = baseurl+"index.php?do=event&id="+edit_event;
              } else{
                  displayAlertMessage(data);
              }
