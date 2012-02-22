@@ -72,7 +72,9 @@ switch($page) {
             view('deck', $data);
         break;
     case 'events':
-    	    $data['events'] = callAPI("event", array('include_owner'=>true,'include_card_count'=>true), 'obj');
+    	    $params = array('include_owner'=>true,'include_card_count'=>true);
+            if(!is('super')) $params['owner'] = $_SESSION['user']->id;
+    	    $data['events'] = callAPI("event", $params, 'obj');
             view('events',$data);
         break;
     case 'event':
@@ -83,10 +85,10 @@ switch($page) {
                     //404 error
                     show_error("Sorry, the event you have requested does not exist.", "Make sure that you have the correct URL and that the owner hasn't deleted it. You can create your own event below:");
                 }
-
                 $event_cards = callAPI("card", array('event_id'=>$event_id,'include_owner'=>1), 'obj');
                 
                 $data['event'] = $event;
+                $data['edit_event_id'] = $event->id;
                 $data['event_cards'] = $event_cards;
             }
     	    $collections = callAPI('collection', array(), 'obj');
@@ -100,7 +102,7 @@ switch($page) {
     	    	}
     	    }
     	    $data['decks'] =  callAPI('deck?include_card_count=1', array(), 'obj');
-    	     $data['steep'] = $steep;
+    	    $data['steep'] = $steep;
        	    view('event',$data);
         break;
     case 'card':
@@ -126,6 +128,10 @@ switch($page) {
                 $data['event_categories'] = $data['collections'][$event->collection_id];
                 $data['event_id'] = $event_id;
                 $data['event'] = $event;
+            } else {
+            	show_error("Sorry, the event you have requested does not exist.", "Make sure that you have the correct URL and that the owner hasn't deleted it. You can create your own event <a href=\"index.php?do=event\">here</a>.");
+            	view('404',$data);
+            	exit;
             }
     	    $card_id = get('id');
             if (isset($card_id)) {
