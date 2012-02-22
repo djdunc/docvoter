@@ -1,15 +1,9 @@
-<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.0/themes/base/jquery-ui.css" type="text/css" media="all" />
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
-<!--	Load the "Chosen" stylesheet. -->
-<link rel="stylesheet" href="assets/js/chosen/chosen.css" type="text/css" media="screen" />
-<!--	Load the Chosen script.-->
-<script src="assets/js/chosen/chosen.jquery.js" type="text/javascript"></script>
 <!-- BEGIN PAGE BREADCRUMBS/TITLE -->
 <div class="container_4">
 	<div id="page-heading" class="clearfix">
 	    <div class="grid-wrap">
     		<div class="grid_2 title-crumbs">
-    		       <h2>Add Deck</h2>
+    		       <h2>Deck details</h2>
     		</div>
     		<div class="grid_2 align_right">
     				<a href="index.php?do=decks" class="button medium">Back to deck list</a>
@@ -49,13 +43,15 @@
 				</form>
 			</div>
 		</div>
-		 <h2>Cards</h2>
+		 <div class="accordion">
+		<h3>Deck cards</h3>
 		<?php foreach($steep as $cat_id=>$cat_name): ?>
-		<div class="panel">
-		    <div class="category <?php echo $cat_name?>-50"><?php echo $cat_name?></div>
-		    <div class="lod" style="display:none">includes/callAPI.php?action=card/get&&category_id=<?php echo $cat_id?>&owner=1</div>
+		<div class="accordion-block">
+		    <h3 class="category <?php echo $cat_name?>-b"><?php echo $cat_name?></h3>
+		    <div class="lod" style="display:none">includes/callAPI.php?action=card/get&category_id=<?php echo $cat_id?>&owner=1</div>
 		</div>        
 		<?php endforeach; ?>
+		</div>
 	</div>
 	
 	<!-- END FORM STYLING -->
@@ -71,6 +67,12 @@
  </div>
 </div>
 
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.0/themes/base/jquery-ui.css" type="text/css" media="all" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
+<!--	Load the "Chosen" stylesheet. -->
+<link rel="stylesheet" href="assets/js/chosen/chosen.css" type="text/css" media="screen" />
+<!--	Load the Chosen script.-->
+<script src="assets/js/chosen/chosen.jquery.js" type="text/javascript"></script>
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.0/themes/base/jquery-ui.css" type="text/css" media="all" />
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
 <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
@@ -126,9 +128,8 @@
       return false;
     });
 
-    $('.panel .category').click(function(){
+    $('.accordion-block .category').click(function(){
         var $placeholder = $(this).next();
-
         if($placeholder.hasClass('lod')) {
             $.ajax({
                 url: $placeholder.html().replace(/&amp;/g,'&'),
@@ -137,17 +138,18 @@
                     //build markup
                     var cards = "";
                     for(var index in data) {
-                        cards += "<div class='list-col'><label><input type='checkbox' id='"+data[index].id+"' value='"+data[index].name+"' /> "+data[index].name+"</label></div>";
+                        cards += "<span class='list-col'><label><input type='checkbox' id='"+data[index].id+"' value='"+data[index].name+"' /> "+data[index].name+"</label></span>";
                     }
-                    cards = "<div class='content'>"+cards+"</div>";
+                    //we need each to have a unique id to add functionality to save
+                    cards = "<form class='cards' id=''>"+cards+"<div class='m-top'><input type='button' id='save-cards' class='button medium blue' value='Save' /> <a href='' class='button medium'>Close</a></div></form>";
                     //replace lod placeholder with markup 
                     $placeholder.replaceWith(cards);
                 },
                 error: function(data){ /*alert(data);*/ }
             });
-            $placeholder.html("loading...");
+            $placeholder.html("<div class='content'><img src='assets/images/indicator.gif' /> loading cards...</div>");
         }
-
+        $(this).toggleClass('open');
         $(this).next().toggle();
     });
     

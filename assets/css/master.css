@@ -1119,18 +1119,11 @@ form.styled.login label span.error {
 
 .list-col {
 	display: inline-block;
-	width: 33%;
-}
-
-.panel .content{
-	
-}
-.panel .category{
-	color: #fff;
-	font-size: 15px;
-	font-weight: bold;
-	padding: .3em;
-	cursor: pointer;
+	width: 50%;
+	overflow: visible;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	border-bottom: 1px solid #ebebeb;
 }
 .progress-bar {
 	display: block;
@@ -1217,42 +1210,52 @@ form.styled.login label span.error {
 
 /* ---------------------------------------------------------------------------- */
 
-.accordion-wrapper {
-	padding-bottom: 5px;
+.accordion{
+	margin-bottom: 20px;
+	background-color: #e5e9eb;
+	border: 1px solid #e3e3e3;
+}
+.accordion h3{
+	padding: 10px 15px;
+	margin-bottom: 0;
 }
 
 .accordion-block {
-	padding: 5px 5px 0;
+	background-color: #fff;
+	margin: 3px;
+	padding: 0;
 }
-
 .accordion-block h3 {
 	opacity: 1;
-	cursor: pointer;
-	margin: 0;
-	background: #fff url('../images/accordion_closed.png') no-repeat 98% 10px;
-	line-height: 19px;
-	font-size: 14px;
+	font-size: 15px;
+	line-height: 15px;
 	font-weight: bold;
-	padding: 13px 45px 13px 13px;
+	padding: 10px 15px;
+	cursor: pointer;
+	background: url(../images/accordion.png) no-repeat right 0;
+	margin: 0;
+	border: 1px solid #eee;
 }
-
+.lod, .cards{
+	padding: 10px 15px;
+	border: 1px solid #ddd;
+	border-top: none;
+}
+.m-top{
+	margin-top: 15px;
+}
+.accordion-block h3.open{
+	background-position: right -36px;
+	border-color:#ddd;
+}
 .accordion-block h3:hover {
-	opacity: 0.75;
-}
-
-.accordion-block.open h3 {
-	background: #fff url('../images/alert_icon_close.png') no-repeat 98% 10px;
-}
-
-.accordion-block .accordion-content {
-	display: none;
-	padding: 15px 15px 0 15px;
+	border-color:#ccc;
 }
 
 /* BUTTONS																		*/
 
 /* ---------------------------------------------------------------------------- */
-
+/Users/malicias/Sites/DoC_CardBuilder/Template Files/Advanced PHP Template/stats.php
 button {
 	/* Disables default styling */
 	/* You need to set font, font size and cursor for buttons */
@@ -1655,17 +1658,41 @@ label.file-holder {
 .political {
 	background-color: #EC2027!important;
 }
+
 .social,.technological,.economic,.environmental,.political{
 	color: #fff!important;
+}
+.social-b {
+	color: #39B1D9!important;
+	
+}
+
+.technological-b {
+	color: #A681B2!important;
+	
+}
+
+.economic-b {
+	color: #F69220!important;
+	}
+
+.environmental-b {
+	color: #8BC53F!important;
+	
+}
+
+.political-b {
+	color: #EC2027!important;
+	
 }
 
 .social-50,.technological-50,.economic-50,.environmental-50,.political-50{
 	color: #333!important;
 }
-.social-50 {
-	background-color: #a5d7ee!important;
-}
 
+.social-50 {
+	background-color: #a4d7ee!important;
+}
 .technological-50 {
 	background-color: #d1c0da!important;
 }
