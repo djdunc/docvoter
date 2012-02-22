@@ -553,7 +553,9 @@ ul#main-navigation {
 	margin: 0 0 10px;
 	width: 100%;
 }
-
+.panel table.styled a:hover{
+	text-decoration: underline;
+}
 .panel table.styled th, .panel table.styled td {
 	padding: 6px 11px;
 }
@@ -593,7 +595,7 @@ ul#main-navigation {
 	background-color: #f8f8f8;
 }
 .panel table.styled tbody tr:hover td{
-	background-color: #ffffd7;
+	background-color: #ffffea;
 }
 
 .panel table.styled thead tr .headerSortUp {

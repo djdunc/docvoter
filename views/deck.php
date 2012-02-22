@@ -145,7 +145,7 @@
                         cards += "<span class='list-col'><label><input type='checkbox' id='"+id+"' value='"+data[index].name+"' "+checked+" /> "+data[index].name+"</label></span>";
                     }
                     //replace lod placeholder with markup 
-                    $placeholder.replaceWith(cards);
+                    $placeholder.replaceWith("<div class='cards'>"+cards+"</div>");
                 },
                 error: function(data){ /*alert(data);*/ }
             });

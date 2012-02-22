@@ -157,10 +157,10 @@
 				<tbody> 
 				    	<?php
 						    foreach ($data['event_cards'] as $card):
-						    $owner_name = get_name($event->owner_user);
+						    $owner_name = get_name($card->owner_user);
 						?>
 					<tr> 
-						<td><a href="index.php?do=event&id=<?php echo $card->id ?>"><?php echo $card->name ?></a></td> 
+						<td><a href="index.php?do=card&id=<?php echo $card->id ?>&event_id=<?php echo $event->id;?>"><?php echo $card->name ?></a></td> 
 						<td class="center <?php echo $data['steep'][$card->category_tag_id].'-b'; ?>"><?php echo $data['steep'][$card->category_tag_id]; ?></td> 
 						<td class="center"><?php echo $owner_name ?></td> 
 						<td class="center"><?php echo(date( "d-m-Y", $card->ctime)); ?></td>

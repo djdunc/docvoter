@@ -21,7 +21,7 @@ $(document).ready(function() {
 	<div id="page-heading" class="clearfix">
 	    <div class="grid-wrap">
     		<h2 class="grid_2">
-    		       My events
+    		       Events
     		</h2>
     		<div class="grid_2 align_right">
     				<a href="index.php?do=event" class="button medium">Add new event</a>

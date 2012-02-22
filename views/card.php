@@ -1,3 +1,4 @@
+<?php var_dump($card)?>
 <!-- BEGIN PAGE BREADCRUMBS/TITLE -->
 <div class="container_4">
 	<div id="page-heading" class="clearfix">
@@ -25,7 +26,7 @@
 						<!-- Text Field -->
 						<label class="align-left">
 							<span>Issue<strong class="red">*</strong></span>
-							<input class="textbox l required editable" name="name" id="name" type="text" value="<?php if(isset($edit_deck->name)){echo($edit_deck->name);}?>" />
+							<input class="textbox l required editable" name="name" id="name" type="text" value="<?php if(isset($card->name)){echo($card->name);}?>" />
 						</label>
 						<!-- Collection -->
     					<label class="align-left" for="category_tag_id">
@@ -36,12 +37,12 @@
 						</label>
 						<label class="align-left">
 							<span>Question<strong class="red"></strong></span>
-							<input class="textbox l editable" name="question" id="quiestion" type="text" value="<?php if(isset($edit_deck->name)){echo($edit_deck->name);}?>" />
+							<input class="textbox l editable" name="question" id="quiestion" type="text" value="<?php if(isset($card->name)){echo($card->name);}?>" />
 						</label>
 						<!-- Text Area -->
 						<label class="align-left" for="textArea">
 							<span>Factoid</span>
-							<textarea class="textarea l editable" name="description" id="description" rows="2" cols="1"><?php if(isset($edit_deck)){echo($edit_deck->description);}?></textarea>
+							<textarea class="textarea l editable" name="description" id="description" rows="2" cols="1"><?php if(isset($card)){echo($card->description);}?></textarea>
 						</label>
 						<!-- Buttons -->
 						<div class="non-label-section">
@@ -71,7 +72,7 @@
 <!--	Load the Chosen script.-->
 <script src="assets/js/chosen/chosen.jquery.js" type="text/javascript"></script>
 <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
-<?php if(!isset($edit_deck_id)){$edit_deck_id=0;} ?>
+<?php if(!isset($card_id)){$card_id=0;} ?>
 <script type="text/javascript">//<![CDATA[
     $(document).ready(function() {
     var formChanged = false;
@@ -87,6 +88,7 @@
     } else{
         var action = 'controller=api&action=card/post&topic_id=1&type=vote&owner='+owner+'&origin_event_id='+event_id;
         var event_action = 'action=eventcards/post&event_id='+event_id;
+        var add_event = true;
     }
     
     $("#card").validate({
@@ -113,7 +115,7 @@
           }
           $.post('includes/callAPI.php', action+'&'+$("#card").find('input[name!=category_tag_id]').serialize(), function(data) {
                   var saved_card = eval(jQuery.parseJSON(data));
-                  if (saved_card.id){
+                  if (saved_card.id && add_event){
                       //alert(event_action+'&card_id='+saved_card.id+'&category_tag_id='+$('#cat_id option:selected').val());
                        $.post('includes/callAPI.php', event_action+'&card_id='+saved_card.id+'&category_tag_id='+$('#cat_id option:selected').val(), function(data) {
                              var saved_eventcards = eval(jQuery.parseJSON(data));
