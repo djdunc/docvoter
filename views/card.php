@@ -83,10 +83,10 @@
     //if adding card card_id == 0
     if (card_id != 0){
         var action = 'controller=api&action=card/put&id='+card_id;
-        var event_action = 'action=eventcard/put&event_id='+event_id;
+        var event_action = 'action=eventcards/put&event_id='+event_id;
     } else{
         var action = 'controller=api&action=card/post&topic_id=1&type=vote&owner='+owner+'&origin_event_id='+event_id;
-        var event_action = 'action=eventcard/post&event_id='+event_id;
+        var event_action = 'action=eventcards/post&event_id='+event_id;
     }
     
     $("#card").validate({
@@ -113,12 +113,15 @@
           }
           $.post('includes/callAPI.php', action+'&'+$("#card").find('input[name!=category_tag_id]').serialize(), function(data) {
                   var saved_card = eval(jQuery.parseJSON(data));
-                  alert(data);
                   if (saved_card.id){
-                       alert(data);
-                       $.post('includes/callAPI.php', event_action+'&card_id'+saved_card.id+'&category_tag_id='+$('#cat_id option:selected').val(), function(data) {
-                             alert(data);
-                              displayAlertMessage("Card saved!");
+                      //alert(event_action+'&card_id='+saved_card.id+'&category_tag_id='+$('#cat_id option:selected').val());
+                       $.post('includes/callAPI.php', event_action+'&card_id='+saved_card.id+'&category_tag_id='+$('#cat_id option:selected').val(), function(data) {
+                             var saved_eventcards = eval(jQuery.parseJSON(data));
+                             if (saved_eventcards.event_id){
+                                displayAlertMessage("Card saved and added to event!");
+                             } else{
+                                 displayAlertMessage(data);
+                             }
                          }).error(function() { alert("There was an error adding your card to this event, please try again."); })
                       
                   } else{
