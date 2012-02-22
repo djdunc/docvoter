@@ -96,15 +96,29 @@ switch($page) {
     	    $data['decks'] =  callAPI('deck?include_card_count=1', array(), 'obj');
        	    view('event',$data);
         break;
-    case 'issues':
-            view('issues',$data);
-        break;
-    case 'issue':
-            view('issue',$data);
-        break;
-    case 'issue_add':
+    case 'card':
+            $card_id = get('id');
+            if (isset($card_id)) {
+                $card = callAPI("card/get?id=$card_id", array(), 'obj');
+                if (empty($card) || !$card->id) {
+                    //404 error
+                    show_error("Sorry, the card you have requested does not exist.", "Make sure that you have the correct URL and that the owner hasn't deleted it. You can create your own card <a href=\"index.php?do=card\">here</a>.");
+                }
+
+                $data['card'] = $card;
+            }
+            $collections = callAPI('collection', array(), 'obj');
+            foreach($collections as $collection) {
+                $data['collections'][$collection->id] = array(
+                    'name'=>$collection->name,
+                    'categories'=>array()
+                );
+                foreach($collection->categories as $category) {
+                    $data['collections'][$collection->id]['categories'][$category->id] = $category->name;   
+                }
+            }
     	    allow('user');
-            view('issue_add',$data);
+            view('card',$data);
         break;
     case 'vote':
     	    view('vote',$data);
