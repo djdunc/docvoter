@@ -78,11 +78,15 @@
 <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
 <?php if(!isset($edit_deck_id)){$edit_deck_id=0;} ?>
 <script type="text/javascript">//<![CDATA[
+
+                                          
     $(document).ready(function() {
     var formChanged = false;
     var baseurl = "<?php echo BASE_URL; ?>";
     var edit_deck = <?php echo($edit_deck_id);?>;
     var owner = <?php echo $_SESSION['user']->id;?>;
+    var deck_card_ids = "<?php echo $deck_card_ids;?>";
+
     //if adding deck edit_deck == 0
     if (edit_deck != 0){
         var action = 'controller=api&action=deck/put&id='+edit_deck;
@@ -138,10 +142,10 @@
                     //build markup
                     var cards = "";
                     for(var index in data) {
-                        cards += "<span class='list-col'><label><input type='checkbox' id='"+data[index].id+"' value='"+data[index].name+"' /> "+data[index].name+"</label></span>";
+                    	var id = data[index].id;
+                    	var checked = deck_card_ids.match(new RegExp("^"+id+",|,"+id+",|,"+id+"$")) ? "checked='checked'" : "";
+                        cards += "<span class='list-col'><label><input type='checkbox' id='"+id+"' value='"+data[index].name+"' "+checked+" /> "+data[index].name+"</label></span>";
                     }
-                    //we need each to have a unique id to add functionality to save
-                    cards = "<form class='cards' id=''>"+cards+"<div class='m-top'><input type='button' id='save-cards' class='button medium blue' value='Save' /> <a href='' class='button medium'>Close</a></div></form>";
                     //replace lod placeholder with markup 
                     $placeholder.replaceWith(cards);
                 },
@@ -152,8 +156,28 @@
         $(this).toggleClass('open');
         $(this).next().toggle();
     });
+
+    $('.accordion-block :checkbox').live('click',function(){
+        addremove(this);
+    });
     
 });
+
+    function addremove(card) {
+        var query_url;
+        if($(card).is(':checked')) {
+            //add deckcard entry
+        	query_url = "includes/callAPI.php?action=deckcard/post&deck_id=<?php echo $edit_deck_id;?>&card_id="+$(card).attr('id');
+        } else {
+            //delete deckcard entry
+        	query_url = "includes/callAPI.php?action=deckcard/delete&deck_id=<?php echo $edit_deck_id;?>&card_id="+$(card).attr('id');
+        }
+        $.ajax({
+            url: query_url,
+            success: function(data){/*uhm ... it worked*/},
+            error: function(data){/*... it didn't*/}
+        });
+    }
 
    function handleFormChanged() {
         $(window).bind('beforeunload', confirmNavigation);

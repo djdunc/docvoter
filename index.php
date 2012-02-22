@@ -55,8 +55,13 @@ switch($page) {
 	            }
 
 	            $deck_cards = callAPI("card", array('deck_id'=>$deck_id), 'obj');
-                
-	            $data['deck'] = $deck;
+                foreach($deck_cards as $card) {
+                	$deck_card_ids[] = $card->id;
+                	$data['deck_card_ids'] = implode(',',$deck_card_ids);
+                }
+	            
+                $data['edit_deck_id'] = $deck_id;
+	            $data['edit_deck'] = $deck;
                 $data['deck_cards'] = $deck_cards;
             }
             

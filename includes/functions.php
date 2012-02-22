@@ -105,7 +105,7 @@ function is($role='admin', $object=null) {
  * @param array $data   assoc array containing any data required by view 
  */
 function view($page="home", $data=array()) {
-//var_dump(array_keys($data));	
+//var_dump($data);	
 	//generate read-only varaibles passed via $data assoc array in local scope
     foreach($data as $key=>$value) {
     	$$key = $value;
@@ -200,7 +200,7 @@ function callAPI($query_url, $query_params=array(), $as='json') {
 //var_dump($oauth->getLastResponse());
         $json_string = $oauth->getLastResponse();
         $ret = $json_string;
-//var_dump($json_string); exit;        
+//var_dump($json_string); exit;
 //    	$error = json_decode($oauth->getLastResponse());
 //        if($error && is_object($error)) {
 //            echo $error->error->message;
@@ -215,7 +215,7 @@ function callAPI($query_url, $query_params=array(), $as='json') {
     if($as == "obj")
         $ret = json_decode($json_string);
     if($as == "assoc")
-        $ret = json_decode($json_string);
+        $ret = json_decode($json_string, true);
         
     return $ret;
 }
