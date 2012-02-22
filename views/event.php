@@ -1,8 +1,37 @@
 <?php //var_dump($collections);?>
+<!--	Load the Tablesorter script. -->
+<script src="assets/js/jquery.tablesorter.min.js" type="text/javascript"></script>
+<script src="assets/js/jquery.tablesorter.pager.js" type="text/javascript"></script>
 <!--	Load the "Chosen" stylesheet. -->
 <link rel="stylesheet" href="assets/js/chosen/chosen.css" type="text/css" media="screen" />
 <!--	Load the Chosen script.-->
 <script src="assets/js/chosen/chosen.jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+// add parser through the tablesorter addParser method 
+    $.tablesorter.addParser({ 
+        // set a unique id 
+        id: 'steep-parser', 
+        is: function(s) { 
+            // return false so this parser is not auto detected 
+            return false; 
+        }, 
+        format: function(s) { 
+            // format your data for normalization 
+            return s.toLowerCase().replace(/social/,0).replace(/technological/,1).replace(/economic/,2).replace(/environmental/,3).replace(/political/,4); 
+        }, 
+        // set type, either numeric or text 
+        type: 'numeric' 
+    });
+$(document).ready(function() {
+    $('#cards').tablesorter({dateFormat: 'ddmmyyyy', widthFixed: true, widgets: ['zebra'],sortList:[[3,1]],headers: { 
+          1: { sorter: "steep-parser" },
+         // 4: { sorter: "shortDate"}, // set day first format 
+          4: { sorter: false}
+        }})
+    .tablesorterPager({container: $("#table-pager-1")});
+    $("#deck-select").chosen();
+});
+</script>
 <!-- BEGIN PAGE BREADCRUMBS/TITLE -->
 <div class="container_4">
 	<div id="page-heading" class="clearfix">
@@ -19,7 +48,7 @@
 <!-- END PAGE BREADCRUMBS/TITLE -->
 <div class="container_4">
 <div class="grid-wrap">
-	<!-- BEGIN FORM STYLING -->
+	<!-- BEGIN FORM  -->
 	<div class="grid_3">
 		<div class="panel form">
 		    <span class="message"></span>
@@ -30,18 +59,18 @@
 						<!-- Text Field -->
 						<label class="align-left">
 							<span>Event name<strong class="red">*</strong></span>
-							<input class="textbox l required editable" name="name" id="name" type="text" value="<?php if(isset($edit_event->name)){echo($edit_event->name);}?>" />
+							<input class="textbox l required editable" name="name" id="name" type="text" value="<?php if(isset($event->name)){echo($event->name);}?>" />
 						</label>
 							<!-- Text Field -->
     						<label class="align-left" for="textField">
     							<span>Event url</span>
-    						    <input class="l readonly" id="url" type="text" value="<?php if(isset($edit_event->name)){echo(BASE_URL.'index.php?event='.$edit_event->id);}?>" readonly="readonly" />
+    						    <input class="l readonly" id="url" type="text" value="<?php if(isset($event->name)){echo(BASE_URL.'index.php?event='.$event->id);}?>" readonly="readonly" />
     						</label>
 						
 						<!-- Text Area -->
 						<label class="align-left" for="textArea">
 							<span>Event description</span>
-							<textarea class="textarea l editable" name="description" id="description" rows="2" cols="1"><?php if(isset($edit_event)){echo($edit_event->description);}?></textarea>
+							<textarea class="textarea l editable" name="description" id="description" rows="2" cols="1"><?php if(isset($edit_event)){echo($event->description);}?></textarea>
 						</label>
 						<!-- Collection -->
     					<label class="align-left" for="collection_id">
@@ -67,18 +96,18 @@
 						    <p class="check-pair">
 						         <input type="hidden" name="auto_close" value="false" />
                                 <label>
-                                    <input type="checkbox" name="auto_close" value="true" <?php if(isset($edit_event) && $edit_event->auto_close){echo 'checked';}?> class="editable" /> Close event automatically after end date</label></p>
+                                    <input type="checkbox" name="auto_close" value="true" <?php if(isset($edit_event) && $event->auto_close){echo 'checked';}?> class="editable" /> Close event automatically after end date</label></p>
 							 <p class="check-pair">
 							     <input type="hidden" name="auto_publish" value="false" />
  							      <label>
-							    <input type="checkbox" name="auto_publish" value="true" <?php if(isset($edit_event) && $edit_event->auto_publish){echo 'checked';}?> class="editable" />
+							    <input type="checkbox" name="auto_publish" value="true" <?php if(isset($edit_event) && $event->auto_publish){echo 'checked';}?> class="editable" />
 							    Auto-publish submitted drivers
 							</label>
 							</p>
 							<p class="check-pair">  
 							    <input type="hidden" name="allow_anon" value="false" />
 							    <label>
-							    <input type="checkbox" name="allow_anon" value="true" <?php if(isset($edit_event) && $edit_event->allow_anon){echo 'checked';}?> class="editable" />
+							    <input type="checkbox" name="allow_anon" value="true" <?php if(isset($edit_event) && $event->allow_anon){echo 'checked';}?> class="editable" />
 							    Include voter survey
 							    </label>
 							</p>
@@ -87,7 +116,7 @@
 						<label class="align-left" for="password">
 							<span>Secret code</span>
 							<input type="hidden" name="private" id="private" value="false" />
-							<input class="textbox s editable" name="password" id="password" type="text" value="<?php if(isset($edit_event)){echo($edit_event->password);}?>" /> <?php if(isset($edit_event)&&$edit_event->private){echo("(private event)");}?>
+							<input class="textbox s editable" name="password" id="password" type="text" value="<?php if(isset($edit_event)){echo($event->password);}?>" /> <?php if(isset($edit_event)&&$event->private){echo("(private event)");}?>
 						</label>
 						
 						<!-- Buttons -->
@@ -100,33 +129,9 @@
 					</fieldset>
 				</form>
 			</div>
-		</div>
-		<div class="panel form">
-		    <h2 class="cap">Select Deck</h2>
-    		<div class="content">
-    		    <form id="deck" class="styled">
-    		    <fieldset>
-    		    <div style="overflow:hidden;"><?php //var_dump($data['decks']);?>
-    		    <?php foreach($data['decks'] as $deck){
-    		        echo('<div class="list-col"><label><input type="radio" name="deck_id" value="'.$deck->id.'"> '.$deck->name."</label></div>");
-    		    }
-    		    ?>
-    		    </div>
-    		    <br />
-    		    <!-- Buttons -->
-				<div>
-				    <input type="button" id="save-deck" class="button medium blue" value="Create event cards" />
-					<a href="index.php?do=admin" class="button medium">Cancel</a>
-				</div>
-				</fieldset>
-				</form>
-    		</div>
-    	</div>
-		    
-		</div>
-	</div>
-	
-	<!-- END FORM STYLING -->
+		</div>	
+    </div>
+	<!-- END FORM  -->
 	<div class="grid_1">
 		<div class="panel">
 		    <h2 class="cap">Lorem Ipsum</h2>
@@ -136,12 +141,96 @@
     			</div>
 		</div>
 	</div>
+	<div class="grid_3">
+        <div id="deck-panel" class="panel form" <?php if(!isset($event)){echo("style='display:none';");} ?>>
+        	<div class="content no-cap clearfix">
+    		    <form id="deck" class="styled">
+    		    <fieldset style="width:70%; float:left; padding-top:1px; padding-right:8px;">
+    		        <label class="align-left" for="deck_id" style="border:none">
+    		           <span>Add cards from Deck</span>
+    		        <select name="deck_id" id="deck-select">
+    		    <?php foreach($data['decks'] as $deck){
+    		        echo('<option value="'.$deck->id.'"> '.$deck->name."</option>");
+    		    }
+    		    ?>
+    		    	</select>
+    		    	</label>
+    		    <!-- Buttons -->
+				</fieldset>
+				 <span style="float:left;"><input type="button" id="save-deck" class="button small blue" value="Add cards" /></span>
+				</form>
+    		</div>
+        </div>
+    </div>
+	</div>
+	</div>
+    <div class="container_4">
+    <div class="grid-wrap">
+        <div class="grid_4 title-crumbs">
+        <h3>Event Cards</h3>
+         </div>
+        	<?php if(isset($event) && !empty($data['event_cards'])){
+    		    //var_dump($data['event_cards']);?>
+    		<div class="grid_4">
+			<div class="panel">
+			<div class="content no-cap">
+		    <table id="cards" class="styled"> 
+				<thead> 
+					<tr> 
+						<th>Name</th>
+						<th>steep</th>
+						<th>Owner</th>
+						<th class="{sorter: 'shortDate'}">Creation date</th>
+						<th class="options-row">Options</th> 
+					</tr> 
+				</thead> 
+				<tbody> 
+				    	<?php
+						    foreach ($data['event_cards'] as $card):
+						        //$owner_name = get_name($event->owner_user);
+						?>
+					<tr> 
+						<td><a href="index.php?do=event&id=<?php echo $card->id ?>"><?php echo $card->name ?></a></td> 
+						<td class="center <?php echo $data['steep'][$card->category_tag_id].'-50'; ?>"><?php echo $data['steep'][$card->category_tag_id]; ?></td> 
+						<td class="center"><?php //echo $owner_name ?></td> 
+						<td class="center"><?php echo(date( "d-m-Y", $card->ctime)); ?></td>
+						<td class="center options-row"><a class="icon-button edit" title="edit event" href="index.php?do=issue&id=<?php echo $card->id ?>">Edit</a></td> 
+					</tr>
+					<?php
+					    endforeach;
+					    unset($card);
+					?>
+				</tbody> 
+				
+			</table>
+			<div id="table-pager-1" class="pager">
+				<form action="">
+					<select class="pagesize">
+						<option selected="selected" value="10">10</option>
+						<option value="20">20</option>
+						<option value="30">30</option>
+						<option value="40">40</option>
+						<option value="50">50</option>
+						<option value="<?php echo count($data['event_cards']);?>">All</option>
+					</select>
+					<a class="button small first"><img src="assets/images/table_pager_first.png" alt="First" /></a>
+					<a class="button small prev"><img src="assets/images/table_pager_previous.png" alt="Previous" /></a>
+					<input type="text" class="pagedisplay" disabled="disabled" />
+					<a class="button small next"><img src="assets/images/table_pager_next.png" alt="Next" /></a>
+					<a class="button small last"><img src="assets/images/table_pager_last.png" alt="Last" /></a>
+				</form>
+			</div>
+			</div>
+		</div>
+			<?php	}?>
+		</div>
+    	</div>
  </div>
 </div>
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.0/themes/base/jquery-ui.css" type="text/css" media="all" />
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
 <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
-<?php if(!isset($edit_event_id)){$edit_event_id=0;} ?>
+<?php if(isset($event)){$edit_event_id=$event->id;}else{$edit_event_id=0;} ?>
 <script type="text/javascript">//<![CDATA[
     $(document).ready(function() {
     var formChanged = false;
@@ -187,14 +276,14 @@
     //if adding event edit_event == 0
     if (edit_event != 0){
         var action = 'controller=api&action=event/put&id='+edit_event;
-        var dstart = $.datepicker.parseDate('@', '<?php if(isset($edit_event)){echo($edit_event->start);}?>000');
-        var dend = $.datepicker.parseDate('@', '<?php if(isset($edit_event)){echo($edit_event->end);}?>000');
+        var dstart = $.datepicker.parseDate('@', '<?php if(isset($edit_event)){echo($event->start);}?>000');
+        var dend = $.datepicker.parseDate('@', '<?php if(isset($edit_event)){echo($event->end);}?>000');
         $('#startpicker').datepicker('setDate', dstart);
         milsToSecs($('#startpicker'),$('#start'));
         $('#endpicker').datepicker('setDate', dend);
          milsToSecs($('#endpicker'),$('#end'));
     } else{
-        var action = 'controller=api&action=event/post&owner='+owner;
+        var action = 'controller=api&action=event/post&eventtype=2&owner='+owner;
         $('#startpicker').datepicker('setDate', new Date());
         milsToSecs($('#startpicker'),$('#start'));
     }
@@ -246,6 +335,7 @@
               alert(data);
               if (saved_event.id){
                   edit_event = saved_event.id;
+                  $('#deck-panel').show();
                   displayAlertMessage("Event saved!");
               } else{
                    displayAlertMessage(data);
@@ -270,7 +360,6 @@
       return false;
     });
 });
-
    function handleFormChanged() {
         $(window).bind('beforeunload', confirmNavigation);
         $('#save').show();

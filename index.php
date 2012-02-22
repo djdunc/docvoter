@@ -75,7 +75,7 @@ switch($page) {
                 $event = callAPI("event/get?id=$event_id", array(), 'obj');
                 if (empty($event) || !$event->id) {
                     //404 error
-                    show_error("Sorry, the event you have requested does not exist.", "Make sure that you have the correct URL and that the owner hasn't deleted it. You can create your own deck <a href=\"index.php?do=event\">here</a>.");
+                    show_error("Sorry, the event you have requested does not exist.", "Make sure that you have the correct URL and that the owner hasn't deleted it. You can create your own event below:");
                 }
 
                 $event_cards = callAPI("card", array('event_id'=>$event_id), 'obj');
@@ -94,6 +94,7 @@ switch($page) {
     	    	}
     	    }
     	    $data['decks'] =  callAPI('deck?include_card_count=1', array(), 'obj');
+    	     $data['steep'] = $steep;
        	    view('event',$data);
         break;
     case 'card':
