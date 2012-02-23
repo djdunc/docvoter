@@ -1,9 +1,9 @@
 <?php
-if(isset($_SESSION['ref_page'])) { 
-    $ref_page = $_SESSION['ref_page'];
-} else {
-	$ref_page = DEFAULT_PAGE;
-}
+//if(isset($_SESSION['ref_page'])) { 
+//    $ref_page = $_SESSION['ref_page'];
+//} else {
+//	$ref_page = DEFAULT_PAGE;
+//}
 if(isset($_SESSION['ref_query'])) {
 	$ref_query = $_SESSION['ref_query'];
 }
@@ -12,9 +12,9 @@ if(isset($_SESSION['ref_query'])) {
      $from_reg = $_SESSION['from_reg'];
      unset($_SESSION['from_reg']);
  } else{ $from_reg="false";}
- if (isset($_SESSION['card_id'])){
-     $ref_page = $ref_page.'&card_id='.$_SESSION['card_id'];
- }
+// if (isset($_SESSION['card_id'])){
+//     $ref_page = $ref_page.'&card_id='.$_SESSION['card_id'];
+// }
 ?>
 <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
 <script type="text/javascript">

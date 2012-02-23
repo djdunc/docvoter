@@ -19,7 +19,7 @@ $data = array(
 	
 //set up ref page
 if($page != "login")
-    $_SESSION['ref_page'] = $page;
+//    $_SESSION['ref_page'] = $page;
     $_SESSION['ref_query'] = $_SERVER['QUERY_STRING'];
 
 //force login and check admin for admin pages (defined in functions->setup())
@@ -165,9 +165,31 @@ switch($page) {
     	    view('vote',$data);
         break;
     case 'about':
+    case 'home':
     default:
-    	    $data['events'] = callAPI("event", array('include_owner'=>true,'include_card_count'=>true), 'obj');
-            $_SESSION['ref_page'] = "";
-            view('about', $data);
+    	    $event_id = get('event_id');
+    	    if(isset($event_id)) {
+    	    	$event = callAPI("event/get?id=$event_id&include_owner=1", array(), 'obj');
+    	        if (!empty($event) && $event->id) {
+                    if(isset($event->owner_user)) {
+                    	$event_org_id = $event->owner_user->organisation_id;
+                    	if(isset($event_org_id) && $event_org_id) {
+                    		$event_org = callAPI("organisation/get?id=$event_org_id", array(), 'obj');
+                    		if(isset($event_org) && $event_org->id) {
+                    			$data['event_org'] = $event_org;
+                    		}
+                    	}
+                    }
+    	        	
+    	        	$data['event'] = $event;
+    	        	view('about', $data);
+                }
+    	    }
+    	    //if no event is set, do home
+    	    if(!isset($event) || !$event->id) {
+    	        $data['events'] = callAPI("event", array('include_owner'=>true,'include_card_count'=>true), 'obj');
+                //$_SESSION['ref_page'] = "";
+                view('home', $data);
+    	    }
 }
 ?>
