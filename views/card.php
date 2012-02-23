@@ -51,8 +51,7 @@
 						</label>
 						<!-- Buttons -->
 						<div class="non-label-section">
-						    
-						    <?php if(isset($card->owner_user->id)&&$card->owner_user->id==1) {?>
+						    <?php if(isset($card->owner_user->id)&&$card->owner_user->id==1&&!is('super')) {?>
 						        <p class="button medium disabled" id="fakesave">Only superadmins can edit this</p>
 						    <?php  }else{?>
 						        <input type="button" id="save" class="button medium blue" value="Save" />

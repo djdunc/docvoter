@@ -313,6 +313,38 @@ ul#main-navigation {
 	display: block;
 }
 
+#category-nav, #category-nav li {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+#category-nav ul {
+	margin: 0 20px;
+	padding: 10px 0;
+}
+
+#category-nav li {
+	display: inline-block;
+	padding: 0 5px 0 0;
+}
+
+#category-nav li a {
+	color: #999;
+	text-decoration: none;
+	display: block;
+	font-size: 15px;
+	line-height: 20px;
+	border: 1px solid #999;
+	padding: 4px 6px 6px;
+	font-weight: bold;
+}
+#category-nav li a:hover, #category-nav li a.active{
+	color: #fff;
+	background-color: #000;
+	border-color: #000;
+}
+
 #page-heading {
 	color: #535353;
 	padding: 15px 0 10px;
@@ -726,6 +758,31 @@ div.pager .table-options {
 }
 .panel table .icon-button.link {
 	background: url('../images/admin-icons.png') no-repeat -63px 0;
+}
+.panel.tagcloud{
+	padding-top: 20px;
+}
+
+#vote-cloud {
+	margin: 0;
+	text-align: center;
+	vertical-align: middle;
+	padding: 30px 0;
+	font-size: 2em;
+	word-spacing: -1px;
+	line-height: 1.1em;
+}
+
+#vote-cloud li {
+	display: inline-block;
+	padding: 0;
+	margin: 0 1em 0 0;
+}
+
+#vote-cloud li a {
+	text-decoration: none;
+	display: block;
+	white-space: nowrap;
 }
 
 /* TABS																			*/
@@ -1688,6 +1745,11 @@ label.file-holder {
 .political-b {
 	color: #EC2027!important;
 	
+}
+
+
+a.social-b:hover,a.technological-b:hover,a.economic-b:hover,a.environmental-b:hover,a.political-b:hover{
+	color: #000!important;
 }
 
 .social-50,.technological-50,.economic-50,.environmental-50,.political-50{

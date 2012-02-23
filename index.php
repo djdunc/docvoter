@@ -147,13 +147,15 @@ switch($page) {
             view('card',$data);
         break;
     case 'vote':
-            $event_id = get('event_id');
+            $event_id = get('event');
             if (isset($event_id)) {
                 $event = callAPI("event/get?id=$event_id&include_owner=1", array(), 'obj');
                 if (empty($event) || !$event->id) {
                     //404 error
-                    show_error("Sorry, the event you have requested does not exist.", "Make sure that you have the correct URL and that the owner hasn't deleted it. You can create your own event below:");
+                    show_error("Sorry, the event you have requested does not exist.", "Make sure that you have the correct URL and that the owner hasn't deleted it.");
                 }
+                $collection = callAPI('collection?id='.$event->collection_id);
+                //var_dump($collection);
 
                 $event_cards = callAPI("card", array('event_id'=>$event_id), 'obj');
                 $votes = callAPI("vote", array('event_id'=>$event_id), 'obj');
@@ -167,7 +169,7 @@ switch($page) {
     case 'about':
     case 'home':
     default:
-    	    $event_id = get('event_id');
+    	    $event_id = get('event');
     	    if(isset($event_id)) {
     	    	$event = callAPI("event/get?id=$event_id&include_owner=1", array(), 'obj');
     	        if (!empty($event) && $event->id) {

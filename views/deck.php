@@ -1,3 +1,9 @@
+<?php if(is('super') || is('owner', $edit_deck )) {
+    $editable = true;
+}else{
+    $editable = false;
+}?>
+
 <!-- BEGIN PAGE BREADCRUMBS/TITLE -->
 <div class="container_4">
 	<div id="page-heading" class="clearfix">
@@ -34,9 +40,13 @@
 						</label>
 						<!-- Buttons -->
 						<div class="non-label-section">
-						    <p class="button medium disabled" id="fakesave">Save</p>
+						    <?php if($editable) {?>
+						     <p class="button medium disabled" id="fakesave">Save</p>
 						    <input type="button" id="save" class="button medium blue" value="Save" style="display:none" />
 							<a href="index.php?do=admin" class="button medium">Cancel</a>
+							<?php  }else{?>
+						    <p class="button medium disabled">Only owner can edit</p>
+						    <?php }?>
 						</div>
 					
 					</fieldset>
@@ -75,16 +85,14 @@
 <script src="assets/js/chosen/chosen.jquery.js" type="text/javascript"></script>
 <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
 <?php if(!isset($edit_deck_id)){$edit_deck_id=0;} ?>
-<script type="text/javascript">//<![CDATA[
-
-                                          
+<script type="text/javascript">//<![CDATA[                                     
     $(document).ready(function() {
     var formChanged = false;
     var baseurl = "<?php echo BASE_URL; ?>";
     var edit_deck = <?php echo($edit_deck_id);?>;
     var owner = <?php echo $_SESSION['user']->id;?>;
     var deck_card_ids = "<?php echo $deck_card_ids;?>";
-
+    var editable = "<?php echo $editable; ?>";
     //if adding deck edit_deck == 0
     if (edit_deck != 0){
         var action = 'controller=api&action=deck/put&id='+edit_deck;
@@ -141,8 +149,14 @@
                     var cards = "";
                     for(var index in data) {
                     	var id = data[index].id;
-                    	var checked = deck_card_ids.match(new RegExp("^"+id+",|,"+id+",|,"+id+"$")) ? "checked='checked'" : "";
-                        cards += "<span class='list-col'><label><input type='checkbox' id='"+id+"' value='"+data[index].name+"' "+checked+" /> "+data[index].name+"</label></span>";
+                    	if (editable){
+                    	    var checked = deck_card_ids.match(new RegExp("^"+id+",|,"+id+",|,"+id+"$")) ? "checked='checked'" : "";
+                            cards += "<span class='list-col'><label><input type='checkbox' id='"+id+"' value='"+data[index].name+"' "+checked+" /> "+data[index].name+"</label></span>";
+                    	} else{
+                    	    if (deck_card_ids.match(new RegExp("^"+id+",|,"+id+",|,"+id+"$")) ){
+                    	        cards += "<span class='list-col'>"+data[index].name+"</span>";
+                    	    }
+                    	}
                     }
                     //replace lod placeholder with markup 
                     $placeholder.replaceWith("<div class='cards'>"+cards+"</div>");

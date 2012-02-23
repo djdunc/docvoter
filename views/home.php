@@ -19,7 +19,7 @@
     		<div class="grid_4">
     		       <ul>
     		           <?php foreach ($data['events'] as $event) { ?>
-    		          <li><a href="<?php echo (BASE_URL.'index.php?do=vote&event_id='.$event->id);?>"><?php echo($event->name);?></a></li>
+    		          <li><a href="<?php echo (BASE_URL.'index.php?event='.$event->id);?>"><?php echo($event->name);?></a></li>
     		          <?php }?>
     		       </ul>
     		</div>

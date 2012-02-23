@@ -96,14 +96,14 @@
 		   //var_dump($data['event']);
 		    if(!in_array($page, $admin_pages) && isset($data['event'])) {?>
 		    <h1 class="grid_2">
-		        <a href="<?php echo BASE_URL;?>index.php?event_id=<?php echo $data['event']->id; ?>">
+		        <a href="<?php echo BASE_URL;?>index.php?event=<?php echo $data['event']->id; ?>">
 		            <span class="org"><?php if(isset($data['event_org']))echo $data['event_org']?>&nbsp;</span>
 			        <?php echo $data['event']->name; ?>
 			    </a>
 		    </h1>
 	        <div class="grid_2">
 	            <ul id="main-navigation">
-                	<li><a href="index.php?event_id=<?php echo $data['event']->id; ?>"<?php if($page == 'about'){ echo(" class=\"active\"");} ?>>about</a></li><li><a href="index.php?do=vote&event_id=<?php echo $data['event']->id; ?>"<?php if($page == 'vote'){ echo(" class=\"active\"");} ?>>vote</a></li><li class="last"><a href="index.php"<?php if($page == 'results'){ echo(" class=\"active\"");} ?>>results</a></li>
+                	<li><a href="index.php?event=<?php echo $data['event']->id; ?>"<?php if($page == 'about'){ echo(" class=\"active\"");} ?>>about</a></li><li><a href="index.php?do=vote&event=<?php echo $data['event']->id; ?>"<?php if($page == 'vote'){ echo(" class=\"active\"");} ?>>vote</a></li><li class="last"><a href="index.php?do=vote&event=<?php echo $data['event']->id; ?>"<?php if($page == 'results'){ echo(" class=\"active\"");} ?>>results</a></li>
                 </ul>
 		    </div>
 		<?php //admin nav

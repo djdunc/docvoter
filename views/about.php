@@ -7,13 +7,27 @@ $(document).ready(function() {
 </script>
 <!-- BEGIN HOMEPAGE -->
 <div class="container_4">
-    <div id="page-heading" class="clearfix">
-    	<div class="page-wrap">
-		<h2>About</h2>
-    </div>
-</div>
+	    <div class="grid-wrap m-top" class="clearfix">
+    		<div class="grid_3">
+    		       <?php echo nl2br($event->description) ?>
+    		</div>
+    		<div class="grid_1 align_right">
+    				
+    		</div>
+	    </div>
 </div>
 <div class="container_4">
-	[ABOUT]
+	    <div class="grid-wrap m-top" class="clearfix">
+    		<div class="grid_3">
+    		    <div class="panel">
+    		        <div class="content no-cap">
+    		       Survey here
+    		      </div>
+    		     </div>
+    		</div>
+    		<div class="grid_1 align_right">
+    				
+    		</div>
+	    </div>
 </div>
 <!-- END CONTAINER -->
