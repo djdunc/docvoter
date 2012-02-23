@@ -43,8 +43,14 @@
     					<label class="align-left" for="collection_id">
     					    
 							<span>Driver categories</span>
+							
 							<select class="chosen" name="collection_id">  
-							    <?php foreach ($collections as $key=>$collection){ echo('<option value='.$key.'>'.$collection['name'].'</option>');} //TODO add collections under once is selecte?>
+							    <?php foreach ($collections as $key=>$collection){ 
+							        $sel = "";
+							        if ($key == $event->collection_id){
+							            $sel = " SELECTED";
+							        }
+							        echo('<option value='.$key.$sel.'>'.$collection['name'].'</option>');}?>
 							</select>
 						</label>
 						<!-- date -->
@@ -88,9 +94,12 @@
 						
 						<!-- Buttons -->
 						<div class="non-label-section">
-						    <p class="button medium disabled" id="fakesave">Save</p>
-						    <input type="button" id="save" class="button medium blue" value="Save" style="display:none" />
-							<a href="index.php?do=events" class="button medium">Cancel</a>
+						    <?php if(is('super') || is('owner', $event )) {?>
+						    <input type="button" id="save" class="button medium blue" value="Save" />
+						    <a href="index.php?do=events" class="button medium">Cancel</a>
+						    <?php  }else{?>
+						        <p class="button medium disabled" id="fakesave">Only owner can edit</p>
+						    <?php }?>
 						</div>
 					
 					</fieldset>
@@ -334,7 +343,7 @@ $(document).ready(function() {
           $(window).unbind("beforeunload");
           $.post('includes/callAPI.php', action+'&'+$("#event").serialize(), function(data) {
               var saved_event = eval(jQuery.parseJSON(data));
-              alert(data);
+              alert($("#event").serialize());
               if (saved_event.id){
                   edit_event = saved_event.id;
                   $('#deck-panel').show();
@@ -364,8 +373,6 @@ $(document).ready(function() {
 });
    function handleFormChanged() {
         $(window).bind('beforeunload', confirmNavigation);
-        $('#save').show();
-        $('#fakesave').hide();
         formChanged = true;
    }
    function confirmNavigation() {

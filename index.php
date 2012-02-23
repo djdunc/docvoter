@@ -147,7 +147,7 @@ switch($page) {
             view('card',$data);
         break;
     case 'vote':
-            $event_id = get('id');
+            $event_id = get('event_id');
             if (isset($event_id)) {
                 $event = callAPI("event/get?id=$event_id&include_owner=1", array(), 'obj');
                 if (empty($event) || !$event->id) {

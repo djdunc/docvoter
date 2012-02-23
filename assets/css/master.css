@@ -420,6 +420,7 @@ ul#main-navigation {
 	display: none;
 	border-bottom: 1px solid #ebebeb;
 	padding: .5em;
+	overflow: hidden;
 }
 
 .alert-wrapper.warning .alert-text {

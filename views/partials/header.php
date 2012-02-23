@@ -84,25 +84,30 @@
 		</div>
 		</div>
 	</div>	
-<!-- BEGIN HEADER -->	
+	
+<?php  //if we are not on vote home 
+ if($page!='home'){?>
 <div id="header">
+    <!-- BEGIN HEADER -->	
     <div class="container_4">
 		<div class="grid-wrap clearfix">
 		<?php
-		    //if we are not on admin
-		    if(!in_array($page, $admin_pages)) {
-		?>
+		    //if we are not on admin and have event
+		   //var_dump($data['event']);
+		    if(!in_array($page, $admin_pages) && isset($data['event'])) {?>
 		    <h1 class="grid_2">
-		        <a href="<?php echo BASE_URL;?>">
-		            <span class="org"><?php if(isset($_SESSION['org']))echo $_SESSION['org']?></span>
-			        <?php if(isset($_SESSION['event']))echo $_SESSION['event_name']; ?>
+		        <a href="<?php echo BASE_URL;?>index.php?event_id=<?php echo $data['event']->id; ?>">
+		            <span class="org"><?php if(isset($data['event_org']))echo $data['event_org']?>&nbsp;</span>
+			        <?php echo $data['event']->name; ?>
 			    </a>
 		    </h1>
 	        <div class="grid_2">
-	            <?php include_once(VIEW_PATH.'partials/main_navigation.php'); ?>
+	            <ul id="main-navigation">
+                	<li><a href="index.php?event_id=<?php echo $data['event']->id; ?>"<?php if($page == 'about'){ echo(" class=\"active\"");} ?>>about</a></li><li><a href="index.php?do=vote&event_id=<?php echo $data['event']->id; ?>"<?php if($page == 'vote'){ echo(" class=\"active\"");} ?>>vote</a></li><li class="last"><a href="index.php"<?php if($page == 'results'){ echo(" class=\"active\"");} ?>>results</a></li>
+                </ul>
 		    </div>
 		<?php //admin nav
-		    } else {
+		    } elseif(in_array($page, $admin_pages)) {
 		?>
 		    <h1 class="grid_2"><span class="org"><?php if(isset($_SESSION['user'])) echo $_SESSION['user_name']; ?>&nbsp;</span><a href="<?php echo BASE_URL;?>index.php?do=events">Dashboard</a>
 	  		</h1>
@@ -117,3 +122,4 @@
 	<!-- END HEADER -->
 </div>
 <!-- END CONTAINER_4 - HEADER-WRAP -->
+<?php }?>

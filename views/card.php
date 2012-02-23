@@ -1,10 +1,10 @@
-<?php var_dump($card)?>
+<?php //var_dump($card)?>
 <!-- BEGIN PAGE BREADCRUMBS/TITLE -->
 <div class="container_4">
 	<div id="page-heading" class="clearfix">
 	    <div class="grid-wrap">
     		<div class="grid_2 title-crumbs">
-    		       <h2><?php echo $event->name;?></h2>
+    		       <h2>Event: <em><?php echo $event->name;?></em></h2>
     		       <h3>Card details</h3>
     		</div>
     		<div class="grid_2 align_right">
@@ -32,12 +32,17 @@
     					<label class="align-left" for="category_tag_id">
 							<span>Category (<?php echo $data['event_categories']['name'];?>)</span>
 							<select class="chosen" name="category_tag_id" id="cat_id">  
-							    <?php foreach ($data['event_categories']['categories'] as $key=>$cat){ echo('<option value='.$key.'>'.$cat.'</option>');} //TODO add collections under once is selecte?>
+							    <?php foreach ($data['event_categories']['categories'] as $key=>$cat){ 
+							        $sel = "";
+							        if ($key == $card->category_tag_id){
+							            $sel = " SELECTED";
+							        }
+							        echo('<option value='.$key.$sel.'>'.$cat.'</option>');} //TODO add collections under once is selecte?>
 							</select>
 						</label>
 						<label class="align-left">
 							<span>Question<strong class="red"></strong></span>
-							<input class="textbox l editable" name="question" id="quiestion" type="text" value="<?php if(isset($card->name)){echo($card->name);}?>" />
+							<input class="textbox l editable" name="question" id="quiestion" type="text" value="<?php if(isset($card->question)){echo($card->question);}?>" />
 						</label>
 						<!-- Text Area -->
 						<label class="align-left" for="textArea">
@@ -46,8 +51,13 @@
 						</label>
 						<!-- Buttons -->
 						<div class="non-label-section">
-						    <input type="button" id="save" class="button medium blue" value="Save" />
-							<a href="index.php?do=admin" class="button medium">Cancel</a>
+						    
+						    <?php if(isset($card->owner_user->id)&&$card->owner_user->id==1) {?>
+						        <p class="button medium disabled" id="fakesave">Only superadmins can edit this</p>
+						    <?php  }else{?>
+						        <input type="button" id="save" class="button medium blue" value="Save" />
+    						    <a href="index.php?do=event&id=<?php echo($event->id);?>" class="button medium">Cancel</a>
+						    <?php }?>
 						</div>
 					
 					</fieldset>
@@ -115,16 +125,21 @@
           }
           $.post('includes/callAPI.php', action+'&'+$("#card").find('input[name!=category_tag_id]').serialize(), function(data) {
                   var saved_card = eval(jQuery.parseJSON(data));
-                  if (saved_card.id && add_event){
-                      //alert(event_action+'&card_id='+saved_card.id+'&category_tag_id='+$('#cat_id option:selected').val());
-                       $.post('includes/callAPI.php', event_action+'&card_id='+saved_card.id+'&category_tag_id='+$('#cat_id option:selected').val(), function(data) {
-                             var saved_eventcards = eval(jQuery.parseJSON(data));
-                             if (saved_eventcards.event_id){
-                                displayAlertMessage("Card saved and added to event!");
-                             } else{
-                                 displayAlertMessage(data);
-                             }
-                         }).error(function() { alert("There was an error adding your card to this event, please try again."); })
+                  if (saved_card.id){
+                      if (!add_event){
+                          displayAlertMessage("Card updated!");
+                      } else{
+                         //alert(event_action+'&card_id='+saved_card.id+'&category_tag_id='+$('#cat_id option:selected').val());
+                        $.post('includes/callAPI.php', event_action+'&card_id='+saved_card.id+'&category_tag_id='+$('#cat_id option:selected').val(), function(data) {
+                               var saved_eventcards = eval(jQuery.parseJSON(data));
+                               if (saved_eventcards.event_id){
+                                  displayAlertMessage("Card saved and added to event!");
+                               } else{
+                                   displayAlertMessage(data);
+                               }
+                           }).error(function() { alert("There was an error adding your card to this event, please try again."); })
+                      }
+                      
                       
                   } else{
                        displayAlertMessage(data);
