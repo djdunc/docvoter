@@ -29,30 +29,61 @@ $request_url = $action;
 
 //if POST|PUT|DELETE, must check privileges
 if(preg_match("/post|put|delete\/*/i",$action)) {
+	
 	if(!is('user')) {
     //must be logged in for POST|PUT|DELETE
         echo "Not logged in; can't POST|PUT|DELETE";
         die;
 	}
-	
-	if(!is('admin')) {
-	//if not admin, can only POST on card|tag|cardtags
-	    $post_allowed = array("card","tag","cardtags");
-        //get resource
-        $resource = substr($action, 0, strpos($action, "/"));
-        if(!in_array($resource,$post_allowed)) {
-        	echo "Must be Admin to do that";
-            die;
-        }
-        
-        if(!preg_match("/post/i",$action)) {
-        //for PUT|DELETE, check ownership of object
-            $object = callAPI($resource,array("id"=>$options['id']),'obj');
-            if(!is('owner',$object)) {
-            	echo "That's not yours. Must be Admin to do that";
-                die;
+
+	if(!is('super')) {
+
+		//get method
+	    $matches = array();
+	    preg_match_all("/(post|put|delete)/i",$action,$matches);
+	    if(isset($matches[1])) { $method = $matches[1]; }
+	    
+	    //get resource
+	    $resource = substr($action, 0, strpos($action, "/"));
+	    
+	    if(is('admin')) {
+	    	//restrict PUT|DELETE to own
+	    	if(preg_match("/put|delete/i",$action)) {
+	    	    $object = callAPI($resource,array("id"=>$options['id']),'obj');
+                if(!is('owner',$object)) {
+                    echo "That's not yours. Must be Super Admin to do that";
+                    die;
+                }
+	    	}
+	    } else { //user
+	    	//restrict POST to card, tag, cardtag and vote
+	    	if(preg_match("/post/i",$action)) {
+                $allowed = array("card","tag","cardtags","vote");
+		    	//get resource
+	            if(!in_array($resource,$allowed)) {
+	                echo "Must be Admin to do that";
+	                die;
+	            }
+	    	}
+	    	//restrict PUT to card and own
+	        if(preg_match("/put/i",$action)) {
+	        	$allowed = array("card");
+                $object = callAPI($resource,array("id"=>$options['id']),'obj');
+                if(!in_array($resource,$allowed) || !is('owner',$object)) {
+                    echo "That's not yours. Must be Super Admin to do that";
+                    die;
+                }
             }
-        }
+            //restrict DELETE to cardtag and own
+	        if(preg_match("/delete/i",$action)) {
+                $allowed = array("cardtags");
+                $object = callAPI($resource,array("id"=>$options['id']),'obj');
+                if(!in_array($resource,$allowed) || !is('owner',$object)) {
+                    echo "That's not yours. Must be Super Admin to do that";
+                    die;
+                }
+            }
+	    }
 	}
 }
 

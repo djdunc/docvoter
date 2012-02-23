@@ -96,7 +96,7 @@ $(document).ready(function() {
 		<div class="panel form">
 		    <span class="message"></span>
 			<div class="content no-cap">
-			    <form method="post" action="index.php?do=login&ref_page=<?php echo $ref_page; ?>" name="loginform" id="loginform" class="styled login">   
+			    <form method="post" action="index.php?do=login&ref_query=<?php echo $ref_query; ?>" name="loginform" id="loginform" class="styled login">   
 			    <fieldset>
     			 <!-- Text Field -->
                     <!-- Text Field -->
