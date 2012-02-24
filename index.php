@@ -135,7 +135,11 @@ switch($page) {
             }
     	    $card_id = get('id');
             if (isset($card_id)) {
-                $card = callAPI("card/get?id=$card_id", array('include_owner'=>1), 'obj');
+            	$params = array('include_owner'=>1);
+            	if(isset($event)) {
+            		$params['event_id']=$event->id();
+            	}
+                $card = callAPI("card/get?id=$card_id", $params, 'obj');
                 if (empty($card) || !$card->id) {
                     //404 error
                     show_error("Sorry, the card you have requested does not exist.", "Make sure that you have the correct URL and that the owner hasn't deleted it. You can create your own card <a href=\"index.php?do=card\">here</a>.");
@@ -147,6 +151,7 @@ switch($page) {
             view('card',$data);
         break;
     case 'vote':
+    	    allow('user');
             $event_id = get('event');
             if (isset($event_id)) {
                 $event = callAPI("event/get?id=$event_id&include_owner=1", array(), 'obj');
@@ -201,7 +206,11 @@ switch($page) {
     	    }
     	    //if no event is set, do home
     	    if(!isset($event) || !$event->id) {
-    	        $data['events'] = callAPI("event", array('include_owner'=>true,'include_card_count'=>true,'type'=>2), 'obj');
+    	        $events = callAPI("event", array('include_owner'=>true,'include_card_count'=>true,'type'=>2), 'obj');
+    	        if(!is('admin')) {
+    	        	//filter out events starting after today
+    	        }
+    	        $data['events'] = $events;
                 //$_SESSION['ref_page'] = "";
                 view('home', $data);
     	    }
