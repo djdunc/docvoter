@@ -163,6 +163,7 @@ switch($page) {
                 $data['event'] = $event;
                 $data['event_cards'] = $event_cards;
                 $data['votes'] = $votes;
+                $data['steep'] = $steep;
             }
     	    view('vote',$data);
         break;

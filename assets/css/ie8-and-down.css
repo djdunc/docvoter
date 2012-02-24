@@ -4,7 +4,7 @@
 #add-card .panel #steep p{
 	-ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
 }
-ul#main-navigation li{
+ul#main-navigation li,ul#subpages li,ul#category-nav li,.panel table .icon-button, #vote-cloud li,.card-options .icon-button,.card-options .counter,.gallery-item .icon-button,.list-col,button, .button{
     zoom: 1;
     *display: inline;
 }

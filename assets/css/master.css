@@ -335,7 +335,7 @@ ul#main-navigation {
 	display: block;
 	font-size: 15px;
 	line-height: 20px;
-	border: 1px solid #999;
+	border: 1px solid #fff;
 	padding: 4px 6px 6px;
 	font-weight: bold;
 }
@@ -767,22 +767,24 @@ div.pager .table-options {
 	margin: 0;
 	text-align: center;
 	vertical-align: middle;
-	padding: 30px 0;
-	font-size: 2em;
+	padding: 30px 20px;
+	font-size: 1.5em;
 	word-spacing: -1px;
 	line-height: 1.1em;
 }
 
 #vote-cloud li {
 	display: inline-block;
-	padding: 0;
-	margin: 0 1em 0 0;
+	margin: 0 0 .3em;
 }
 
 #vote-cloud li a {
 	text-decoration: none;
 	display: block;
 	white-space: nowrap;
+	font-weight: bold;
+	border: 1px solid #ebebeb;
+	padding: .2em .5em .4em;
 }
 
 /* TABS																			*/
@@ -1350,9 +1352,10 @@ text-decoration:none; margin: 0 6px 0 0; padding: 7px 9px; display:inline-block;
 }
 
 .button.large {
-	font-size: 16px;
-	line-height: 16px;
-	padding: 11px 15px;
+	font-size: 15px;
+	line-height: 15px;
+	padding: 6px 12px 9px;
+	-moz-border-radius:18px; -webkit-border-radius:18px; border-radius:18px;
 }.button:hover, .button.hover { background:#606a6d; }
 
 .button,button.grey {
