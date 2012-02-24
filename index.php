@@ -72,7 +72,7 @@ switch($page) {
             view('deck', $data);
         break;
     case 'events':
-    	    $params = array('include_owner'=>true,'include_card_count'=>true);
+    	    $params = array('include_owner'=>true,'include_card_count'=>true,'type'=>2);
             if(!is('super')) $params['owner'] = $_SESSION['user']->id;
     	    $data['events'] = callAPI("event", $params, 'obj');
             view('events',$data);
@@ -154,6 +154,17 @@ switch($page) {
                     //404 error
                     show_error("Sorry, the event you have requested does not exist.", "Make sure that you have the correct URL and that the owner hasn't deleted it.");
                 }
+                
+                if(isset($event->owner_user)) {
+                    $event_org_id = $event->owner_user->organisation_id;
+                    if(isset($event_org_id) && $event_org_id) {
+                        $event_org = callAPI("organisation/get?id=$event_org_id", array(), 'obj');
+                        if(isset($event_org) && $event_org->id) {
+                            $data['event_org'] = $event_org;
+                        }
+                    }
+                }
+                
                 $collection = callAPI('collection?id='.$event->collection_id);
                 //var_dump($collection);
 
@@ -190,7 +201,7 @@ switch($page) {
     	    }
     	    //if no event is set, do home
     	    if(!isset($event) || !$event->id) {
-    	        $data['events'] = callAPI("event", array('include_owner'=>true,'include_card_count'=>true), 'obj');
+    	        $data['events'] = callAPI("event", array('include_owner'=>true,'include_card_count'=>true,'type'=>2), 'obj');
                 //$_SESSION['ref_page'] = "";
                 view('home', $data);
     	    }
