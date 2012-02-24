@@ -137,7 +137,7 @@ switch($page) {
             if (isset($card_id)) {
             	$params = array('include_owner'=>1);
             	if(isset($event)) {
-            		$params['event_id']=$event->id();
+            		$params['event_id']=$event->id;
             	}
                 $card = callAPI("card/get?id=$card_id", $params, 'obj');
                 if (empty($card) || !$card->id) {
