@@ -7,7 +7,7 @@
     		       <h2>Event details</h2>
     		</div>
     		<div class="grid_2 align_right">
-    				<a href="index.php?do=events" class="button medium">Back to events list</a>
+    				<a href="index.php?event=<?php echo($event->id)?>" class="button medium blue">View event</a> <a href="index.php?do=events" class="button medium">Back to events list</a>
     		</div>
 	    </div>
     </div>
@@ -170,7 +170,8 @@
 						?>
 					<tr> 
 						<td><a href="index.php?do=card&id=<?php echo $card->id ?>&event_id=<?php echo $event->id;?>"><?php echo $card->name ?></a></td> 
-						<td class="center <?php echo $data['steep'][$card->category_tag_id].'-b'; ?>"><?php echo $data['steep'][$card->category_tag_id]; ?></td> 
+						<!-- <td class="center <?php //echo $data['steep'][$card->category_tag_id].'-b'; ?>"><?php //echo $data['steep'][$card->category_tag_id]; ?></td>  -->
+						<td class="center <?php if ($event->collection_id==1){echo $data['steep'][$card->category_tag_id].'-b';} ?>"><?php echo $collections[$event->collection_id][$card->category_tag_id]; ?></td>
 						<td class="center"><?php echo $owner_name ?></td> 
 						<td class="center"><?php echo(date( "d-m-Y", $card->ctime)); ?></td>
 						<td class="center options-row"><a class="icon-button edit" title="edit event" href="index.php?do=issue&id=<?php echo $card->id ?>">Edit</a></td> 
@@ -290,11 +291,11 @@ $(document).ready(function() {
         var action = 'controller=api&action=event/put&id='+edit_event;
         var dstart = '<?php if(isset($event)){echo($event->start);}?>';
         var dend = '<?php if(isset($event)){echo($event->end);}?>';
-        if (dstart!='0'){
+        if (dstart!='0'&&dstart!=''){
             $('#startpicker').datepicker('setDate', $.datepicker.parseDate('@',dstart+'000'));
             milsToSecs($('#startpicker'),$('#start'));
         }
-        if (dend!='0'){
+        if (dend!='0'&&dend!=''){
             $('#endpicker').datepicker('setDate', $.datepicker.parseDate('@',dend+'000'));
             milsToSecs($('#endpicker'),$('#end'));
         }  
@@ -323,6 +324,14 @@ $(document).ready(function() {
 
     $('#event .editable').bind('change paste', function() {
          handleFormChanged();
+    });
+    $('#startpicker').bind('change paste', function() {
+         milsToSecs($(this),$('#start'));
+          handleFormChanged();
+    });
+    $('#endpicker').bind('change paste', function() {
+         milsToSecs($(this),$('#end'));
+          handleFormChanged();
     });
     
     
