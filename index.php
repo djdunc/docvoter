@@ -209,6 +209,12 @@ switch($page) {
     	        $events = callAPI("event", array('include_owner'=>true,'include_card_count'=>true,'type'=>2), 'obj');
     	        if(!is('admin')) {
     	        	//filter out events starting after today
+	    	        $count = count($events);                
+	                while($count--) {
+	                    if($events[$count]->start > time()) {
+	                        unset($events[$count]);
+	                    }
+	                }    	        	
     	        }
     	        $data['events'] = $events;
                 //$_SESSION['ref_page'] = "";

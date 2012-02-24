@@ -45,7 +45,6 @@ function login($data=null) {
 function allow($allowed,$error_params=array('Sorry,','You must be an admin to do that..','403')) {
 	if(!$allowed) {
 		show_error($error_params[0],$error_params[1],$error_params[2]);
-		require_once(VIEW_PATH.'partials/footer.php');
 		die;
 	}
 	//if it gets here, action is allowed and program flow is continued
@@ -140,6 +139,8 @@ function show_error($h1, $body, $type="404"){
     }
     require_once(VIEW_PATH.'partials/header.php');
     require_once(VIEW_PATH.'404.php');
+    require_once(VIEW_PATH.'partials/footer.php');
+    die;
 }
 
 /**
