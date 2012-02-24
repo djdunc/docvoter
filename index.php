@@ -170,8 +170,7 @@ switch($page) {
                     }
                 }
                 
-                $collection = callAPI('collection?id='.$event->collection_id);
-                //var_dump($collection);
+                $data['collection'] = callAPI('collection?id='.$event->collection_id);
 
                 $event_cards = callAPI("card", array('event_id'=>$event_id), 'obj');
                 $votes = callAPI("vote", array('event_id'=>$event_id), 'obj');
