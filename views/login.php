@@ -6,6 +6,8 @@
 //}
 if(isset($_SESSION['ref_query'])) {
 	$ref_query = $_SESSION['ref_query'];
+} else {
+	$ref_query = null;
 }
 
  if (isset($_SESSION['from_reg'])){
