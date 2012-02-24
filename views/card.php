@@ -120,6 +120,8 @@
           $(window).unbind("beforeunload");  
           if (collection == 'steep'){
               action = action+'&category_id='+$('#cat_id option:selected').val();
+          } else{
+              action = action+'&category_id=6';
           }
           $.post('includes/callAPI.php', action+'&'+$("#card").find('input[name!=category_tag_id]').serialize(), function(data) {
                   var saved_card = eval(jQuery.parseJSON(data));
