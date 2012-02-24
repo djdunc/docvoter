@@ -1,10 +1,13 @@
-<?php //var_dump($event);?>
+<?php var_dump();?>
 <div class="container_4">
 	<div id="page-heading" class="clearfix">
 	    <div class="grid-wrap">
     		<div class="grid_3">
     		       <ul id="category-nav">
-    		           <li><a class="active" href="">top 50</a></li><li><a href="">social</a></li><li><a href="">technological</a></li>
+    		           <li><a class="active" href="">top 50</a></li>
+    		           <?php foreach ($collection->categories as $cat ){?>
+    		               <li><a href=""><?php $cat->name; ?></a></li>
+    		           <?php } ?>
     		       </ul>
     		</div>
     		<div class="grid_1 align_right">

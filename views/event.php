@@ -118,8 +118,8 @@
 		</div>
 	</div>
 
-	<div class="grid_3" id="deck-panel" <?php if(isset($event) && !empty($data['event_cards'])){echo("style='display:none'");}?>>
-        <div class="panel" <?php if(!isset($event)){echo("style='display:none;'");} ?>>
+	<div class="grid_3" id="deck-panel" <?php if(!isset($event) || !empty($data['event_cards'])){echo("style='display:none'");}?>>
+        <div class="panel">
         	<div class="content no-cap clearfix">
     		    <form id="deck">
     		    <fieldset>
@@ -341,7 +341,6 @@ $(document).ready(function() {
          $('#private').val('false');
      }
     });
-    
     //bind save button
     $("#save").click(function() {
       if($("#event").valid()){
@@ -351,6 +350,7 @@ $(document).ready(function() {
               if (saved_event.id){
                   edit_event = saved_event.id;
                   $('#deck-panel').show();
+                  window.location.hash = '#deck-panel';
                   displayAlertMessage("Event saved!");
               } else{
                    displayAlertMessage(data);
