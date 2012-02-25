@@ -155,6 +155,33 @@ function get($key) {
 	}
 }
 
+function top($count, $votes) {
+	$ids = array();
+	if(!is_array($votes)) return $ids;
+	
+	//make nice array out of votes
+	foreach($votes as $vote) {
+		$vote_array[$vote->category_tag_id][$vote->card_id] = $vote->total;
+	}
+	
+	$categories = array_keys($vote_array);
+	$category_count = count($categories);
+	
+	while($category_count--) {
+		asort($vote_array[$categories[$category_count]]);
+	}
+	$index = 0;
+	$category_count = count($categories);
+	while($count--) {
+		array_push($ids,array_pop(array_keys($vote_array[$categories[$index]])));
+		array_pop($vote_array[$categories[$index]]);
+		$index++;
+		if($index == $category_count)$index = 0;
+	}
+	
+	return $ids;
+}
+
 /**
  * Used to retrive nice name from user object
  * @param PHPFrame_User $owner
