@@ -170,14 +170,14 @@ switch($page) {
                     }
                 }
                 
-                $data['collection'] = callAPI('collection?id='.$event->collection_id);
-
+                $data['collection'] = callAPI('collection?id='.$event->collection_id, array(), 'obj');
                 $event_cards = callAPI("card", array('event_id'=>$event_id), 'obj');
                 $votes = callAPI("vote", array('event_id'=>$event_id), 'obj');
                 
                 $data['event'] = $event;
                 $data['event_cards'] = $event_cards;
                 $data['votes'] = $votes;
+                $data['top50'] = top(50,$data['votes']);
                 $data['steep'] = $steep;
             }
     	    view('vote',$data);
