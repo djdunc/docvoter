@@ -25,7 +25,7 @@ if($page != "login")
 //force login and check admin for admin pages (defined in functions->setup())
 if(in_array($page,$admin_pages)) {
 	login($data);
-	allow('admin');
+	allow(is('admin'));
 }
 	
 //do required page
@@ -106,7 +106,7 @@ switch($page) {
        	    view('event',$data);
         break;
     case 'card':
-    	    allow('user');
+    	    allow(is('user'));
             $collections = callAPI('collection', array(), 'obj');
             foreach($collections as $collection) {
                 $data['collections'][$collection->id] = array(
@@ -151,7 +151,7 @@ switch($page) {
             view('card',$data);
         break;
     case 'vote':
-    	    allow('user');
+    	    allow(is('user'));
     	    $event_id = get('event');
             if (isset($event_id)) {
                 $event = callAPI("event/get?id=$event_id&include_owner=1", array(), 'obj');
@@ -181,10 +181,10 @@ switch($page) {
                 $data['event_cards'] = $event_cards;
                 $data['steep'] = $steep;
             }
-            view('vote',$data);
+            view(is('vote'),$data);
         break;    
     case 'results':
-    	    allow('user');
+    	    allow(is('user'));
             $event_id = get('event');
             if (isset($event_id)) {
                 $event = callAPI("event/get?id=$event_id&include_owner=1", array(), 'obj');
