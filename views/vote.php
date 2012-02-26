@@ -52,5 +52,30 @@
 <script type="text/javascript">
 $(document).ready(function() {
     $(".card").tipTip({defaultPosition:"right",maxWidth:"auto",content:"click to vote",delay:800});
+<<<<<<< HEAD
+=======
+    $(".card").click(function(){
+        //voting stuff
+        if(!$(this).hasClass('voted')) {
+        	//vote
+        	var query_url = "includes/callAPI.php?action=vote/post&event_id="+event_id+"&owner="+owner+"&card_id="+$(this).attr('id');
+            $(this).addClass('voted');
+            $.ajax({
+	            url: query_url,
+	            success: function(data){/*uhm ... it worked*/},
+	            error: function(data){/*... it didn't*/}
+	        });
+        } else {
+            //unvote
+            var query_url = "includes/callAPI.php?action=vote/delete&event_id="+event_id+"&owner="+owner+"&card_id="+$(this).attr('id');
+        	$(this).removeClass('voted');
+        	$.ajax({
+                url: query_url,
+                success: function(data){/*uhm ... it worked*/},
+                error: function(data){/*... it didn't*/}
+            });
+        }
+    });
+>>>>>>> cb62e99d710ef3eb94e48abce556255162f2902b
 });
 </script>
