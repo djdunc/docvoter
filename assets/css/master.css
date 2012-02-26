@@ -1808,6 +1808,11 @@ a.social-to:hover,a.technological-to:hover,a.economic-to:hover,a.environmental-t
 	background-color: #f19490!important;
 }
 
+.voted, a.voted:hover {
+ background-color: #000!important;	
+ color: #fff!important;
+}
+
 #add-card #question.social {
 	background-color: rgba(0, 0, 255, 0.2);
 
