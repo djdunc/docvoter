@@ -181,7 +181,7 @@ switch($page) {
                 $data['event_cards'] = $event_cards;
                 $data['steep'] = $steep;
             }
-            view(is('vote'),$data);
+            view('vote',$data);
         break;    
     case 'results':
     	    allow(is('user'));
