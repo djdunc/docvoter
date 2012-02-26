@@ -176,12 +176,14 @@ switch($page) {
                 }
                 $event_cards = callAPI("card", array('event_id'=>$event_id), 'obj');
                 $votes = callAPI("vote", array('event_id'=>$event_id), 'obj');
-                
+                if(!isset($votes)) $votes = array();
                 $data['event'] = $event;
                 $data['event_cards'] = $event_cards;
+                $data['votes'] = $votes;
+                $data['top50'] = top(50,$data['votes']);
                 $data['steep'] = $steep;
             }
-            view(is('vote'),$data);
+            view('vote',$data);
         break;    
     case 'results':
     	    allow(is('user'));
@@ -210,7 +212,7 @@ switch($page) {
                 }
                 $event_cards = callAPI("card", array('event_id'=>$event_id), 'obj');
                 $votes = callAPI("vote", array('event_id'=>$event_id), 'obj');
-                
+                if(!isset($votes)) $votes = array();
                 $data['event'] = $event;
                 $data['event_cards'] = $event_cards;
                 $data['votes'] = $votes;
