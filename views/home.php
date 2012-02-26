@@ -24,9 +24,9 @@
     		              <p class="drivers">
     		                  
     		                  <?php if($event->end!=0 && $event->end < time()) { ?>
-    		                  <span class="social">viral/bacterial pandemic</span> <span class="technological">full scale nuclear war</span> <span class="environmental">rapid rise in life expentancy</span> <span class="economic">gulf stream shuts down</span> <span class="political">lifelong working</span>
+    		                  <span class="social">viral/bacterial pandemic</span> <span class="technological-b">full scale nuclear war</span> <span class="environmental">rapid rise in life expentancy</span> <span class="economic">gulf stream shuts down</span> <span class="political">lifelong working</span>
     		                  <?php }else {?>
-    		                      <span class="">Have your say!</span>
+    		                      <span class="say">Have your say!</span>
     		                  <?php }?>
     		                  </p>
     		              <p class="footer"><span class="event"><?php echo($event->name);?></span>

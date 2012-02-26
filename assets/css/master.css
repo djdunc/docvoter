@@ -785,8 +785,17 @@ div.pager .table-options {
 	margin-bottom: .2em;
 	text-align: center;
 	padding: 20px;
+	font-size: 1.5em;
+	line-height: 1.5em;
+	overflow: hidden;
 }
-
+#event-gallery li .drivers span{
+	white-space: nowrap;
+}
+#event-gallery li .say{
+	display: block;
+	padding-top: 50px;
+}
 #event-gallery li a:hover .drivers{
 	border-color: #000;
 }
@@ -1793,6 +1802,9 @@ label.file-holder {
 #vote-cloud li.political a{
 	color: #EC2027!important;
 	
+}
+#vote-cloud li a{
+	background-color: #fff!important;
 }
 #vote-cloud li a.voted, #vote-cloud li a.voted:hover {
  background-color: #000!important;	

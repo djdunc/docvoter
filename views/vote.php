@@ -32,11 +32,6 @@
                             foreach ($event_cards as $card) { //var_dump($card);
                                 $top = in_array($card->id,$top50)?"top50":"";
                                 //$hide = in_array($card->id,$top50)?"":"style='display:none;'";
-                                if ($collection['name']=='steep' ){
-                                      $steepclass = $category.'-b';
-                            	} else{
-                            	    $steepclass='';
-                            	}
                             	$card_cat_id = (int)$card->category_tag_id;
                             	if ($card_cat_id == $cat_id){
                             	    $clean_cat = dirify($category);

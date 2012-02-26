@@ -180,7 +180,7 @@ switch($page) {
                 $data['event'] = $event;
                 $data['event_cards'] = $event_cards;
                 $data['votes'] = $votes;
-                $data['top50'] = top(50,$data['votes']);
+                if(isset($votes)) $data['top50'] = top(50,$data['votes']);
                 $data['steep'] = $steep;
             }
             view('vote',$data);
@@ -245,15 +245,13 @@ switch($page) {
     	    //if no event is set, do home
     	    if(!isset($event) || !$event->id) {
     	        $events = callAPI("event", array('include_owner'=>true,'include_card_count'=>true,'type'=>2), 'obj');
-    	        if(!is('admin')) {
-    	        	//filter out events starting after today
-	    	        $count = count($events);                
-	                while($count--) {
-	                    if($events[$count]->start > time()) {
-	                        unset($events[$count]);
-	                    }
-	                }    	        	
-    	        }
+    	        //filter out events starting after today
+    	        $count = count($events);                
+                while($count--) {
+                    if($events[$count]->start > time()) {
+                        unset($events[$count]);
+                    }
+                }    	        	
     	        $data['events'] = $events;
                 //$_SESSION['ref_page'] = "";
                 view('home', $data);

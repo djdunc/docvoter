@@ -247,6 +247,7 @@ function callAPI($query_url, $query_params=array(), $as='json') {
         
     return $ret;
 }
+//from http://snipplr.com/view/14278/dirify/
 //This is an improvement of Adam Kalsey's port to PHP of Movable Type's dirification function written in Perl. http://kalsey.com/2004/07/dirifyinphp/
 //added to cleanup category names and make them usable as links might use to do clean urls in future
 //or perhaps we can do with just spaces??
