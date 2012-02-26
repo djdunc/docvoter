@@ -1,12 +1,13 @@
-<?php var_dump();?>
+<?php //var_dump($_SESSION['user']);?>
 <div class="container_4">
 	<div id="page-heading" class="clearfix">
 	    <div class="grid-wrap">
     		<div class="grid_3">
     		       <ul id="category-nav">
     		           <li><a class="active" href="">top 50</a></li>
-    		           <?php foreach ($collection->categories as $cat ){?>
-    		               <li><a href=""><?php $cat->name; ?></a></li>
+    		           <?php 
+    		           foreach ($collection['categories'] as $key=>$cat ){?>
+    		               <li><a href="" <?php if ($collection['name']=='steep' ){ echo("class='".$cat."-to'");} ?>><?php echo $cat; ?></a></li>
     		           <?php } ?>
     		       </ul>
     		</div>

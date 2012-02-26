@@ -103,7 +103,7 @@
 		    </h1>
 	        <div class="grid_2">
 	            <ul id="main-navigation">
-                	<li><a href="index.php?event=<?php echo $data['event']->id; ?>"<?php if($page == 'about'){ echo(" class=\"active\"");} ?>>about</a></li><?php if(is('user')){?><li><a href="index.php?do=vote&event=<?php echo $data['event']->id; ?>"<?php if($page == 'vote'){ echo(" class=\"active\"");} ?>>vote</a></li><?php }?><li class="last"><a href="index.php?do=vote&event=<?php echo $data['event']->id; ?>"<?php if($page == 'results'){ echo(" class=\"active\"");} ?>>results</a></li>
+                	<li><a href="index.php?event=<?php echo $data['event']->id; ?>"<?php if($page == 'about'){ echo(" class=\"active\"");} ?>>about</a></li><?php if(is('user')){?><li><a href="index.php?do=vote&event=<?php echo $data['event']->id; ?>"<?php if($page == 'vote'){ echo(" class=\"active\"");} ?>>vote</a></li><?php }?><li class="last"><a href="index.php?do=results&event=<?php echo $data['event']->id; ?>"<?php if($page == 'results'){ echo(" class=\"active\"");} ?>>results</a></li>
                 </ul>
 		    </div>
 		<?php //admin nav

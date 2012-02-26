@@ -1755,6 +1755,36 @@ a.social-b:hover,a.technological-b:hover,a.economic-b:hover,a.environmental-b:ho
 	color: #000!important;
 }
 
+.social-to {
+	color: #39B1D9!important;
+	border: 1px solid #39B1D9!important;
+}
+
+.technological-to {
+	color: #A681B2!important;
+	border: 1px solid #A681B2!important;
+}
+
+.economic-to {
+	color: #F69220!important;
+	border: 1px solid #F69220!important;
+	}
+
+.environmental-to {
+	color: #8BC53F!important;
+	border: 1px solid #8BC53F!important;
+}
+
+.political-to {
+	color: #EC2027!important;
+	border: 1px solid #EC2027!important;
+}
+a.social-to:hover,a.technological-to:hover,a.economic-to:hover,a.environmental-to:hover,a.political-to:hover{
+	color: #fff!important;
+	background-color: #000;
+	border-color: #000!important;
+}
+
 .social-50,.technological-50,.economic-50,.environmental-50,.political-50{
 	color: #333!important;
 }
