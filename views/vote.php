@@ -1,4 +1,4 @@
-<?php //var_dump($event);?>
+<?php //var_dump($collection);?>
 <div class="container_4">
 	<div id="page-heading" class="clearfix">
 	    <div class="grid-wrap">
@@ -36,8 +36,9 @@
     		           ?>
     		           <?php
                           $cards= shuffle_assoc($data['event_cards']); foreach ($cards as $card) { //var_dump($card);
+                          	$top = in_array($card->id,$top50)?"top50":"";
                             ?>
-                           <li class='<?php echo $collection['categories'][$card->category_tag_id];?>'><a href="" id="<?php echo $card->id;?>"<?php echo 'class="card '.$collection['categories'][$card->category_tag_id].'-b'.'"'; ?>><?php echo($card->name);?></a></li>
+                           <li class='<?php echo $collection['categories'][$card->category_tag_id]." ".$top;?>'><a href="" id="<?php echo $card->id;?>"<?php echo 'class="card '.$top." ".$collection['categories'][$card->category_tag_id].'-b'.'"'; ?>><?php echo($card->name);?></a></li>
                       <?php }?>
     		       </ul>
     		     </div>

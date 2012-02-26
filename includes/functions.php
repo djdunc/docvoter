@@ -157,7 +157,7 @@ function get($key) {
 
 function top($count, $votes) {
 	$ids = array();
-	if(!is_array($votes)) return $ids;
+	if(!is_array($votes) || !count($votes)) return $ids;
 	
 	//make nice array out of votes
 	foreach($votes as $vote) {
