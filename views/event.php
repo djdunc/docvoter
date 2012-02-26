@@ -118,7 +118,7 @@
 		</div>
 	</div>
 
-	<div class="grid_3" id="deck-panel" <?php if(!isset($event) || !empty($data['event_cards'])){echo("style='display:none'");}?>>
+	<div class="grid_3" id="deck-panel" <?php if(!isset($event) || !empty($event_cards)){echo("style='display:none'");}?>>
         <div class="panel">
         	<div class="content no-cap clearfix">
     		    <form id="deck">
@@ -245,6 +245,7 @@ $(document).ready(function() {
     var baseurl = "<?php echo BASE_URL; ?>";
     var edit_event = <?php echo($edit_event_id);?>;
     var owner = <?php echo $_SESSION['user']->id;?>;
+    var cards = <?php echo count($event_cards); ?>;
     //setup datepickers
     function milsToSecs(picker, altField){
         var date = picker.datepicker('getDate');
@@ -349,8 +350,10 @@ $(document).ready(function() {
               var saved_event = eval(jQuery.parseJSON(data));
               if (saved_event.id){
                   edit_event = saved_event.id;
-                  $('#deck-panel').show();
-                  window.location.hash = '#deck-panel';
+                  if (cards==0){
+                      $('#deck-panel').show();
+                      window.location.hash = '#deck-panel';
+                  }
                   displayAlertMessage("Event saved!");
               } else{
                    displayAlertMessage(data);
