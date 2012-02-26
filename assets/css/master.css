@@ -335,14 +335,14 @@ ul#main-navigation {
 	display: block;
 	font-size: 15px;
 	line-height: 20px;
-	border: 1px solid #fff;
+	border: 1px solid #ccc;
 	padding: 4px 6px 6px;
 	font-weight: bold;
 }
 #category-nav li a:hover, #category-nav li a.active{
-	color: #fff;
+	color: #fff!important;
 	background-color: #000;
-	border-color: #000;
+	border-color: #000!important;
 }
 
 #page-heading {
@@ -708,7 +708,7 @@ div.pager .pagedisplay {
 	background-color: #fff;
 }
 
-.content.gallery div.pager .pagedisplay {
+.content.gallery div.pager .pagedisplay{
 	background-color: #ebebeb;
 }
 
@@ -763,6 +763,52 @@ div.pager .table-options {
 	padding-top: 20px;
 }
 
+
+
+#event-gallery {
+	margin: 0;
+	vertical-align: middle;
+	padding: 20px 0;
+}
+
+#event-gallery li {
+	vertical-align: top;
+	width: 355px;
+	display: inline-block;
+	margin: 0 16px .3em 0;
+}
+#event-gallery li .drivers{
+	border: 5px solid #ebebeb;
+	background-color: #fff;
+	width: 305px;
+	height: 150px;
+	margin-bottom: .2em;
+	text-align: center;
+	padding: 20px;
+}
+
+#event-gallery li a:hover .drivers{
+	border-color: #000;
+}
+
+#event-gallery li .footer{
+	padding: 5px;
+}
+#event-gallery li a .footer .event{
+	font-size: 15px;
+	display: block;
+	font-weight: bold;
+}
+#event-gallery li a .footer .votes{
+	background: url(../images/s-icons.png) no-repeat left center;
+	padding-left: 12px;
+	color: #aaa;
+}
+#event-gallery li a .footer .org{
+	color: #aaa;
+}
+
+
 #vote-cloud {
 	margin: 0;
 	text-align: center;
@@ -775,7 +821,7 @@ div.pager .table-options {
 
 #vote-cloud li {
 	display: inline-block;
-	margin: 0 0 .3em;
+	margin: 0 .3em .3em 0;
 }
 
 #vote-cloud li a {
@@ -1723,31 +1769,34 @@ label.file-holder {
 	background-color: #EC2027!important;
 }
 
-.social,.technological,.economic,.environmental,.political{
+.social,.technological,.economic,.environmental,.political,.social a,.technological a,.economic a,.environmental a, .political a{
 	color: #fff!important;
 }
-.social-b {
+#vote-cloud li.social a {
 	color: #39B1D9!important;
-	
 }
 
-.technological-b {
+#vote-cloud li.technological a{
 	color: #A681B2!important;
 	
 }
 
-.economic-b {
+#vote-cloud li.economic a{
 	color: #F69220!important;
 	}
 
-.environmental-b {
+#vote-cloud li.environmental a{
 	color: #8BC53F!important;
 	
 }
 
-.political-b {
+#vote-cloud li.political a{
 	color: #EC2027!important;
 	
+}
+#vote-cloud li a.voted, #vote-cloud li a.voted:hover {
+ background-color: #000!important;	
+ color: #fff!important;
 }
 
 
@@ -1808,14 +1857,13 @@ a.social-to:hover,a.technological-to:hover,a.economic-to:hover,a.environmental-t
 	background-color: #f19490!important;
 }
 
-.voted, a.voted:hover {
- background-color: #000!important;	
- color: #fff!important;
+#vote-cloud li a:hover{
+	background-color: #000!important;
+	color: #fff!important;
 }
 
 #add-card #question.social {
 	background-color: rgba(0, 0, 255, 0.2);
-
 /* Modern browsers */
 	background: transparent url(../images/social.png) repeat!important;
 }
