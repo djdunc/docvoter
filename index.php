@@ -152,6 +152,39 @@ switch($page) {
         break;
     case 'vote':
     	    allow('user');
+    	    $event_id = get('event');
+            if (isset($event_id)) {
+                $event = callAPI("event/get?id=$event_id&include_owner=1", array(), 'obj');
+                if (empty($event) || !$event->id) {
+                    //404 error
+                    show_error("Sorry, the event you have requested does not exist.", "Make sure that you have the correct URL and that the owner hasn't deleted it.");
+                }
+                
+                if(isset($event->owner_user)) {
+                    $event_org_id = $event->owner_user->organisation_id;
+                    if(isset($event_org_id) && $event_org_id) {
+                        $event_org = callAPI("organisation/get?id=$event_org_id", array(), 'obj');
+                        if(isset($event_org) && $event_org->id) {
+                            $data['event_org'] = $event_org;
+                        }
+                    }
+                }
+                $collection = callAPI('collection?id='.$event->collection_id, array(), 'obj');
+                $data['collection'] = array('id'=>$collection->id,'name'=>$collection->name);
+                foreach($collection->categories as $category) {
+                    $data['collection']['categories'][$category->id] = $category->name;
+                }
+                $event_cards = callAPI("card", array('event_id'=>$event_id), 'obj');
+                $votes = callAPI("vote", array('event_id'=>$event_id), 'obj');
+                
+                $data['event'] = $event;
+                $data['event_cards'] = $event_cards;
+                $data['steep'] = $steep;
+            }
+            view('vote',$data);
+        break;    
+    case 'results':
+    	    allow('user');
             $event_id = get('event');
             if (isset($event_id)) {
                 $event = callAPI("event/get?id=$event_id&include_owner=1", array(), 'obj');
@@ -170,7 +203,11 @@ switch($page) {
                     }
                 }
                 
-                $data['collection'] = callAPI('collection?id='.$event->collection_id, array(), 'obj');
+                $collection = callAPI('collection?id='.$event->collection_id, array(), 'obj');
+                $data['collection'] = array('id'=>$collection->id,'name'=>$collection->name);
+                foreach($collection->categories as $category) {
+                	$data['collection']['categories'][$category->id] = $category->name;
+                }
                 $event_cards = callAPI("card", array('event_id'=>$event_id), 'obj');
                 $votes = callAPI("vote", array('event_id'=>$event_id), 'obj');
                 
@@ -180,7 +217,7 @@ switch($page) {
                 $data['top50'] = top(50,$data['votes']);
                 $data['steep'] = $steep;
             }
-    	    view('vote',$data);
+    	    view('results',$data);
         break;
     case 'about':
     case 'home':
