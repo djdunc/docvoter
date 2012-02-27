@@ -137,9 +137,13 @@ function show_error($h1, $body, $type="404"){
         header("Status: 404 Not Found");
         $title = "Private event, you must login to access contents";
     }
-    require_once(VIEW_PATH.'partials/header.php');
-    require_once(VIEW_PATH.'404.php');
-    require_once(VIEW_PATH.'partials/footer.php');
+    global $data;
+    $data['message_h1'] = $message_h1;
+    $data['message_body'] = $message_body;
+    view('404',$data);
+//    require_once(VIEW_PATH.'partials/header.php');
+//    require_once(VIEW_PATH.'404.php');
+//    require_once(VIEW_PATH.'partials/footer.php');
     die;
 }
 
@@ -155,9 +159,28 @@ function get($key) {
 	}
 }
 
+function top_or_random($count, $votes, $cards) {
+	//gets top from votes
+	$top_or_random = top($count,$votes);
+	//if not enough, keeps ending latest card id until enough or no more cards
+    while(count($top_or_random) < $count && count($cards)) {
+        $latest = array_pop($cards);
+        $top_or_random[] = $latest->id;
+    }
+    //returns array of ids
+    return($top_or_random);
+}
+
 function top($count, $votes) {
 	$ids = array();
+	$votecount = count($votes);
 	if(!is_array($votes) || !count($votes)) return $ids;
+    if($count >= $votecount) {
+    	foreach($votes as $vote) {
+    		$ids[] = $vote->card_id;
+    	}
+    	return $ids;
+    }
 	
 	//make nice array out of votes
 	foreach($votes as $vote) {
@@ -172,7 +195,7 @@ function top($count, $votes) {
 	}
 	$index = 0;
 	$category_count = count($categories);
-	while($count--) {
+	while(count($ids) < $count) {
 		array_push($ids,array_pop(array_keys($vote_array[$categories[$index]])));
 		array_pop($vote_array[$categories[$index]]);
 		$index++;

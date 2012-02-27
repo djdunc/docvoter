@@ -13,6 +13,7 @@ setup(
 );
 
 //set up data assoc array to pass variables to view
+global $data;
 $data = array(
     'admin_pages'=>$admin_pages
 );
@@ -176,11 +177,10 @@ switch($page) {
                 }
                 $event_cards = callAPI("card", array('event_id'=>$event_id), 'obj');
                 $votes = callAPI("vote", array('event_id'=>$event_id), 'obj');
-                if(!isset($votes)) $votes = array();
                 $data['event'] = $event;
                 $data['event_cards'] = $event_cards;
                 $data['votes'] = $votes;
-                if(isset($votes)) $data['top50'] = top(50,$data['votes']);
+                $data['top50'] = top_or_random(50, $votes, $event_cards);
                 $data['steep'] = $steep;
             }
             view('vote',$data);
@@ -212,11 +212,10 @@ switch($page) {
                 }
                 $event_cards = callAPI("card", array('event_id'=>$event_id), 'obj');
                 $votes = callAPI("vote", array('event_id'=>$event_id), 'obj');
-                if(!isset($votes)) $votes = array();
+                $data['top50'] = top_or_random(50, $votes, $event_cards);
                 $data['event'] = $event;
                 $data['event_cards'] = $event_cards;
                 $data['votes'] = $votes;
-                $data['top50'] = top(50,$data['votes']);
                 $data['steep'] = $steep;
             }
     	    view('results',$data);
