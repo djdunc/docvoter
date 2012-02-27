@@ -9,14 +9,14 @@
                            if ($collection['name']=='steep' ){
                                $steepclass = $category."-to";
                      	    } else{
-                     	       $steepclass='';
+                     	       $steepclass = $category;
                      	    }
                      	    $clean_cat = dirify($category);
                            echo "<li><a href='' id='$clean_cat' class='$steepclass'>$category</a></li>";
                        } ?>
     		       </ul>
     		</div>
-    		<div class="grid_1 align_right">
+    		<div class="grid_1 align_right add-driver">
     				<a href="index.php?do=driver" class="button blue large">+ add driver</a>
     		</div>
 	    </div>
@@ -28,14 +28,15 @@
     		    <div class="panel">
     		       <ul id="vote-cloud">
                       <?php
+                      $date_order_cards = array_reverse($event_cards);
                         foreach ( $collection['categories'] as $cat_id=>$category){
-                            foreach ($event_cards as $card) { //var_dump($card);
+                            foreach ($date_order_cards as $card) { //var_dump($card);
                                 $top = in_array($card->id,$top50)?"top50":"";
                                 //$hide = in_array($card->id,$top50)?"":"style='display:none;'";
                             	$card_cat_id = (int)$card->category_tag_id;
                             	if ($card_cat_id == $cat_id){
                             	    $clean_cat = dirify($category);
-                            	    echo("<li class='$top $clean_cat'><a href='' id='$card->id' class='card'>$card->name</a></li>");
+                            	    echo("<li class='$top $clean_cat'><a href='' id='$card->id'>$card->name</a> <a class='info' href='#'>this is the tip!</a></li>");
                             	}
                             }
                         }?>
@@ -46,9 +47,9 @@
 </div>
 <br /><br />
 <!-- Load the tiptip script -->
-<script src="assets/js/indyone-TipTip-06dc274/jquery.tipTip.minified.js" type="text/javascript"></script>
+<!-- <script src="assets/js/tipTipv13/jquery.tipTip.minified.js" type="text/javascript"></script> -->
 <!--	Load the tiptip stylesheet. -->
-<link rel="stylesheet" href="assets/js/indyone-TipTip-06dc274/tipTip.css" type="text/css" media="screen" />
+<!-- <link rel="stylesheet" href="assets/js/tipTipv13/tipTip.css" type="text/css" media="screen" /> -->
 <script type="text/javascript">
 $(document).ready(function() {
 	var event_id=<?php echo $event->id;?>;
@@ -66,14 +67,14 @@ $(document).ready(function() {
         var title = 'hi';
         return title;
     }
-    $(".card").tipTip({defaultPosition:"right",maxWidth:"auto",cssClass:"alternative",
-        content:function() {
-        if(!$(this).hasClass('voted')) {
-    		  return('click to vote');
-    	} else {
-    	     return('click to remove vote');
-    	}}
-    	});
+    // $(".card").tipTip({defaultPosition:"right",maxWidth:"auto",cssClass:"alternative",
+    //         content:function() {
+    //         if(!$(this).hasClass('voted')) {
+    //            return('click to vote');
+    //      } else {
+    //           return('click to remove vote');
+    //      }}
+    //      });
     $(".card").click(function(){
         //voting stuff
         var currcard = $(this);
@@ -85,8 +86,8 @@ $(document).ready(function() {
 	            url: query_url,
 	            success: function(data){/*uhm ... it worked*/
 	                currcard.addClass('voted');
-	                currcard.tipTip('hide');
-                    currcard.tipTip('show');
+	                // currcard.tipTip('hide');
+	                //                   currcard.tipTip('show');
 	            },
 	            error: function(data){/*... it didn't*/}
 	        });
@@ -97,8 +98,8 @@ $(document).ready(function() {
                 url: query_url,
                 success: function(data){/*uhm ... it worked*/
                        currcard.removeClass('voted');
-                       currcard.tipTip('hide');
-                       currcard.tipTip('show');
+                       // currcard.tipTip('hide');
+                       //                        currcard.tipTip('show');
                     },
                 error: function(data){/*... it didn't*/}
             });

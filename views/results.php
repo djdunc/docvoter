@@ -8,12 +8,15 @@
                           <?php foreach($collection['categories'] as $cat_id=>$category){
                               if ($collection['name']=='steep' ){
                                   $steepclass = $category."-to";
+                        	    } else{
+                        	       $steepclass = $category;
                         	    }
-                              echo "<li><a href='' id='$category' class='$steepclass'>$category</a></li>";
+                        	    $clean_cat = dirify($category);
+                              echo "<li><a href='' id='$clean_cat' class='$steepclass'>$category</a></li>";
                           } ?>
        		       </ul>
     		</div>
-    		<div class="grid_1 align_right">
+    		<div class="grid_1 align_right add-driver">
     				
     		</div>
 	    </div>
@@ -29,11 +32,6 @@
                                 foreach ($event_cards as $card) { //var_dump($card);
                                     $top = in_array($card->id,$top50)?"top50":"";
                                     //$hide = in_array($card->id,$top50)?"":"style='display:none;'";
-                                    if ($collection['name']=='steep' ){
-                                          $steepclass = $category.'-b';
-                                	} else{
-                                	    $steepclass='';
-                                	}
                                 	$card_cat_id = (int)$card->category_tag_id;
                                 	if ($card_cat_id == $cat_id){
                                 	    $clean_cat = dirify($category);

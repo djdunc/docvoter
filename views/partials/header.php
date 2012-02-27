@@ -45,7 +45,6 @@
 	var ADAPT_CONFIG = {
 	  	path: 'assets/css/',
 	  	dynamic: true,
-		callback: resizeGalleries,
 	 	range: [
 	    	'0px    to 420px  /// mobile_portrait.css',
 	    	'420px  to 600px  /// mobile_landscape.css',
@@ -90,32 +89,30 @@
 <div id="header">
     <!-- BEGIN HEADER -->	
     <div class="container_4">
-		<div class="grid-wrap clearfix">
+		<div class="grid-wrap clearfix" id="header-holder">
 		<?php
 		    //if we are not on admin and have event
 		   //var_dump($data['event']);
 		    if(!in_array($page, $admin_pages) && isset($data['event'])) {?>
-		    <h1 class="grid_2">
+		    <h1 class="grid_3">
 		        <a href="<?php echo BASE_URL;?>index.php?event=<?php echo $data['event']->id; ?>">
 		            <span class="org"><?php if(isset($data['event_org']))echo $data['event_org']->name;?>&nbsp;</span>
 			        <?php echo $data['event']->name; ?>
 			    </a>
 		    </h1>
-	        <div class="grid_2">
+	        <!-- <div class="grid_2"> -->
 	            <ul id="main-navigation">
                 	<li><a href="index.php?event=<?php echo $data['event']->id; ?>"<?php if($page == 'about'){ echo(" class=\"active\"");} ?>>about</a></li><?php if(is('user')){?><li><a href="index.php?do=vote&event=<?php echo $data['event']->id; ?>"<?php if($page == 'vote'){ echo(" class=\"active\"");} ?>>vote</a></li><?php }?><li class="last"><a href="index.php?do=results&event=<?php echo $data['event']->id; ?>"<?php if($page == 'results'){ echo(" class=\"active\"");} ?>>results</a></li>
                 </ul>
-		    </div>
+		    <!-- </div> -->
 		<?php //admin nav
 		    } elseif(in_array($page, $admin_pages)) {
 		?>
-		    <h1 class="grid_2"><span class="org"><?php if(isset($_SESSION['user'])) echo $_SESSION['user_name']; ?>&nbsp;</span><a href="<?php echo BASE_URL;?>index.php?do=events">Dashboard</a>
+		    <h1 class="grid_3"><span class="org"><?php if(isset($_SESSION['user'])) echo $_SESSION['user_name']; ?>&nbsp;</span><a href="<?php echo BASE_URL;?>index.php?do=events">Dashboard</a>
 	  		</h1>
-	  		<div class="grid_2">
 	  		    <ul id="main-navigation">
 	         		<li><a href="index.php?do=events"<?php if($page == 'events'||$page == 'event'||$page == 'card'){ echo(" class=\"active\"");} ?>>events</a></li><li class="last"><a href="index.php?do=decks"<?php if($page == 'decks'||$page == 'deck'){ echo(" class=\"active\"");} ?>>decks</a></li>
 	         	</ul>
-	        </div>
 		<?php }?>
 		</div>
 	</div>
