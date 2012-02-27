@@ -74,7 +74,17 @@ switch($page) {
     case 'events':
     	    $params = array('include_owner'=>true,'include_card_count'=>true,'type'=>2);
             if(!is('super')) $params['owner'] = $_SESSION['user']->id;
-    	    $data['events'] = callAPI("event", $params, 'obj');
+    	    $events = callAPI("event", $params, 'obj');
+            if(!is('super')) {
+                //filter out events starting after today
+                $count = count($events);
+                while($count--) {
+                    if($events[$count]->start > time()) {
+                        unset($events[$count]);
+                    }
+                }                   
+            }
+            $data['events'] = $events;
             view('events',$data);
         break;
     case 'event':
@@ -245,11 +255,11 @@ switch($page) {
     	    //if no event is set, do home
     	    if(!isset($event) || !$event->id) {
     	        $events = callAPI("event", array('include_owner'=>true,'include_card_count'=>true,'type'=>2), 'obj');
-    	        if(!is('admin')) {
+    	        if(!is('super')) {
     	        	//filter out events starting after today
-	    	        $count = count($events);                
+	    	        $count = count($events);
 	                while($count--) {
-	                    if($events[$count]->start > time()) {
+		                if($events[$count]->start > time() && $events[$count]->owner != $_SESSION['user']->id) {
 	                        unset($events[$count]);
 	                    }
 	                }    	        	
