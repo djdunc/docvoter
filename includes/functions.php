@@ -159,17 +159,17 @@ function get($key) {
 	}
 }
 
-function top_or_random($count, $votes, $cards) {
-	//gets top from votes
-	$top_or_random = top($count,$votes);
-	//if not enough, keeps ending latest card id until enough or no more cards
-    while(count($top_or_random) < $count && count($cards)) {
-        $latest = array_pop($cards);
-        $top_or_random[] = $latest->id;
-    }
-    //returns array of ids
-    return($top_or_random);
-}
+//function top_or_random($count, $votes, $cards) {
+//	//gets top from votes
+//	$top_or_random = top($count,$votes);
+//	//if not enough, keeps ending latest card id until enough or no more cards
+//    while(count($top_or_random) < $count && count($cards)) {
+//        $latest = array_pop($cards);
+//        $top_or_random[] = $latest->id;
+//    }
+//    //returns array of ids
+//    return($top_or_random);
+//}
 
 function top($count, $votes) {
 	$ids = array();

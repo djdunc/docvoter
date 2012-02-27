@@ -180,7 +180,7 @@ switch($page) {
                 $data['event'] = $event;
                 $data['event_cards'] = $event_cards;
                 $data['votes'] = $votes;
-                $data['top50'] = top_or_random(50, $votes, $event_cards);
+                $data['top50'] = top(50, $votes);
                 $data['steep'] = $steep;
             }
             view('vote',$data);
@@ -211,7 +211,7 @@ switch($page) {
                 }
                 $event_cards = callAPI("card", array('event_id'=>$event_id), 'obj');
                 $votes = callAPI("vote", array('event_id'=>$event_id), 'obj');
-                $data['top50'] = top_or_random(50, $votes, $event_cards);
+                $data['top50'] = top(50, $votes);
                 $data['event'] = $event;
                 $data['event_cards'] = $event_cards;
                 $data['votes'] = $votes;
