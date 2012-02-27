@@ -186,7 +186,6 @@ switch($page) {
             view('vote',$data);
         break;    
     case 'results':
-    	    allow(is('user'));
             $event_id = get('event');
             if (isset($event_id)) {
                 $event = callAPI("event/get?id=$event_id&include_owner=1", array(), 'obj');
