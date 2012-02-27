@@ -196,7 +196,8 @@ function top($count, $votes) {
 	$index = 0;
 	$category_count = count($categories);
 	while(count($ids) < $count) {
-		array_push($ids,array_pop(array_keys($vote_array[$categories[$index]])));
+		$top_id = array_pop(array_keys($vote_array[$categories[$index]]));
+		if( $top_id ) $ids[] = $top_id;
 		array_pop($vote_array[$categories[$index]]);
 		$index++;
 		if($index == $category_count)$index = 0;
