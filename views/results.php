@@ -1,4 +1,4 @@
-<?php //var_dump($event);?>
+<?php //var_dump($votes); //var_dump($event_cards)?>
 <div class="container_4">
 	<div id="page-heading" class="clearfix">
 	    <div class="grid-wrap">
@@ -29,14 +29,15 @@
     		        <ul id="vote-cloud">
                           <?php
                             foreach ( $collection['categories'] as $cat_id=>$category){
-                                foreach ($event_cards as $card) { //var_dump($card);
-                                    $top = in_array($card->id,$top50)?"top50":"";
-                                    //$hide = in_array($card->id,$top50)?"":"style='display:none;'";
+                                foreach ($votes as $card) { //var_dump($card);
+                                    $top = in_array($card->card_id,$top50)?"top50":"";
+                                    $hide = in_array($card->card_id,$top50)?"":"style='display:none;'";
                                 	$card_cat_id = (int)$card->category_tag_id;
                                 	if ($card_cat_id == $cat_id){
                                 	    $clean_cat = dirify($category);
-                                	    echo("<li class='$top $clean_cat'><a href='' id='$card->id' class='card'>$card->name</a></li>");
+                                	    echo("<li class='$top $clean_cat' $hide><a href='' id='$card->card_id' class='card' value='$card->total'>$card->card_title</a></li>");
                                 	}
+                                	//var_dump($votes[$card->id]);
                                 }
                             }?>
         		       </ul>
@@ -59,7 +60,37 @@ $(document).ready(function() {
             $('#vote-cloud li').hide();   
             var class_to_show = $(this).attr('id');
             $('#vote-cloud li.'+class_to_show).show();
+            resizeCards('#vote-cloud li.'+class_to_show+' a');
         }
     });
+    Array.max = function( array ){
+        return Math.max.apply( Math, array );
+    };
+    Array.min = function( array ){
+        return Math.min.apply( Math, array );
+    };
+    minSize =13;
+    maxSize =38;
+    function resizeCards(cards){
+        var votes = [];
+        $(cards).each(function () {
+            votes.push(parseInt($(this).attr('value')));
+        });
+         // Pull out the minimum and maximum vote count from our tags. 
+         //Creating a spread to be used in font size calculations. 
+        var maxVote = Array.max(votes);
+        var minVote = Array.min(votes);
+        spread = maxVote-minVote;
+        // Check to see if we have a good spread, if not, set one.
+    	if (spread == 0) {
+    		spread = 1;
+    	}
+        $(cards).each(function () {
+            var val = $(this).attr('value');
+            fontSize = minSize+(val-minVote)*(maxSize-minSize)/spread;
+            $(this).css("fontSize",fontSize);
+        });
+    }
+    resizeCards("#vote-cloud li a");
 });
 </script>
