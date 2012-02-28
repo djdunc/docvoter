@@ -1,4 +1,4 @@
-<?php var_dump($user)?>
+<?php //var_dump($user)?>
 <!-- BEGIN PAGE BREADCRUMBS/TITLE -->
 <div class="container_4">
 	<div id="page-heading" class="clearfix">
@@ -109,7 +109,7 @@
     });
     function postCard(){
         $.post('includes/callAPI.php', action+'&name='+$("#name").val(), function(data) {
-                 try { saved_card = $.parseJSON(data); }
+                  try { saved_card = $.parseJSON(data); }
                   catch (err) { displayAlertMessage(data); return false; }
                   if (saved_card.id){
                        // alert(event_action+'&card_id='+saved_card.id+'&category_tag_id='+$('#cat_id option:selected').val());
@@ -117,7 +117,7 @@
                              try { saved_eventcard = $.parseJSON(data); }
                              catch (err) { displayAlertMessage(data); return false; }
                                if (saved_eventcard.event_id){
-                                  displayAlertMessage("Card saved!");
+                                  window.location.href = baseurl+'index.php?do=vote&event='+event_id;
                                }
                            }).error(function() { alert("There was an error adding your card to this event, please try again."); })
                   } else{
@@ -127,7 +127,6 @@
     }
     function postOwner(){
         var update_user = 'action=user/put&id='+owner+'&email='+$("#email").val();
-        alert(update_user);
         $.post('includes/callAPI.php', update_user , function(data) {
              try { saved_user = $.parseJSON(data); }
              catch (err) { displayAlertMessage(data); return false; }
