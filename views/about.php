@@ -8,59 +8,22 @@
     		       <?php echo nl2br($event->description) ?>
     		     </div>
     		    <?php } ?>
-    		      <?php if(!isset($_SESSION['user']->id)){?>
-    		    <div class="pad-r">
-    		        	<h3>Create a new Account</h3>
-        			    <div class="panel form">
-                   		    <span class="message"></span>
-                   			<div class="content no-cap">
-                   			    <form id="register" class="styled">
-                					<fieldset>
-                					    <!-- Text Field -->
-                						<label class="align-left" for="name">
-                							<span>First name</span>
-                							<input class="textbox m editable" name="first_name" id="first_name" type="text" value="" />
-                						</label>
-                						<!-- Text Field -->
-                						<label class="align-left" for="name">
-                							<span>Last name</span>
-                							<input class="textbox m editable" name="last_name" id="last_name" type="text" value="" />
-                						</label>
-                						<!-- Text Field -->
-                						<label class="align-left" for="username">
-                							<span>Email address<strong class="red">*</strong></span>
-                							<input class="textbox m editable" name="email" id="email" type="text" value="" />
-                						</label>
-                						<!-- Text Field -->
-                						<label class="align-left" for="password">
-                							<span>Password<strong class="red">*</strong></span>
-                							<input class="textbox required editable" name="password" id="password" type="password" value="" />
-                						</label>
-                						<!-- Text Field -->
-                						<label class="align-left" for="name">
-                							<span>Confirm password<strong class="red">*</strong></span>
-                							<input class="textbox required editable" name="password_confirm" id="password_confirm" type="password" value="" />
-                						</label>
-                						<!-- Buttons -->
-                						<div class="non-label-section" id="save_btns">
-                						    <p class="button medium disabled" id="fakesave">Register</p>
-                						    <input type="submit" id="save" class="button medium blue" value="Register" style="display:none" />
-                						    <a href="index.php" class="button medium">Cancel</a>
-                						</div>
-
-                					</fieldset>
-                				</form>
-                   			</form>
-                   		  </div>
-                        </div>
-    		    </div>
     		    
-    		    <?php } elseif(($event->allow_anon && !isset($event->end)) || ($event->allow_anon && ($event->end >= time()))){ ?>
+    		    
+    		    <?php if(($event->allow_anon && !isset($event->end)) || ($event->allow_anon && ($event->end >= time()))){ ?>
     		         <h3>Survey</h3>
             		    <div class="panel form">
             		         <span class="message"></span>
             		        <div class="content no-cap">
-            		            <?php require_once(SURVEY_PATH.'/survey_sample.php');?>
+            		            <?php
+                                $survey_path = "";
+                                if(is_readable(SURVEY_PATH."/survey_$event->id.php")) {
+                                  $survey_path = SURVEY_PATH."/survey_$event->id.php";
+                                } else {
+                                  $survey_path = SURVEY_PATH."/survey_sample.php";
+                                }
+                                require_once($survey_path);
+                                ?>
             		       </div>
             		     </div>
             	 <?php } ?>
@@ -92,7 +55,8 @@
                						    <input type="submit" id="login" class="button medium blue" value="Login" style="display:none" />
                						    </div>
                						</div>
-                                   <!-- <input type="submit" name="login" id="login" value="Login" class="button blue" /> --> 
+               						 <br /><br />
+            					<p id="account_set">Don't have an account yet?, <a href="index.php?do=register">click here to sign up</a>.</p>
                                </form>
                                </div>
                               </div>
@@ -101,3 +65,59 @@
 	    </div>
 </div>
 <!-- END CONTAINER -->
+<script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var formChanged = false;
+var baseurl = "<?php echo BASE_URL; ?>";
+var ref = "do=vote&event=<?php echo $event->id; ?>";
+var action = 'controller=user&action=get&';
+$(document).ready(function() {
+    var validator = $("#loginform").validate({ 
+         rules: { 
+            username: "required", 
+            password: "required", 
+    },
+    errorElement: "span",
+     messages: {
+     	 username: "Username required", 
+         password: "Password required",	
+    },
+    
+       debug:true
+    });
+    
+   // if something is edited, show save button, and display alert on page leave
+   $('#loginform .editable').bind('change paste', function() {
+           handleFormChanged();
+      });
+    
+    //bind save button
+    $("#login").click(function() {
+      if($("#loginform").valid()){
+          $('#login').hide();
+          $(".buttons").append("<div id=\"indicator\"><img src=\"assets/images/indicator.gif\" /></div>")
+          $.post('includes/load_login.php', action+$("#loginform").serialize(), function(data) {
+              try {
+                  var user = jQuery.parseJSON(data);
+                  window.location.href = baseurl+"index.php?"+ref;
+              } catch (err) {
+            	  displayAlertMessage("Error:"+data);//todo display real json error
+                  $('#login').show();
+                  $('#indicator').remove();
+              }
+            }).error(function() { displayAlertMessage("Bad username/password combination"); }, "json")
+      }
+      return false;
+    });
+    
+   });
+
+   function handleFormChanged() {
+        $('#login').show();
+        $('#fakelogin').hide();
+        formChanged = true;
+   }
+
+    /* ]]> */
+</script>

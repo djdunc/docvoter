@@ -83,9 +83,6 @@
 		</div>
 		</div>
 	</div>	
-	
-<?php  //if we are not on vote home 
- if($page!='home'){?>
 <div id="header">
     <!-- BEGIN HEADER -->	
     <div class="container_4">
@@ -113,10 +110,19 @@
 	  		    <ul id="main-navigation">
 	         		<li><a href="index.php?do=events"<?php if($page == 'events'||$page == 'event'||$page == 'eventcard'){ echo(" class=\"active\"");} ?>>events</a></li><li class="last"><a href="index.php?do=decks"<?php if($page == 'decks'||$page == 'deck'){ echo(" class=\"active\"");} ?>>decks</a></li>
 	         	</ul>
+		<?php } else{?>
+
+	        <h1 class="grid_2">
+		            <a href="<?php echo BASE_URL;?>"><span class="org">vote</span>
+			        Drivers of Change Events</a>
+		    </h1>
+    		<div class="grid_2 align_right">
+
+    		</div>
+		    
 		<?php }?>
 		</div>
 	</div>
 	<!-- END HEADER -->
 </div>
 <!-- END CONTAINER_4 - HEADER-WRAP -->
-<?php }?>
