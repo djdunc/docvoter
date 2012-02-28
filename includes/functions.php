@@ -19,7 +19,7 @@ function setup($data=array()) {
 	$steep_cols = array (1=>"39B1D9", 2=>"A681B2", 3=>"F69220", 4=>"8BC53F", 5=>"EC2027");
 	
 	//set admin pages
-	$admin_pages = array('decks','deck','events','event','card');
+	$admin_pages = array('decks','deck','events','event','eventcard');
 	
 	//OAuth
     $_SESSION['oauth'] = new OAuth(PRIVATE_KEY, SECRET, OAUTH_SIG_METHOD_HMACSHA1);
