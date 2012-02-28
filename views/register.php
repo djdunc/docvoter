@@ -104,9 +104,13 @@ $(document).ready(function() {
           }else{
               var fields = $($("#register")[0].elements).not("#email").serialize();
           }  
-           $.post('includes/load.php', action+fields+'username='$('#email').val(), function(data) {
+           $.post('index.php?do=registration', action+fields+'username='+$('#email').val(), function(data) {
                displayAlertMessage(data);
-            var user = eval(jQuery.parseJSON(data));
+
+               var user;
+               try{user = jQuery.parseJSON(data);}
+               catch(err){displayAlertMessage(data);return false;};
+               
                if(user.username){
                    window.location.href = baseurl+"index.php?do=login";
               } else{

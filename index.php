@@ -40,6 +40,35 @@ switch($page) {
     case 'login':
             view('login', $data);
         break;
+    case 'relogin':
+            allow(is('user'));
+            $_SESSION['user'] = callAPI('user/get&id='.$_SESSION['user']->id);
+            return $_SESSION['user']->id ? "success" : "failed";
+        break;
+    case 'register':
+    	    view('register',$data);
+    	break;
+    case 'registration':
+    	    //callAPI with user post, set group_id = 3
+    	    $params['username'] = get('username');
+            $params['password'] = get('password');
+    	    $params['email'] = get('email');
+            $params['first_name'] = get('first_name');
+    	    $params['last_name'] = get('last_name');
+    	    $params['group_id'] = 3;
+    	    
+    	    $user = callAPI('user/post',$params,'obj');
+    	    
+    	    if($user && is_object($user) && $user->id) {
+                $_SESSION['user'] = $user;
+                $_SESSION['user_name'] = $user->first_name." ".$user->last_name;
+                echo(json_encode($user));
+    	    } else {
+    	    	echo $user;
+                die;
+    	    }
+    	    
+    	break;
     case 'decks':
             $data['decks'] = callAPI("deck", array('include_card_count'=>1), 'obj');
             $data['steep'] = $steep;
