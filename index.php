@@ -164,7 +164,7 @@ switch($page) {
                         $data['collections'][$collection->id]['categories'][$category->id] = $category->name;   
                     }
                 }
-                $event_id = get('event_id');
+                $event_id = get('event');
                 if(isset($event_id)) {
                 	$event = callAPI("event/get?id=$event_id", array(), 'obj');
                     if (empty($event) || !$event->id) {

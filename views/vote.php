@@ -17,7 +17,7 @@
     		       </ul>
     		</div>
     		<div class="grid_1 align_right add-driver">
-    				<a href="index.php?do=driver" class="button blue large">+ add driver</a>
+    				<a href="index.php?do=card&event=<?php echo $event->id?>" class="button blue large">+ add driver</a>
     		</div>
 	    </div>
     </div>
@@ -29,14 +29,15 @@
     		       <ul id="vote-cloud">
                       <?php
                       $date_order_cards = array_reverse($event_cards);
+                       var_dump($top50);
                         foreach ( $collection['categories'] as $cat_id=>$category){
-                            foreach ($date_order_cards as $card) { //var_dump($card);
+                            foreach ($date_order_cards as $card) {
                                 $top = in_array($card->id,$top50)?"top50":"";
-                                //$hide = in_array($card->id,$top50)?"":"style='display:none;'";
+                                $hide = in_array($card->id,$top50)?"":"style='display:none;'";
                             	$card_cat_id = (int)$card->category_tag_id;
                             	if ($card_cat_id == $cat_id){
                             	    $clean_cat = dirify($category);
-                            	    echo("<li class='$top $clean_cat'><a href='' id='$card->id'>$card->name</a> <a class='info' href='#'>this is the tip!</a></li>");
+                            	    echo("<li class='$top $clean_cat' $hide><a href='' id='$card->id'>$card->name</a> <a class='info' href='#'>this is the tip!</a></li>");
                             	}
                             }
                         }?>
