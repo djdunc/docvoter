@@ -67,7 +67,7 @@ if(preg_match("/post|put|delete\/*/i",$action)) {
 	    	}
 	    	//restrict PUT to card and own
 	        if(preg_match("/put/i",$action)) {
-	        	$allowed = array("card");
+	        	$allowed = array("card","user");
                 $object = callAPI($resource,array("id"=>$options['id']),'obj');
                 if(!in_array($resource,$allowed) || !is('owner',$object)) {
                     echo "That's not yours. Must be Super Admin to do that";
