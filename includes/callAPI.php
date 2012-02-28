@@ -58,7 +58,7 @@ if(preg_match("/post|put|delete\/*/i",$action)) {
 	    } else { //user
 	    	//restrict POST to card, tag, cardtag and vote
 	    	if(preg_match("/post/i",$action)) {
-                $allowed = array("card","tag","cardtags","vote");
+                $allowed = array("card","tag","cardtags","vote","eventcards");
 		    	//get resource
 	            if(!in_array($resource,$allowed)) {
 	                echo "Must be Admin to do that";
