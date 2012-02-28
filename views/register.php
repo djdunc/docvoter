@@ -1,4 +1,4 @@
-<h3>Create a new Account</h3>
+<?php var_dump($_SESSION['user'])?><h3>Create a new Account</h3>
     <div class="panel form">
 	    <span class="message"></span>
 		<div class="content no-cap">
@@ -17,7 +17,7 @@
 					<!-- Text Field -->
 					<label class="align-left" for="username">
 						<span>Email address<strong class="red">*</strong></span>
-						<input class="textbox m editable" name="email" id="email" type="text" value="" />
+						<input class="textbox m editable" name="username" id="username" type="text" value="" />
 					</label>
 					<!-- Text Field -->
 					<label class="align-left" for="password">
@@ -68,9 +68,6 @@ $(document).ready(function() {
                 required: true, 
                 minlength: 5, 
                 equalTo: "#password" 
-            },
-            email:{
-                email:true
             }
     },
      messages: {
@@ -78,7 +75,7 @@ $(document).ready(function() {
      				required: " ",
      				equalTo: "Please enter the same password as above"	
      			},
-     			email: {
+     			username: {
      				required: "Email is required",
      				remote: "That email is already in use."
      			}
@@ -99,14 +96,11 @@ $(document).ready(function() {
           $(window).unbind("beforeunload");
           $("#fakesave").html("Sending...").show();
           $("#save").hide();
-          if($("#email").val()!=''){
-              var fields = $($("#register")[0].elements).not("#password_confirm").serialize();
-          }else{
-              var fields = $($("#register")[0].elements).not("#email").serialize();
-          }  
-           $.post('index.php?do=registration', action+fields+'username='+$('#email').val(), function(data) {
+          var form_val = action+$("#register").find('input[name!=password_confirm]').serialize()+'&email='+$('#username').val();
+          alert(form_val);
+          return false;
+           $.post('index.php?do=registration', form_val, function(data) {
                displayAlertMessage(data);
-
                var user;
                try{user = jQuery.parseJSON(data);}
                catch(err){displayAlertMessage(data);return false;};
