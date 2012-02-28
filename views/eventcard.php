@@ -1,13 +1,14 @@
-<?php var_dump($user)?>
+<?php //var_dump($card)?>
 <!-- BEGIN PAGE BREADCRUMBS/TITLE -->
 <div class="container_4">
 	<div id="page-heading" class="clearfix">
 	    <div class="grid-wrap">
     		<div class="grid_2 title-crumbs">
-    		       <h3>New driver</h3>
+    		       <h2>Event: <em><?php echo $event->name;?></em></h2>
+    		       <h3>Card details</h3>
     		</div>
     		<div class="grid_2 align_right">
-    				<a href="index.php?do=vote&event=<?php echo $data['event_id']?>" class="button large">Back to voting</a>
+    				<a href="index.php?do=event&id=<?php echo $data['event_id']?>" class="button medium">Back to event</a>
     		</div>
 	    </div>
     </div>
@@ -29,7 +30,7 @@
 						</label>
 						<!-- Collection -->
     					<label class="align-left" for="category_tag_id">
-							<span>Category<strong class="red">*</strong></span>
+							<span>Category (<?php echo $data['event_categories']['name'];?>)</span>
 							<select class="chosen" name="category_tag_id" id="cat_id">  
 							    <?php foreach ($data['event_categories']['categories'] as $key=>$cat){ 
 							        $sel = "";
@@ -39,12 +40,15 @@
 							        echo('<option value='.$key.$sel.'>'.$cat.'</option>');} //TODO add collections under once is selecte?>
 							</select>
 						</label>
-						<?php if (!$user->email||$user->email=='')?>
 						<label class="align-left">
-							<span>Your email<strong class="red">*</strong></span>
-							<input class="textbox l editable" name="email" id="email" type="text" value="" />
+							<span>Question<strong class="red"></strong></span>
+							<input class="textbox l editable" name="question" id="quiestion" type="text" value="<?php if(isset($card->question)){echo($card->question);}?>" />
 						</label>
-						<?php?>
+						<!-- Text Area -->
+						<label class="align-left" for="textArea">
+							<span>Factoid</span>
+							<textarea class="textarea l editable" name="description" id="description" rows="2" cols="1"><?php if(isset($card)){echo($card->description);}?></textarea>
+						</label>
 						<!-- Buttons -->
 						<div class="non-label-section">
 						    <?php if(isset($card->owner_user->id)&&$card->owner_user->id==1&&!is('super')) {?>
@@ -86,7 +90,6 @@
     var owner = <?php echo $_SESSION['user']->id;?>;
     var card_id = <?php if(isset($card)){ echo($card->id);} else{echo('0');}?>;
     var collection = "<?php echo $data['event_categories']['name'];?>";
-    var owner_email = <?php if (!$user->email||$user->email==''){echo 'false';}else{echo 'true';}?>;
     //if adding card card_id == 0
     if (card_id != 0){
         var action = 'controller=api&action=card/put&id='+card_id;
@@ -96,19 +99,31 @@
         var event_action = 'action=eventcards/post&event_id='+event_id;
     }
     
-    if(!owner_email){
-        $("#card").validate({
-            rules: { name: "required", email:{  required: true, email:true}},
-            messages: { name: "Card name is required", email: "Please enter a valid email address"}
-        });
-    }
-    
+    $("#card").validate({
+        rules: { name: "required"},
+        messages: { name: "Card name is required"}
+    });
     
     $('#card input.editable, #card textarea.editable').each(function (i) {
          $(this).data('initial_value', $(this).val());
     });
-    function postCard(){
-        $.post('includes/callAPI.php', action+'&'+$("#card").find('input[name!=category_tag_id]').serialize(), function(data) {
+
+    $('#card input.editable, #card textarea.editable').keyup(function() {
+         if ($(this).val() != $(this).data('initial_value')) {
+              handleFormChanged();
+         }
+    });
+
+    //bind save button
+    $("#save").click(function() {
+      if($("#card").valid()){
+          $(window).unbind("beforeunload");  
+          if (collection == 'steep'){
+              action = action+'&category_id='+$('#cat_id option:selected').val();
+          } else{
+              action = action+'&category_id=6';
+          }
+          $.post('includes/callAPI.php', action+'&'+$("#card").find('input[name!=category_tag_id]').serialize(), function(data) {
                   var saved_card = eval(jQuery.parseJSON(data));
                   if (saved_card.id){
                          //alert(event_action+'&card_id='+saved_card.id+'&category_tag_id='+$('#cat_id option:selected').val());
@@ -124,32 +139,6 @@
                        displayAlertMessage(data);
                   }
          }).error(function() { alert("There was an error saving your card, please try again later."); })
-    }
-    function postOwner(){
-        var update_user = 'action=user/put&id='+owner+'&email='+$("#email").val();
-        alert(update_user);
-        $.post('includes/callAPI.php', update_user , function(data) {
-              var saved_user = data;
-              if (saved_user.id){
-                     postCard();
-              } else{
-                   alert(data);
-              }
-         }).error(function() { alert("There was an error saving your card, please try again later."); },'json')
-    }
-
-    //bind save button
-    $("#save").click(function() {
-      if($("#card").valid()){
-          if (collection == 'steep'){
-              action = action+'&category_id='+$('#cat_id option:selected').val();
-          } else{
-              action = action+'&category_id=6';
-          }
-          if (!owner_email){
-             postOwner();
-          }
-          
       }
       return false;
     });

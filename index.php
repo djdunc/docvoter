@@ -106,7 +106,8 @@ switch($page) {
     	    $data['steep'] = $steep;
        	    view('event',$data);
         break;
-    case 'card':
+        //add card in admin mode
+    case 'eventcard':
     	    allow(is('user'));
             $collections = callAPI('collection', array(), 'obj');
             foreach($collections as $collection) {
@@ -149,8 +150,53 @@ switch($page) {
                 $data['card'] = $card;
             }
             $data['user'] = $_SESSION['user'];
-            view('card',$data);
+            view('eventcard',$data);
         break;
+        case 'card':
+        	    allow(is('user'));
+                $collections = callAPI('collection', array(), 'obj');
+                foreach($collections as $collection) {
+                    $data['collections'][$collection->id] = array(
+                        'name'=>$collection->name,
+                        'categories'=>array()
+                    );
+                    foreach($collection->categories as $category) {
+                        $data['collections'][$collection->id]['categories'][$category->id] = $category->name;   
+                    }
+                }
+                $event_id = get('event_id');
+                if(isset($event_id)) {
+                	$event = callAPI("event/get?id=$event_id", array(), 'obj');
+                    if (empty($event) || !$event->id) {
+                        //404 error
+                        show_error("Sorry, the event you have requested does not exist.", "Make sure that you have the correct URL and that the owner hasn't deleted it. You can create your own event <a href=\"index.php?do=event\">here</a>.");
+                    }
+
+                    $data['event_categories'] = $data['collections'][$event->collection_id];
+                    $data['event_id'] = $event_id;
+                    $data['event'] = $event;
+                } else {
+                	show_error("Sorry, the event you have requested does not exist.", "Make sure that you have the correct URL and that the owner hasn't deleted it. You can create your own event <a href=\"index.php?do=event\">here</a>.");
+                	view('404',$data);
+                	exit;
+                }
+        	    $card_id = get('id');
+                if (isset($card_id)) {
+                	$params = array('include_owner'=>1);
+                	if(isset($event)) {
+                		$params['event_id']=$event->id;
+                	}
+                    $card = callAPI("card/get?id=$card_id", $params, 'obj');
+                    if (empty($card) || !$card->id) {
+                        //404 error
+                        show_error("Sorry, the card you have requested does not exist.", "Make sure that you have the correct URL and that the owner hasn't deleted it. You can create your own card <a href=\"index.php?do=card\">here</a>.");
+                    }
+
+                    $data['card'] = $card;
+                }
+                $data['user'] = $_SESSION['user'];
+                view('card',$data);
+            break;
     case 'vote':
     	    allow(is('user'));
     	    $event_id = get('event');

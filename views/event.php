@@ -145,7 +145,7 @@
     		       <h3>Event Cards</h3>
     		</div>
     		<div class="grid_2 align_right">
-    				<a href="index.php?do=card&event_id=<?php echo $event->id;?>" class="button medium">Add a new card</a>
+    				<a href="index.php?do=eventcard&event_id=<?php echo $event->id;?>" class="button medium">Add a new card</a>
     		</div>
     </div>
     <div class="grid_4">
@@ -157,7 +157,7 @@
 						<th>Name</th>
 						<th>Category</th>
 						<th>Owner</th>
-						<th class="{sorter: 'shortDate'}">Creation date</th>
+						<th class="{sorter: 'shortDate'}">Created</th>
 						<th class="options-row">Options</th> 
 					</tr> 
 				</thead> 
@@ -167,7 +167,7 @@
 						    $owner_name = get_name($card->owner_user);
 						?>
 					<tr> 
-						<td><a href="index.php?do=card&id=<?php echo $card->id ?>&event_id=<?php echo $event->id;?>"><?php echo $card->name ?></a></td> 
+						<td><a href="index.php?do=eventcard&id=<?php echo $card->id ?>&event_id=<?php echo $event->id;?>"><?php echo $card->name ?></a></td> 
 						<td class="center <?php if ($event->collection_id==1){echo $data['steep'][$card->category_tag_id].'-b';} ?>"><?php if(isset($collections[$event->collection_id]['categories'][$card->category_tag_id])){ echo $collections[$event->collection_id]['categories'][$card->category_tag_id]; }  ?></td>
 						<td class="center"><?php echo $owner_name ?></td> 
 						<td class="center"><?php echo(date( "d-m-Y", $card->ctime)); ?></td>

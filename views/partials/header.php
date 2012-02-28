@@ -111,7 +111,7 @@
 		    <h1 class="grid_3"><span class="org"><?php if(isset($_SESSION['user'])) echo $_SESSION['user_name']; ?>&nbsp;</span><a href="<?php echo BASE_URL;?>index.php?do=events">Dashboard</a>
 	  		</h1>
 	  		    <ul id="main-navigation">
-	         		<li><a href="index.php?do=events"<?php if($page == 'events'||$page == 'event'||$page == 'card'){ echo(" class=\"active\"");} ?>>events</a></li><li class="last"><a href="index.php?do=decks"<?php if($page == 'decks'||$page == 'deck'){ echo(" class=\"active\"");} ?>>decks</a></li>
+	         		<li><a href="index.php?do=events"<?php if($page == 'events'||$page == 'event'||$page == 'eventcard'){ echo(" class=\"active\"");} ?>>events</a></li><li class="last"><a href="index.php?do=decks"<?php if($page == 'decks'||$page == 'deck'){ echo(" class=\"active\"");} ?>>decks</a></li>
 	         	</ul>
 		<?php }?>
 		</div>
