@@ -69,18 +69,18 @@
 						    <p class="check-pair">
 						         <input type="hidden" name="auto_close" value="false" />
                                 <label>
-                                    <input type="checkbox" name="auto_close" value="true" <?php if(isset($edit_event) && $event->auto_close){echo 'checked';}?> class="editable" /> Close event automatically after end date</label></p>
+                                    <input type="checkbox" name="auto_close" value="true" <?php if(isset($event) && $event->auto_close){echo 'checked';}?> class="editable" /> Close event automatically after end date</label></p>
 							 <p class="check-pair">
 							     <input type="hidden" name="auto_publish" value="false" />
  							      <label>
-							    <input type="checkbox" name="auto_publish" value="true" <?php if(isset($edit_event) && $event->auto_publish){echo 'checked';}?> class="editable" />
+							    <input type="checkbox" name="auto_publish" value="true" <?php if(isset($event) && $event->auto_publish){echo 'checked';}?> class="editable" />
 							    Auto-publish submitted drivers
 							</label>
 							</p>
 							<p class="check-pair">  
 							    <input type="hidden" name="allow_anon" value="false" />
 							    <label>
-							    <input type="checkbox" name="allow_anon" value="true" <?php if(isset($edit_event) && $event->allow_anon){echo 'checked';}?> class="editable" />
+							    <input type="checkbox" name="allow_anon" value="true" <?php if(isset($event) && $event->allow_anon){echo 'checked';}?> class="editable" />
 							    Include voter survey
 							    </label>
 							</p>

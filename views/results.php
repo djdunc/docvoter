@@ -4,8 +4,7 @@
 	    <div class="grid-wrap">
     		<div class="grid_3">
     		       <ul id="category-nav">
-       		           <li><a id="top50" class="active" href="">top 50</a></li>
-                          <?php foreach($collection['categories'] as $cat_id=>$category){
+       		           <li><a id="top50" class="active" href="">top 50</a></li><?php foreach($collection['categories'] as $cat_id=>$category){
                               if ($collection['name']=='steep' ){
                                   $steepclass = $category."-to";
                         	    } else{
@@ -26,6 +25,7 @@
 	    <div class="grid-wrap" class="clearfix">
     		<div class="grid_4">
     		    <div class="panel">
+    		        <?php if (count($event_cards)){?>
     		        <ul id="vote-cloud">
                           <?php
                             foreach ( $collection['categories'] as $cat_id=>$category){
@@ -40,6 +40,7 @@
                                 }
                             }?>
         		       </ul>
+        		       <?php } else { echo('<h3 class="content no-cap push-down">This event has no drivers to display.');}?>
     		     </div>
     		</div>
 	    </div>

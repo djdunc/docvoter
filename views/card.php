@@ -39,16 +39,16 @@
 							        echo('<option value='.$key.$sel.'>'.$cat.'</option>');} //TODO add collections under once is selecte?>
 							</select>
 						</label>
-						<?php if (!$user->email||$user->email=='')?>
+						<?php if (!$user->email||$user->email==''){?>
 						<label class="align-left">
 							<span>Your email<strong class="red">*</strong></span>
 							<input class="textbox l editable" name="email" id="email" type="text" value="" />
 						</label>
-						<?php?>
+						<?php } ?>
 						<!-- Buttons -->
 						<div class="non-label-section">
 						    <?php if(isset($card->owner_user->id)&&$card->owner_user->id==1&&!is('super')) {?>
-						        <p class="button medium disabled" id="fakesave">Only superadmins can edit this</p>
+						        <p class="button medium disabled" id="fakesave">Only owner can edit this card</p>
 						    <?php  }else{?>
 						        <input type="button" id="save" class="button medium blue" value="Save" />
     						    <a href="index.php?do=event&id=<?php echo($event->id);?>" class="button medium">Cancel</a>
@@ -108,33 +108,32 @@
          $(this).data('initial_value', $(this).val());
     });
     function postCard(){
-        $.post('includes/callAPI.php', action+'&'+$("#card").find('input[name!=category_tag_id]').serialize(), function(data) {
-                  var saved_card = eval(jQuery.parseJSON(data));
+        $.post('includes/callAPI.php', action+'&name='+$("#name").val(), function(data) {
+                 try { saved_card = $.parseJSON(data); }
+                  catch (err) { displayAlertMessage(data); return false; }
                   if (saved_card.id){
-                         //alert(event_action+'&card_id='+saved_card.id+'&category_tag_id='+$('#cat_id option:selected').val());
+                       // alert(event_action+'&card_id='+saved_card.id+'&category_tag_id='+$('#cat_id option:selected').val());
                         $.post('includes/callAPI.php', event_action+'&card_id='+saved_card.id+'&category_tag_id='+$('#cat_id option:selected').val(), function(data) {
-                               var saved_eventcards = eval(jQuery.parseJSON(data));
-                               if (saved_eventcards.event_id){
+                             try { saved_eventcard = $.parseJSON(data); }
+                             catch (err) { displayAlertMessage(data); return false; }
+                               if (saved_eventcard.event_id){
                                   displayAlertMessage("Card saved!");
-                               } else{
-                                   displayAlertMessage(data);
                                }
                            }).error(function() { alert("There was an error adding your card to this event, please try again."); })
                   } else{
                        displayAlertMessage(data);
                   }
-         }).error(function() { alert("There was an error saving your card, please try again later."); })
+         }).error(function() { alert("There was an error saving your card, please try again later."); },'json')
     }
     function postOwner(){
         var update_user = 'action=user/put&id='+owner+'&email='+$("#email").val();
         alert(update_user);
         $.post('includes/callAPI.php', update_user , function(data) {
-              var saved_user = data;
+             try { saved_user = $.parseJSON(data); }
+             catch (err) { displayAlertMessage(data); return false; }
               if (saved_user.id){
                      postCard();
-              } else{
-                   alert(data);
-              }
+              } 
          }).error(function() { alert("There was an error saving your card, please try again later."); },'json')
     }
 
@@ -148,6 +147,9 @@
           }
           if (!owner_email){
              postOwner();
+          } else{
+              alert('card');
+              postCard();
           }
           
       }

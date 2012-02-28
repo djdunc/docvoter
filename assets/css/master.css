@@ -390,6 +390,10 @@ ul#main-navigation {
 .intro {
 	max-width: 1000px;
 }
+.pad-r{
+	padding-bottom: 1em;
+	padding-right: 2.5em;
+}
 
 /* ALERTS																		*/
 
@@ -1386,8 +1390,7 @@ button {
 }
 
 button, .button { 
-text-decoration:none; margin: 0 6px 0 0; padding: 7px 9px; display:inline-block; -moz-border-radius:12px; -webkit-border-radius:12px; border-radius:12px; color:#fff;
-	font-weight: bold;
+text-decoration:none; margin: 0 6px 0 0; padding: 7px 9px; display:inline-block; -moz-border-radius:12px; -webkit-border-radius:12px; border-radius:12px; color:#fff;font-weight: bold;
 }
 .button:hover, button:hover {
 	color: #fff;

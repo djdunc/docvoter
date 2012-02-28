@@ -4,8 +4,7 @@
 	    <div class="grid-wrap">
     		<div class="grid_3">
     		       <ul id="category-nav">
-    		           <li><a id="top50" class="active" href="">top 50</a></li>
-                       <?php foreach($collection['categories'] as $cat_id=>$category){
+    		           <li><a id="top50" class="active" href="">top 50</a></li><?php foreach($collection['categories'] as $cat_id=>$category){
                            if ($collection['name']=='steep' ){
                                $steepclass = $category."-to";
                      	    } else{
@@ -26,10 +25,10 @@
 	    <div class="grid-wrap" class="clearfix">
     		<div class="grid_4">
     		    <div class="panel">
+    		       <?php if (count($event_cards)){?>
     		       <ul id="vote-cloud">
                       <?php
                       $date_order_cards = array_reverse($event_cards);
-                       var_dump($top50);
                         foreach ( $collection['categories'] as $cat_id=>$category){
                             foreach ($date_order_cards as $card) {
                                 $top = in_array($card->id,$top50)?"top50":"";
@@ -37,11 +36,12 @@
                             	$card_cat_id = (int)$card->category_tag_id;
                             	if ($card_cat_id == $cat_id){
                             	    $clean_cat = dirify($category);
-                            	    echo("<li class='$top $clean_cat' $hide><a href='' id='$card->id'>$card->name</a> <a class='info' href='#'>this is the tip!</a></li>");
+                            	    echo("<li class='$top $clean_cat' $hide><a href='' id='$card->id'>$card->name</a></li>");
                             	}
                             }
                         }?>
     		       </ul>
+    		       <?php } else { echo('<h3 class="content no-cap push-down">This event has no drivers yet. <a href="index.php?do=card&event='.$event->id.'">+ add your driver here</a>.</h3>');}?>
     		     </div>
     		</div>
 	    </div>

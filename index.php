@@ -292,7 +292,7 @@ switch($page) {
     	        //filter out events starting after today
     	        $count = count($events);                
                 while($count--) {
-                    if($events[$count]->start > time()) {
+                    if($events[$count]->start >= time()) {
                         unset($events[$count]);
                     }
                 }    	        	
