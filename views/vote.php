@@ -36,7 +36,7 @@
                             	$card_cat_id = (int)$card->category_tag_id;
                             	if ($card_cat_id == $cat_id){
                             	    $clean_cat = dirify($category);
-                            	    echo("<li class='$top $clean_cat' $hide><a href='' id='$card->id'>$card->name</a></li>");
+                            	    echo("<li class='$top $clean_cat' $hide><a href='' class='card' id='$card->id'>$card->name</a></li>");
                             	}
                             }
                         }?>
