@@ -99,16 +99,14 @@ $(document).ready(function() {
           var form_val = action+$("#register").find('input[name!=password_confirm]').serialize()+'&email='+$('#username').val();
           //alert(form_val);
            $.post('index.php?do=registration', form_val, function(data) {
-               displayAlertMessage(data);
+               //displayAlertMessage(data);
                var user;
-               try{user = jQuery.parseJSON(data);}
+               try{ user = jQuery.parseJSON(data);}
                catch(err){displayAlertMessage(data);return false;};
                
                if(user.username){
                    window.location.href = baseurl+"index.php?do=login";
-              } else{
-                    displayAlertMessage(data);
-            }
+               }
            }).error(function() { alert("error"); }, "json")
       }
       return false;
