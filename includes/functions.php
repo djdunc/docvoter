@@ -153,8 +153,8 @@ function show_error($h1, $body, $type="404"){
  * @param unknown_type $key
  */
 function get($key) {
-	if(isset($_GET[$key])) {
-		return $_GET[$key];
+	if(isset($_REQUEST[$key])) {
+		return $_REQUEST[$key];
 	} else {
 		return NULL;
 	}

@@ -1,4 +1,4 @@
-<?php var_dump($_SESSION['user'])?><h3>Create a new Account</h3>
+<h3>Create a new Account</h3>
     <div class="panel form">
 	    <span class="message"></span>
 		<div class="content no-cap">
@@ -46,7 +46,8 @@
 /* <![CDATA[ */
 var formChanged = false;
 var baseurl = "<?php echo BASE_URL; ?>";
-var action = 'controller=user&action=post&';
+var ref_query = "<?php if(isset($_SESSION['ref_query'])) echo $_SESSION['ref_query']; ?>";
+var action = 'action=user/post&';
 $(document).ready(function() {
     var validator = $("#register").validate({ 
          rules: { 
@@ -103,9 +104,8 @@ $(document).ready(function() {
                var user;
                try{ user = jQuery.parseJSON(data);}
                catch(err){displayAlertMessage(data);return false;};
-               
                if(user.username){
-                   window.location.href = baseurl+"index.php?do=login";
+                   window.location.href = baseurl+"index.php?"+ref_query;
                }
            }).error(function() { alert("error"); }, "json")
       }

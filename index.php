@@ -19,7 +19,7 @@ $data = array(
 );
 	
 //set up ref page
-if($page != "login")
+if($page != "login" && $page != "register" && $page != "registration")
 //    $_SESSION['ref_page'] = $page;
     $_SESSION['ref_query'] = $_SERVER['QUERY_STRING'];
 
@@ -56,7 +56,6 @@ switch($page) {
             $params['first_name'] = get('first_name');
     	    $params['last_name'] = get('last_name');
     	    $params['group_id'] = 3;
-    	    
     	    $user_json = callAPI('user/post',$params,'obj');
     	    
     	    if($user_json && is_object($user_json) && $user_json->id) {
