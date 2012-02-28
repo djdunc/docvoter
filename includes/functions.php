@@ -63,6 +63,7 @@ function is($role='admin', $object=null) {
 	switch($role) {
 		case 'user':
 		        if(isset($_SESSION['user'])
+		            && is_object($_SESSION['user'])
                     && $_SESSION['user']->group_id == USER_GROUP_ID
                 ) {
                     $auth = true;
