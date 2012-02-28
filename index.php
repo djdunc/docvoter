@@ -57,14 +57,14 @@ switch($page) {
     	    $params['last_name'] = get('last_name');
     	    $params['group_id'] = 3;
     	    
-    	    $user = callAPI('user/post',$params,'obj');
+    	    $user_json = callAPI('user/post',$params,'obj');
     	    
-    	    if($user && is_object($user) && $user->id) {
-                $_SESSION['user'] = $user;
-                $_SESSION['user_name'] = $user->first_name." ".$user->last_name;
-                echo(json_encode($user));
+    	    if($user_json && is_object($user_json) && $user_json->id) {
+                $_SESSION['user'] = $user_json;
+                $_SESSION['user_name'] = $user_json->first_name." ".$user_json->last_name;
+                echo(json_encode($user_json));
     	    } else {
-    	    	echo $user;
+    	    	echo $user_json;
                 die;
     	    }
     	    

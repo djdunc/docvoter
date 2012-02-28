@@ -97,8 +97,7 @@ $(document).ready(function() {
           $("#fakesave").html("Sending...").show();
           $("#save").hide();
           var form_val = action+$("#register").find('input[name!=password_confirm]').serialize()+'&email='+$('#username').val();
-          alert(form_val);
-          return false;
+          //alert(form_val);
            $.post('index.php?do=registration', form_val, function(data) {
                displayAlertMessage(data);
                var user;
