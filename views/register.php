@@ -41,3 +41,97 @@
 		</form>
 	  </div>
 </div>
+<script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var formChanged = false;
+var baseurl = "<?php echo BASE_URL; ?>";
+var action = 'controller=user&action=post&';
+$(document).ready(function() {
+    var validator = $("#register").validate({ 
+         rules: { 
+            firstname: "required", 
+            lastname: "required", 
+            username: { 
+                required: true,
+                email:true, 
+                 remote: {
+                     url:baseurl+'includes/username_unique.php',
+                     type: 'post',
+                 }
+            },
+            password: { 
+                required: true, 
+                minlength: 5 
+            }, 
+            password_confirm: { 
+                required: true, 
+                minlength: 5, 
+                equalTo: "#password" 
+            },
+            email:{
+                email:true
+            }
+    },
+     messages: {
+     			password_confirm: {
+     				required: " ",
+     				equalTo: "Please enter the same password as above"	
+     			},
+     			email: {
+     				required: "Email is required",
+     				remote: "That email is already in use."
+     			}
+    },
+           // debug:true
+     
+     
+    });
+    
+   // if something is edited, show save button, and display alert on page leave
+   $('#register .editable').bind('change paste', function() {
+           handleFormChanged();
+      });
+    
+    //bind save button
+    $("#save").click(function() {
+      if($("#register").valid()){
+          $(window).unbind("beforeunload");
+          $("#fakesave").html("Sending...").show();
+          $("#save").hide();
+          if($("#email").val()!=''){
+              var fields = $($("#register")[0].elements).not("#password_confirm").serialize();
+          }else{
+              var fields = $($("#register")[0].elements).not("#email").serialize();
+          }  
+           $.post('includes/load.php', action+fields+'username='$('#email').val(), function(data) {
+               displayAlertMessage(data);
+            var user = eval(jQuery.parseJSON(data));
+               if(user.username){
+                   window.location.href = baseurl+"index.php?do=login";
+              } else{
+                    displayAlertMessage(data);
+            }
+           }).error(function() { alert("error"); }, "json")
+      }
+      return false;
+    });
+    
+   });
+
+   function handleFormChanged() {
+        $(window).bind('beforeunload', confirmNavigation);
+     $('#save').show();
+        $('#fakesave').hide();
+        formChanged = true;
+   }
+
+   function confirmNavigation() {
+        if (formChanged) {
+             return ('One or more forms on this page have changed. Your changes will be lost!');
+        } else {
+             return true;
+        }
+   }
+    /* ]]> */
+</script>
