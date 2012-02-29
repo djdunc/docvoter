@@ -7,13 +7,15 @@
 <script src="assets/js/chosen/chosen.jquery.js" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-    $('#events')
-	.tablesorter({dateFormat: 'ddmmyyyy', widthFixed: true, widgets: ['zebra'],sortList:[[3,1]],headers: { 
-          //3: { sorter: "shortDate", dateFormat: 'ddmmyyyy' }, // dateFormat will parsed as the default above 
-         // 4: { sorter: "shortDate"}, // set day first format 
-          5: { sorter: false}
-        }})
-    .tablesorterPager({container: $("#table-pager-1")});
+	if($('#events').length) {
+	    $('#events')
+		.tablesorter({dateFormat: 'ddmmyyyy', widthFixed: true, widgets: ['zebra'],sortList:[[3,1]],headers: { 
+	          //3: { sorter: "shortDate", dateFormat: 'ddmmyyyy' }, // dateFormat will parsed as the default above 
+	         // 4: { sorter: "shortDate"}, // set day first format 
+	          5: { sorter: false}
+	        }})
+	    .tablesorterPager({container: $("#table-pager-1")});
+	}
 });
 </script>
 <!-- BEGIN PAGE BREADCRUMBS/TITLE -->

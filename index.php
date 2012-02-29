@@ -75,7 +75,9 @@ switch($page) {
             view('decks', $data);
         break;
     case 'deck':
+    	    $deck_card_ids = array();
             $deck_id = get('id');
+            $data['editable'] = false;
             if (isset($deck_id)) {
                 $deck = callAPI("deck/get?id=$deck_id", array(), 'obj');
                 if (empty($deck) || !$deck->id) {
@@ -86,9 +88,9 @@ switch($page) {
 	            $deck_cards = callAPI("card", array('deck_id'=>$deck_id), 'obj');
                 foreach($deck_cards as $card) {
                 	$deck_card_ids[] = $card->id;
-                	$data['deck_card_ids'] = implode(',',$deck_card_ids);
                 }
-	            
+                $data['editable'] = is('super') || (is('admin') && is('owner',$deck));
+                $data['deck_card_ids'] = implode(',',$deck_card_ids);
                 $data['edit_deck_id'] = $deck_id;
 	            $data['edit_deck'] = $deck;
                 $data['deck_cards'] = $deck_cards;
@@ -107,6 +109,7 @@ switch($page) {
             view('events',$data);
         break;
     case 'event':
+    	    $data['event_cards'] = array();
             $event_id = get('id');
             if (isset($event_id)) {
                 $event = callAPI("event/get?id=$event_id", array(), 'obj');

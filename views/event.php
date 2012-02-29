@@ -94,12 +94,15 @@
 						
 						<!-- Buttons -->
 						<div class="non-label-section">
-						    <?php if(is('super') || is('owner', $event )) {?>
-						    <input type="button" id="save" class="button medium blue" value="Save" />
-						    <a href="index.php?do=events" class="button medium">Cancel</a>
-						    <?php  }else{?>
+						    <?php if(isset($event) && (is('super') || is('owner',$event))):?>
+						        <input type="button" id="save" class="button medium blue" value="Save" />
+                                <a href="index.php?do=events" class="button medium">Cancel</a>
+						    <?php elseif(is('admin')):?>
+						        <input type="button" id="save" class="button medium blue" value="Save" />
+                                <a href="index.php?do=events" class="button medium">Cancel</a>
+						    <?php else:?>
 						        <p class="button medium disabled" id="fakesave">Only owner can edit</p>
-						    <?php }?>
+						    <?php endif;?>
 						</div>
 					
 					</fieldset>
@@ -126,7 +129,7 @@
     		           <h3>Add cards from Deck</h3>
     		        <div>
     		        <?php foreach($data['decks'] as $deck){
-                          echo("<span class='list-col'><label><input type='radio' name='deck_id'  value=".$deck->id.'"> '.$deck->name."</label></span>");
+                          echo("<span class='list-col'><label><input type='radio' name='deck_id'  value='$deck->id'>$deck->name</label></span>");
                       } ?>
     		          </div>
     		    <!-- Buttons -->
