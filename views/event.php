@@ -143,7 +143,7 @@
     </div>
     <?php if(isset($event) && !empty($data['event_cards'])){
     //var_dump($data['event_cards']);?>
-     <div class="clearfix">
+    <div class="clearfix">
     		<div class="grid_2 title-crumbs">
     		       <h3>Event Cards</h3>
     		</div>
@@ -215,34 +215,8 @@
 <link rel="stylesheet" href="assets/js/chosen/chosen.css" type="text/css" media="screen" />
 <!--	Load the Chosen script.-->
 <script src="assets/js/chosen/chosen.jquery.js" type="text/javascript"></script>
-<script type="text/javascript">
-// add parser through the tablesorter addParser method 
-    /*$.tablesorter.addParser({ 
-        // set a unique id 
-        id: 'steep-parser', 
-        is: function(s) { 
-            // return false so this parser is not auto detected 
-            return false; 
-        }, 
-        format: function(s) { 
-            // format your data for normalization 
-            return s.toLowerCase().replace(/social/,0).replace(/technological/,1).replace(/economic/,2).replace(/environmental/,3).replace(/political/,4); 
-        }, 
-        // set type, either numeric or text 
-        type: 'numeric' 
-    });*/
-$(document).ready(function() {
-    $('#cards').tablesorter({dateFormat: 'ddmmyyyy', widthFixed: true, widgets: ['zebra'],sortList:[[3,1]],headers: { 
-          //1: { sorter: "steep-parser" },
-         // 4: { sorter: "shortDate"}, // set day first format 
-          4: { sorter: false}
-        }})
-    .tablesorterPager({container: $("#table-pager-1")});
-    $("#deck-select").chosen();
-});
-</script>
 <?php if(isset($event)){$edit_event_id=$event->id;}else{$edit_event_id=0;} ?>
-<script type="text/javascript">//<![CDATA[
+<script type="text/javascript">
     $(document).ready(function() {
     var formChanged = false;
     var baseurl = "<?php echo BASE_URL; ?>";
@@ -274,18 +248,17 @@ $(document).ready(function() {
          handleFormChanged();
         }
     });
-    //start second one always from first date
-    function customRange(a) {  
-        var b = new Date();  
-        var c = new Date(b.getFullYear(), b.getMonth(), b.getDate());  
-        if (a.id == 'endpicker') {  
-            if ($('#startpicker').datepicker('getDate') != null) {  
-                c = $('#startpicker').datepicker('getDate');  
-            }  
-        }  
-        return {  
-            minDate: c  
-        }  
+    function customRange(a) {//start second one always from first date
+        var b = new Date();
+        var c = new Date(b.getFullYear(), b.getMonth(), b.getDate());
+        if (a.id == 'endpicker') {
+            if ($('#startpicker').datepicker('getDate') != null) {
+                c = $('#startpicker').datepicker('getDate');
+            }
+        }
+        return {
+            minDate: c
+        }
     }
     //if adding event edit_event == 0
     if (edit_event != 0){
@@ -300,7 +273,18 @@ $(document).ready(function() {
             $('#endpicker').datepicker('setDate', $.datepicker.parseDate('@',dend+'000'));
             milsToSecs($('#endpicker'),$('#end'));
         }  
-         if (cards!=0){
+        // if we have cards, sort table and add delete buttons
+        if (cards!=0){
+             
+             $('#cards').tablesorter({
+                 dateFormat: 'ddmmyyyy', 
+                 widthFixed: true, 
+                 widgets: ['zebra'],
+                 sortList:[[3,1]],
+                 headers: {4: { sorter: false}}
+             })
+             .tablesorterPager({container: $("#table-pager-1")});
+             $("#deck-select").chosen();
              
             function confirmGetMessage(line) {
             var myId = line.attr('id');
@@ -325,7 +309,7 @@ $(document).ready(function() {
             });
         }
         
-    } else{
+    } else{ //we are adding event
         var action = 'controller=api&action=event/post&eventtype=2&owner='+owner;
         $('#startpicker').datepicker('setDate', new Date());
         milsToSecs($('#startpicker'),$('#start'));
@@ -359,7 +343,6 @@ $(document).ready(function() {
          milsToSecs($(this),$('#end'));
           handleFormChanged();
     });
-    
     
     //set value of private on password change
     $('#password').keyup(function() {
@@ -417,4 +400,4 @@ $(document).ready(function() {
              return true;
         }
    }
-//]]></script>
+</script>

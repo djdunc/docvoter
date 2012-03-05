@@ -36,7 +36,7 @@
                             	$card_cat_id = (int)$card->category_tag_id;
                             	if ($card_cat_id == $cat_id){
                             	    $clean_cat = dirify($category);
-                            	    echo("<li class='$top $clean_cat' $hide><a href='' class='card' id='$card->id' title='click to vote'>$card->name</a></li>");
+                            	    echo("<li class='$top $clean_cat' $hide><a href='' class='card' id='$card->id' alt='$card->name'>$card->name</a></li>");
                             	}
                             }
                         }?>
@@ -55,6 +55,7 @@
 $(document).ready(function() {
 	var event_id=<?php echo $event->id;?>;
 	var owner=<?php echo $_SESSION['user']->id;?>;
+	//navigation
 	$('#category-nav li a').click(function(){
         if(!$(this).hasClass('active')) {
             $('#category-nav li a').removeClass('active');
@@ -64,22 +65,14 @@ $(document).ready(function() {
             $('#vote-cloud li.'+class_to_show).show();
         }
     });
-    function votedStatus(elem){
-        var title = 'hi';
-        return title;
-    }
-    // $(".card").tipTip({defaultPosition:"right",maxWidth:"auto",cssClass:"alternative",
-    //         content:function() {
-    //         if(!$(this).hasClass('voted')) {
-    //            return('click to vote');
-    //      } else {
-    //           return('click to remove vote');
-    //      }}
-    //      });
+    //tooltip
     $('.card').poshytip({
+        content: 'click to vote',
         className: 'tip-twitter',
         alignTo: 'target',
     	alignX: 'center',
+    	alignY: 'bottom',
+    	allowTipHover: false,
     	offsetY: 8,	
         slide: false
     });
@@ -89,26 +82,32 @@ $(document).ready(function() {
         if(!currcard.hasClass('voted')) {
         	//vote
         	var query_url = "includes/callAPI.php?action=vote/post&event_id="+event_id+"&owner="+owner+"&card_id="+$(this).attr('id');
-            currcard.poshytip('update', 'sending vote...');
+            currcard.poshytip('update', 'sending...');
             $.ajax({
 	            url: query_url,
-	            success: function(data){/*uhm ... it worked*/
+	            success: function(data){/*... it worked*/
 	                currcard.addClass('voted');
-	                currcard.poshytip('update', 'click to remove');
+	                currcard.poshytip('update', 'click to cancel');
 	            },
-	            error: function(data){/*... it didn't*/}
+	            error: function(data){/*... it didn't: reverse tip*/
+	                currcard.poshytip('update', 'click to vote');
+	                currcard.poshytip('update', 'there was an error sending vote, please try again later',true);
+	            }
 	        });
         } else {
             //unvote
             var query_url = "includes/callAPI.php?action=vote/delete&event_id="+event_id+"&owner="+owner+"&card_id="+$(this).attr('id');
+            currcard.poshytip('update', 'removing...');
         	$.ajax({
                 url: query_url,
-                success: function(data){/*uhm ... it worked*/
+                success: function(data){/*... it worked*/
                        currcard.removeClass('voted');
-                       // currcard.tipTip('hide');
-                       //                        currcard.tipTip('show');
+                       currcard.poshytip('update', 'click to vote');
                     },
-                error: function(data){/*... it didn't*/}
+                error: function(data){/*... it didn't*/
+                    currcard.poshytip('update', 'click to cancel');
+                       currcard.poshytip('update', 'there was an error removing vote, please try again later',true);
+                }
             });
         }
     });

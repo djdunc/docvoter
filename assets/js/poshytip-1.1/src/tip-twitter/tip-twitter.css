@@ -1,11 +1,9 @@
 .tip-twitter {
 	opacity:0.9;
 	z-index:1000;
-	text-align:left;
-	border-radius:4px;
-	-moz-border-radius:4px;
-	-webkit-border-radius:4px;
-	padding: 13px;
+	text-align: center;
+	padding: 12px 8px;
+	min-width: 100px;
 	max-width:200px;
 	color:#fff;
 	background-color:#000;
@@ -18,7 +16,7 @@
 }
 .tip-twitter .tip-inner {
 	line-height: 18px;
-	font-size: 15px;
+	font-size: 14px;
 	font-weight: bold;
 }
 

@@ -147,7 +147,6 @@
           if (!owner_email){
              postOwner();
           } else{
-              alert('card');
               postCard();
           }
           

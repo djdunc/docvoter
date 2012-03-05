@@ -1949,3 +1949,9 @@ ul#tag-list li{
 	 float: right!important;
 	  -moz-border-radius: 12px; -webkit-border-radius: 12px; -khtml-border-radius: 12px; border-radius: 12px;
 }
+
+/* ff bug with datepicker pushing page down */
+#ui-datepicker-div {
+    display: none;
+}
+

@@ -102,6 +102,8 @@ $(document).ready(function() {
                 className: 'tip-twitter',
                 alignTo: 'target',
             	alignX: 'center',
+            	alignY: 'bottom',
+            	allowTipHover: false,
             	offsetY: 8,
                 slide: false
             });
