@@ -816,8 +816,8 @@ div.pager .table-options {
 	font-weight: bold;
 }
 #event-gallery li a .footer .votes{
-	background: url(../images/s-icons.png) no-repeat left center;
-	padding-left: 12px;
+	background: url(../images/xs-icons.png) no-repeat left center;
+	padding-left: 14px;
 	color: #aaa;
 }
 #event-gallery li a .footer .org{
