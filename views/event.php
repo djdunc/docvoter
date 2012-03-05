@@ -129,7 +129,7 @@
     		           <h3>Add cards from Deck</h3>
     		        <div>
     		        <?php foreach($data['decks'] as $deck){
-                          echo("<span class='list-col'><label><input type='radio' name='deck_id'  value='$deck->id'>$deck->name</label></span>");
+                          echo("<span class='list-col'><label><input type='radio' name='deck_id'  value='$deck->id'> $deck->name</label></span>");
                       } ?>
     		          </div>
     		    <!-- Buttons -->
@@ -169,12 +169,12 @@
 						    foreach ($data['event_cards'] as $card):
 						    $owner_name = get_name($card->owner_user);
 						?>
-					<tr> 
+					<tr id='<?php echo $card->id ?>'> 
 						<td><a href="index.php?do=eventcard&id=<?php echo $card->id ?>&event_id=<?php echo $event->id;?>"><?php echo $card->name ?></a></td> 
 						<td class="center <?php if ($event->collection_id==1){echo $data['steep'][$card->category_tag_id].'-b';} ?>"><?php if(isset($collections[$event->collection_id]['categories'][$card->category_tag_id])){ echo $collections[$event->collection_id]['categories'][$card->category_tag_id]; }  ?></td>
 						<td class="center"><?php echo $owner_name ?></td> 
 						<td class="center"><?php echo(date( "d-m-Y", $card->ctime)); ?></td>
-						<td class="center options-row"><a class="icon-button edit" title="edit event" href="index.php?do=issue&id=<?php echo $card->id ?>">Edit</a></td> 
+						<td class="center options-row"><a class="icon-button edit" title="edit card" href="index.php?do=eventcard&id=<?php echo $card->id ?>&event_id=<?php echo $event->id;?>">Edit</a><a class="icon-button delete" title="remove card from this event" href="#">Remove</a></td> 
 					</tr>
 					<?php
 					    endforeach;
@@ -300,6 +300,31 @@ $(document).ready(function() {
             $('#endpicker').datepicker('setDate', $.datepicker.parseDate('@',dend+'000'));
             milsToSecs($('#endpicker'),$('#end'));
         }  
+         if (cards!=0){
+             
+            function confirmGetMessage(line) {
+            var myId = line.attr('id');
+            //display a confirmation box
+            var deletecard = confirm("Are you sure you want to remove this card?"); 
+            //if the user presses the "OK" button delete
+                if (deletecard){
+                    $.post('includes/callAPI.php', 'action=eventcards/delete&event_id='+edit_event+'&card_id='+myId, function(data) {
+                        if(data==''){
+                            line.remove();
+                        } else{
+                            alert("There was an error removing the card, please try again later.");
+                        }
+                    }).error(function() { alert("There was an error removing the card, please try again later."); })
+                }
+            }
+            //delete buttons
+            $(".delete").click(function() {
+                var myTr = $(this).closest('tr');
+                confirmGetMessage(myTr);
+               return false;
+            });
+        }
+        
     } else{
         var action = 'controller=api&action=event/post&eventtype=2&owner='+owner;
         $('#startpicker').datepicker('setDate', new Date());
