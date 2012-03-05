@@ -41,7 +41,7 @@ if (isset($write_header)){
 fputcsv($sf , $options);
 fclose($sf);
 
-$_SESSION['survey']= true;
+$_SESSION['survey'] = true;
 
 echo('');
 

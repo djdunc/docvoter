@@ -323,10 +323,30 @@ switch($page) {
     	        //filter out events starting after today
     	        $count = count($events);                
                 while($count--) {
-                    if($events[$count]->start >= time()) {
+                    if($events[$count]->start > time()) {
                         unset($events[$count]);
                     }
-                }    	        	
+                }  
+                foreach ($events as $event){
+                    if(isset($event->owner_user)) {
+                    	$event_org_id = $event->owner_user->organisation_id;
+                    	if(isset($event_org_id) && $event_org_id) {
+                    		$event_org = callAPI("organisation/get?id=$event_org_id", array(), 'obj');
+                    		if(isset($event_org) && $event_org->id) {
+                    			$event->org = $event_org->name;
+                    		}
+                    	}
+                    }
+                    $allvotes = callAPI("vote", array('event_id'=>$event->id), 'obj');
+                    $event_votes = 0;
+                    foreach ($allvotes as $vote){
+                        $event_votes += $vote->total;
+                    }
+                    $event->totalvotes = $event_votes;
+                    unset($event_votes);
+                    //todo add 5 top drivers
+                    //$votes = callAPI("vote", array('event_id'=>$event_id), 'obj');
+                }  	        	
     	        $data['events'] = $events;
                 //$_SESSION['ref_page'] = "";
                 view('home', $data);
