@@ -787,14 +787,13 @@ div.pager .table-options {
 #event-gallery li .drivers{
 	border: 5px solid #ebebeb;
 	background-color: #fff;
-	width: 305px;
-	height: 150px;
-	margin-bottom: .2em;
+	width: 345px;
+	height: 190px;
 	text-align: center;
-	padding: 20px;
 	font-size: 1.5em;
 	line-height: 1.5em;
 	overflow: hidden;
+	margin-bottom: 0;
 }
 #event-gallery li .drivers span{
 	white-space: nowrap;
@@ -808,7 +807,8 @@ div.pager .table-options {
 }
 
 #event-gallery li .footer{
-	padding: 5px;
+	margin-top: 0;
+	padding: 8px;
 }
 #event-gallery li a .footer .event{
 	font-size: 15px;
