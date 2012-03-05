@@ -47,10 +47,10 @@
 	    </div>
 </div>
 <br /><br />
-<!-- Load the tiptip script -->
-<script src="assets/js/tipTipv13/jquery.tipTip.minified.js" type="text/javascript"></script>
-<!--	Load the tiptip stylesheet. -->
-<link rel="stylesheet" href="assets/js/tipTipv13/tipTip.css" type="text/css" media="screen" />
+<!-- Load the poshytip script -->
+<script src="assets/js/poshytip-1.1/src/jquery.poshytip.min" type="text/javascript"></script>
+<!--	Load the poshytip stylesheet. -->
+<link rel="stylesheet" href="assets/js/poshytip-1.1/src/tip-twitter/tip-twitter.css" type="text/css" media="screen" />
 <script type="text/javascript">
 $(document).ready(function() {
     $('#category-nav li a').click(function(){
@@ -87,8 +87,24 @@ $(document).ready(function() {
     	}
         $(cards).each(function () {
             var val = $(this).attr('value');
+            var txt='';
+            if (val == 1) {
+                txt = val+' vote';
+            }else if (val == 0){
+                txt = 'no votes';
+            }else {
+                var txt = val+' votes';
+            }
             fontSize = minSize+(val-minVote)*(maxSize-minSize)/spread;
             $(this).css("fontSize",fontSize);
+            $(this).poshytip({
+                content: txt,
+                className: 'tip-twitter',
+                alignTo: 'target',
+            	alignX: 'center',
+            	offsetY: 8,
+                slide: false
+            });
         });
     }
     resizeCards("#vote-cloud li a");

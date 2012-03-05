@@ -36,7 +36,7 @@
                             	$card_cat_id = (int)$card->category_tag_id;
                             	if ($card_cat_id == $cat_id){
                             	    $clean_cat = dirify($category);
-                            	    echo("<li class='$top $clean_cat' $hide><a href='' class='card' id='$card->id'>$card->name</a></li>");
+                            	    echo("<li class='$top $clean_cat' $hide><a href='' class='card' id='$card->id' title='click to vote'>$card->name</a></li>");
                             	}
                             }
                         }?>
@@ -47,10 +47,10 @@
 	    </div>
 </div>
 <br /><br />
-<!-- Load the tiptip script -->
-<!-- <script src="assets/js/tipTipv13/jquery.tipTip.minified.js" type="text/javascript"></script> -->
-<!--	Load the tiptip stylesheet. -->
-<!-- <link rel="stylesheet" href="assets/js/tipTipv13/tipTip.css" type="text/css" media="screen" /> -->
+<!-- Load the poshytip script -->
+<script src="assets/js/poshytip-1.1/src/jquery.poshytip.min" type="text/javascript"></script>
+<!--	Load the poshytip stylesheet. -->
+<link rel="stylesheet" href="assets/js/poshytip-1.1/src/tip-twitter/tip-twitter.css" type="text/css" media="screen" />
 <script type="text/javascript">
 $(document).ready(function() {
 	var event_id=<?php echo $event->id;?>;
@@ -76,19 +76,25 @@ $(document).ready(function() {
     //           return('click to remove vote');
     //      }}
     //      });
+    $('.card').poshytip({
+        className: 'tip-twitter',
+        alignTo: 'target',
+    	alignX: 'center',
+    	offsetY: 8,	
+        slide: false
+    });
     $(".card").click(function(){
         //voting stuff
         var currcard = $(this);
         if(!currcard.hasClass('voted')) {
         	//vote
         	var query_url = "includes/callAPI.php?action=vote/post&event_id="+event_id+"&owner="+owner+"&card_id="+$(this).attr('id');
-            //$(this).tipTip({content:"click to unvote"});
+            currcard.poshytip('update', 'sending vote...');
             $.ajax({
 	            url: query_url,
 	            success: function(data){/*uhm ... it worked*/
 	                currcard.addClass('voted');
-	                // currcard.tipTip('hide');
-	                //                   currcard.tipTip('show');
+	                currcard.poshytip('update', 'click to remove');
 	            },
 	            error: function(data){/*... it didn't*/}
 	        });

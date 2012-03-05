@@ -1813,7 +1813,7 @@ label.file-holder {
 	background-color: #fff!important;
 }
 #vote-cloud li a.voted, #vote-cloud li a.voted:hover {
- background-color: #000!important;	
+ background-color: #266eaa!important;	
  color: #fff!important;
 }
 
@@ -1876,7 +1876,7 @@ a.social-to:hover,a.technological-to:hover,a.economic-to:hover,a.environmental-t
 }
 
 #vote-cloud li a:hover{
-	background-color: #000!important;
+	background-color: #266eaa!important;
 	color: #fff!important;
 }
 
