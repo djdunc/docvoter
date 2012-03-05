@@ -10,7 +10,7 @@
     		    <?php } ?>
     		    
     		    
-    		    <?php if(($event->allow_anon && !isset($event->end)) || ($event->allow_anon && ($event->end >= time()))){ ?>
+    		    <?php if((isset($_SESSION['user']->id) && $event->allow_anon && !isset($event->end)) || (isset($_SESSION['user']->id) && $event->allow_anon && ($event->end >= time()))){ ?>
     		         <h3>Survey</h3>
             		    <div class="panel form">
             		         <span class="message"></span>
@@ -35,7 +35,7 @@
     		       	<div class="panel form">
                		    <span class="message"></span>
                			<div class="content no-cap">
-               			    <form method="post" action="index.php?do=login&ref_query=<?php echo $ref_query; ?>" name="loginform" id="loginform" class="styled login">   
+               			    <form method="post" action="" name="loginform" id="loginform" class="styled login">   
                			    <fieldset>
                    			 <!-- Text Field -->
                                    <!-- Text Field -->
@@ -65,15 +65,20 @@
 	    </div>
 </div>
 <!-- END CONTAINER -->
-<script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+<!--	Load the "Chosen" stylesheet. -->
+<link rel="stylesheet" href="assets/js/chosen/chosen.css" type="text/css" media="screen" />
+<!--	Load the Chosen script.-->
+<script src="assets/js/chosen/chosen.jquery.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
 <script type="text/javascript">
 /* <![CDATA[ */
 var formChanged = false;
 var baseurl = "<?php echo BASE_URL; ?>";
-var ref = "do=vote&event=<?php echo $event->id; ?>";
+var ref = "<?php if ($event->allow_anon){ echo('do=about&event='.$event->id); } else { echo ('do=vote&event='.$event->id);} ?>";
 var action = 'controller=user&action=get&';
+var event_id = '<?php echo $event->id;?>';
 $(document).ready(function() {
-    var validator = $("#loginform").validate({ 
+    $("#loginform").validate({ 
          rules: { 
             username: "required", 
             password: "required", 
@@ -82,9 +87,7 @@ $(document).ready(function() {
      messages: {
      	 username: "Username required", 
          password: "Password required",	
-    },
-    
-       debug:true
+    }
     });
     
    // if something is edited, show save button, and display alert on page leave
@@ -111,7 +114,19 @@ $(document).ready(function() {
       return false;
     });
     
+    //bind survey button if available
+      $("#send-survey").click(function() {
+          $.post('includes/save_survey.php?event_id='+event_id, $("#survey").serialize(), function(data) {
+                if (data==''){
+                   window.location.href = baseurl+'index.php?do=vote&event='+event_id;
+                }
+              }).error(function() { displayAlertMessage("There was an error saving your data, please try again later."); })
+            return false;
+      });
+
+    
    });
+   
 
    function handleFormChanged() {
         $('#login').show();
