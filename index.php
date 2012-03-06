@@ -327,7 +327,9 @@ switch($page) {
                         unset($events[$count]);
                     }
                 }  
+                //from remaining
                 foreach ($events as $event){
+                    //get org
                     if(isset($event->owner_user)) {
                     	$event_org_id = $event->owner_user->organisation_id;
                     	if(isset($event_org_id) && $event_org_id) {
@@ -337,15 +339,25 @@ switch($page) {
                     		}
                     	}
                     }
+                    //get votes
                     $allvotes = callAPI("vote", array('event_id'=>$event->id), 'obj');
-                    $event_votes = 0;
+                    //tally total
+                    $totalvotes = 0;
                     foreach ($allvotes as $vote){
-                        $event_votes += $vote->total;
+                        $totalvotes += $vote->total;
                     }
-                    $event->totalvotes = $event_votes;
-                    unset($event_votes);
-                    //todo add 5 top drivers
-                    //$votes = callAPI("vote", array('event_id'=>$event_id), 'obj');
+                    $event->totalvotes = $totalvotes;
+                    unset($totalvotes);
+                    //if event has ended get top 5
+                    if($event->end!=0 && $event->end < time() && count($allvotes)>0){
+                        $top5 = top(5, $allvotes);
+                        $event->top5 = array();
+                        foreach ($allvotes as $topcard){
+                            if (in_array($topcard->card_id, $top5 )){
+                                $event->top5[]=$topcard;
+                            }
+                        }
+                    }
                 }  	        	
     	        $data['events'] = $events;
                 //$_SESSION['ref_page'] = "";

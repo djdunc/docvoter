@@ -795,8 +795,9 @@ div.pager .table-options {
 	overflow: hidden;
 	margin-bottom: 0;
 }
-#event-gallery li .drivers span{
-	white-space: nowrap;
+#event-gallery li .drivers .pad-t{
+	display: block;
+	padding: 40px;
 }
 #event-gallery li .say{
 	display: block;
@@ -804,6 +805,11 @@ div.pager .table-options {
 }
 #event-gallery li a:hover .drivers{
 	border-color: #000;
+}
+
+#event-gallery li .drivers span.card{
+ 	background-color: #266eaa;	
+ 	color: #fff!important;
 }
 
 #event-gallery li .footer{
@@ -1764,23 +1770,23 @@ label.file-holder {
 	position: relative;
 }
 
-.social {
+.social,.cat-1 {
 	background-color: #39B1D9!important;
 }
 
-.technological {
+.technological,.cat-2 {
 	background-color: #A681B2!important;
 }
 
-.economic {
+.economic,.cat-3 {
 	background-color: #F69220!important;
 }
 
-.environmental {
+.environmental,.cat-4 {
 	background-color: #8BC53F!important;
 }
 
-.political {
+.political, .cat-5 {
 	background-color: #EC2027!important;
 }
 
@@ -1812,7 +1818,7 @@ label.file-holder {
 #vote-cloud li a{
 	background-color: #fff!important;
 }
-#vote-cloud li a.voted, #vote-cloud li a.voted:hover {
+#vote-cloud li a.voted, #vote-cloud li a.voted:hover{
  background-color: #266eaa!important;	
  color: #fff!important;
 }
