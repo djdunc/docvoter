@@ -353,3 +353,4 @@ function convert_high_ascii($s)
 	$s = preg_replace($find,$replace,$s);
 	return $s;
 	}
+?>
