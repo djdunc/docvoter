@@ -48,7 +48,7 @@
 </div>
 <br /><br />
 <!-- Load the poshytip script -->
-<script src="assets/js/poshytip-1.1/src/jquery.poshytip.min" type="text/javascript"></script>
+<script src="assets/js/poshytip-1.1/src/jquery.poshytip.min.js" type="text/javascript"></script>
 <!--	Load the poshytip stylesheet. -->
 <link rel="stylesheet" href="assets/js/poshytip-1.1/src/tip-twitter/tip-twitter.css" type="text/css" media="screen" />
 <script type="text/javascript">
