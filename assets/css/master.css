@@ -205,6 +205,7 @@ body {
 }
 #header-holder{
 	position: relative;
+	 min-height: 70px;
 }
 
 #header h1 {
@@ -252,7 +253,7 @@ ul#main-navigation {
 	padding-top: 30px;
 	padding-right: 11px;
 	padding-left: 10px;
-	background: url(../images/nav_bkg.gif) no-repeat right;
+	background: url(../images/nav_bkg.gif) no-repeat right bottom;
 	border-bottom: 1px solid #fff;
 	font-size: 17px;
 }

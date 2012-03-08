@@ -10,7 +10,8 @@
     		    <?php } ?>
     		    
     		    
-    		    <?php if((isset($_SESSION['user']->id) && $event->allow_anon && !isset($event->end)) || (isset($_SESSION['user']->id) && $event->allow_anon && ($event->end >= time()))){ ?>
+    		    <?php if (!$_SESSION['survey']){
+    		    if((isset($_SESSION['user']->id) && $event->allow_anon && !isset($event->end)) || (isset($_SESSION['user']->id) && $event->allow_anon && ($event->end >= time()))){ ?>
     		         <h3>Survey</h3>
             		    <div class="panel form">
             		         <span class="message"></span>
@@ -26,7 +27,8 @@
                                 ?>
             		       </div>
             		     </div>
-            	 <?php } ?>
+            	 <?php } 
+            	 } ?>
     		    
     		</div>
     		<div class="grid_1">
