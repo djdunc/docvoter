@@ -4,7 +4,7 @@
 	    <div class="grid-wrap">
     		<div class="grid_3">
     		       <ul id="category-nav">
-       		           <li><a id="top50" class="active" href="">top 50</a></li><?php foreach($collection['categories'] as $cat_id=>$category){
+       		           <li><a id="top50" class="active" href="">top <?php echo count($top50);?></a></li><?php foreach($collection['categories'] as $cat_id=>$category){
                               if ($collection['name']=='steep' ){
                                   $steepclass = $category."-to";
                         	    } else{
