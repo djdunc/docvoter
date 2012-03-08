@@ -30,7 +30,7 @@
 						</label>
 						<!-- Collection -->
     					<label class="align-left" for="category_tag_id">
-							<span>Category (<?php echo $data['event_categories']['name'];?>)</span>
+							<span>Category</span>
 							<select class="chosen" name="category_tag_id" id="cat_id">  
 							    <?php foreach ($data['event_categories']['categories'] as $key=>$cat){ 
 							        $sel = "";
