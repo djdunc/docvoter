@@ -10,7 +10,7 @@
     		    <?php } ?>
     		    
     		    
-    		    <?php if (!$_SESSION['survey']){
+    		    <?php if (!isset($_SESSION['survey'])){
     		    if((isset($_SESSION['user']->id) && $event->allow_anon && !isset($event->end)) || (isset($_SESSION['user']->id) && $event->allow_anon && ($event->end >= time()))){ ?>
     		         <h3>Survey</h3>
             		    <div class="panel form">

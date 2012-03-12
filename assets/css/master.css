@@ -838,8 +838,8 @@ div.pager .table-options {
 	vertical-align: middle;
 	padding: 30px 20px;
 	word-spacing: -1px;
-	line-height: 1.1em;
 	font-size: 1.15em;
+	line-height: 1.15em;
 }
 
 #vote-cloud li {
@@ -853,7 +853,7 @@ div.pager .table-options {
 	white-space: nowrap;
 	font-weight: bold;
 	border: 1px solid #ebebeb;
-	padding: .2em .5em .4em;
+	padding: 2px 8px 7px;
 }
 
 /* TABS																			*/

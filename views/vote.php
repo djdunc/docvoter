@@ -4,15 +4,21 @@
 	    <div class="grid-wrap">
     		<div class="grid_3">
     		       <ul id="category-nav">
-    		           <li><a id="top50" class="active" href="">top <?php echo count($top50);?></a></li><?php foreach($collection['categories'] as $cat_id=>$category){
+    		           <li><a id="top50" class="active" href="">top <?php echo count($top50);?></a></li><?php 
+    		          $cols = array('ec248e','d8a50e','339999','ff5e10','0c8b32','b0126f','062b60','a17317','53b9be','adadad','f83f5f');
+    		          $count=0;
+    		           foreach($collection['categories'] as $cat_id=>$category){
+    		               $clean_cat = dirify($category);
                            if ($collection['name']=='steep' ){
                                $steepclass = $category."-to";
+                               $style ='';
                      	    } else{
-                     	       $steepclass = $category;
+                     	       $steepclass = $clean_cat;
+                     	       $style = 'style="color:#'.$cols[$count].'; border-color:#'.$cols[$count].';"';
                      	    }
-                     	    $clean_cat = dirify($category);
-                           echo "<li><a href='' id='$clean_cat' class='$steepclass'>$category</a></li>";
-                       } ?>
+                           echo "<li><a href='' id='$clean_cat' class='$steepclass' $style>$category</a></li>";
+                           $count++;
+                       } unset($count); unset($style); ?>
     		       </ul>
     		</div>
     		<div class="grid_1 align_right add-driver">
@@ -29,17 +35,23 @@
     		       <ul id="vote-cloud">
                       <?php
                       $date_order_cards = array_reverse($event_cards);
+                      $style ='';
+                      $count=0;
                         foreach ( $collection['categories'] as $cat_id=>$category){
+                            if ($collection['name']!='steep' ){
+                                $style = 'style="color:#'.$cols[$count].';"';
+                            }
                             foreach ($date_order_cards as $card) {
                                 $top = in_array($card->id,$top50)?"top50":"";
                                 $hide = in_array($card->id,$top50)?"":"style='display:none;'";
                             	$card_cat_id = (int)$card->category_tag_id;
                             	if ($card_cat_id == $cat_id){
                             	    $clean_cat = dirify($category);
-                            	    echo("<li class='$top $clean_cat' $hide><a href='' class='card' id='$card->id' alt='$card->name'>$card->name</a></li>");
+                            	    echo("<li class='$top $clean_cat' $hide><a href='' class='card' id='$card->id' alt='$card->name' $style>$card->name</a></li>");
                             	}
                             }
-                        }?>
+                         $count++;
+                        } unset($count); unset($style);?>
     		       </ul>
     		       <?php } else { echo('<h3 class="content no-cap push-down">This event has no drivers yet. <a href="index.php?do=card&event='.$event->id.'">+ add your driver here</a>.</h3>');}?>
     		     </div>
