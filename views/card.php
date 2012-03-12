@@ -51,7 +51,7 @@
 						        <p class="button medium disabled" id="fakesave">Only owner can edit this card</p>
 						    <?php  }else{?>
 						        <input type="button" id="save" class="button medium blue" value="Save" />
-    						    <a href="index.php?do=event&id=<?php echo($event->id);?>" class="button medium">Cancel</a>
+    						    <a href="index.php?event=<?php echo($event->id);?>" class="button medium">Cancel</a>
 						    <?php }?>
 						</div>
 					
@@ -63,10 +63,12 @@
 	<!-- END FORM STYLING -->
 	<div class="grid_1">
 		<div class="panel">
-		    <h2 class="cap">Lorem Ipsum</h2>
+		    <h2 class="cap">Notes</h2>
 		    	<div class="content">
 		    	    <p><strong class="red">*</strong> Indicates required fields</p>
-    				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    				<p>Try to keep the issue text as short as possible - they are being shown as a list.</p>
+
+                    <p>The question and factoid fields allow you to capture a bit more information about the card in the same format as the original Drivers of Change cards - but these are optional.</p>
     			</div>
 		</div>
 	</div>

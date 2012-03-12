@@ -37,7 +37,7 @@
 						<!-- Text Area -->
 						<label class="align-left" for="textArea">
 							<span>Event description</span>
-							<textarea class="textarea l editable" name="description" id="description" rows="2" cols="1"><?php if(isset($edit_event)){echo($event->description);}?></textarea>
+							<textarea class="textarea l editable" name="description" id="description" rows="2" cols="1"><?php if(isset($event->description)){echo($event->description);}?></textarea>
 						</label>
 						<!-- Collection -->
     					<label class="align-left" for="collection_id">
@@ -113,10 +113,14 @@
 	<!-- END FORM  -->
 	<div class="grid_1">
 		<div class="panel">
-		    <h2 class="cap">Lorem Ipsum</h2>
+		    <h2 class="cap">Notes</h2>
 		    	<div class="content">
 		    	    <p><strong class="red">*</strong> Indicates required fields</p>
-    				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    				<p>The driver categories are used to display the different groupings of issues. The Foresight team typically use STEEP however requests can be made for other categories - but these need to be set-up manually, contact the Foresight team if you need to do this.</p>
+
+                    <p>We recommend you select the Auto-publish submitted drivers.</p>
+
+                    <p>If you want to include a survey to link through to voter demographics please contact the foresight team before setting up event.</p>
     			</div>
 		</div>
 	</div>
