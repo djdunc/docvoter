@@ -4,7 +4,7 @@
 	<div class="clearfix">
 	    <div class="grid-wrap">
 	        <div class="grid_3 push-top">
-	            <p>Much about the course of our future is unknown, but there are actions taking place today that will determine tomorrow's way of life. <span class="break-l"></span>The <strong><em>Vote</em></strong> app allows us to get feedback from people around the world on what is driving change in their world. A Flickr pool of previous vote events is available at <a href="http://bit.ly/docvote" target="_blank">http://bit.ly/docvote</a></p>
+	            <p>Much about the course of our future is unknown, but there are actions taking place today that will determine tomorrow's way of life. <span class="break-l"></span>The <strong><em>Vote</em></strong> app allows us to get feedback from people around the world on what is driving change in their world. A Flickr pool of previous <strong><em>Vote</em></strong> events is available at <a href="http://bit.ly/docvote" target="_blank">http://bit.ly/docvote</a></p>
 
                 <p>To create a <strong><em>Vote</em></strong> event contact vote[at]driversofchange.com</p>
 	        </div>
