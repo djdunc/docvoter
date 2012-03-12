@@ -73,6 +73,7 @@
     		<?php if (!is('user')): ?>
     		    <a href="index.php?do=login" class="signout">sign in</a>
     		<?php else: ?>
+    		    <?php echo($_SESSION['user_name']);?>: 
     		    <?php if(is('admin')): ?>
     		    <a href="index.php?do=events"<?php if(in_array($page,$admin_pages)){ echo(" class=\"active\"");} ?>>admin</a> |
     		    <?php endif; ?>
