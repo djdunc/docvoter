@@ -15,6 +15,27 @@ $(document).ready(function() {
 	          5: { sorter: false}
 	        }})
 	    .tablesorterPager({container: $("#table-pager-1")});
+	    //display a confirmation box
+	    function confirmGetMessage(line) {
+            var myId = line.attr('id');
+            var deletevent = confirm("Are you sure you want to delete this event? "+myId); 
+            //if the user presses the "OK" button delete
+            if (deletevent){
+                $.post('includes/callAPI.php', 'action=event/delete&id='+myId, function(data) {
+                    if(data==''){
+                        line.remove();
+                    } else{
+                        alert("There was an error removing the event, please try again later.");
+                    }
+                }).error(function() { alert("There was an error removing the event, please try again later."); })
+            }
+        }
+        //delete buttons
+        $(".delete").click(function() {
+            var myTr = $(this).closest('tr');
+            confirmGetMessage(myTr);
+           return false;
+        });
 	}
 });
 </script>
@@ -55,13 +76,14 @@ $(document).ready(function() {
 						    foreach ($events as $event):
 						        $owner_name = get_name($event->owner_user);
 						?>
-						<tr> 
+						
+						<tr id='<?php echo $event->id ?>'> 
 							<td><a href="index.php?do=event&id=<?php echo $event->id ?>"><?php echo $event->name ?></a></td> 
 							<td class="center"><?php echo $owner_name ?></td> 
 							<td class="center"><?php echo $event->card_count; ?></td> 
 							<td class="center"><?php echo(date( "d-m-Y", $event->start)); ?></td>
 							<td class="center"><?php if($event->end!=0){echo(date( "d-m-Y", $event->end));}?></td> 
-							<td class="center options-row"><a class="icon-button edit" title="edit event" href="index.php?do=event&id=<?php echo $event->id ?>">Edit</a><a class="icon-button send" title="send details" href="mailto:?subject=<?php echo $event->name; ?> Drivers of Change&amp;body=Link: <?php echo urlencode(BASE_URL.'index.php?event='.$event->id); ?> <?php if($event->password!=''){ echo("Secret Code:".$event->password);} ?>">Send details</a><a class="icon-button link" title="view event" href="<?php echo(BASE_URL.'index.php?event='.$event->id);?>">View event</a></td> 
+							<td class="center options-row"><a class="icon-button edit" title="edit event" href="index.php?do=event&id=<?php echo $event->id ?>">Edit</a><a class="icon-button send" title="send details" href="mailto:?subject=<?php echo $event->name; ?> Drivers of Change&amp;body=Link: <?php echo urlencode(BASE_URL.'index.php?event='.$event->id); ?> <?php if($event->password!=''){ echo("Secret Code:".$event->password);} ?>">Send details</a><a class="icon-button link" title="view event" href="<?php echo(BASE_URL.'index.php?event='.$event->id);?>">View event</a><?php if(is('owner')||is('super')){ ?>&nbsp;&nbsp;<a class="icon-button delete" title="delete event" href="#">Delete</a><?php } ?></td> 
 						</tr>
 						<?php
 						    endforeach;
