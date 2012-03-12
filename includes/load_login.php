@@ -21,11 +21,11 @@ if($user && is_object($user) && $user->id) {
     
     $name = $user->username; 
 
-    if($user->first_name && !$user->last_name) {
+    if($user->first_name!='' && !$user->last_name) {
     	$name = $user->first_name;
-    } elseif($user->first_name && $user->last_name) {
+    } elseif($user->first_name!='' && $user->last_name!='') {
     	$name = $user->first_name." ".$user->last_name;
-    } elseif($user->last_name) {
+    } elseif($user->last_name!='') {
     	$name = $user->last_name;
     }
     $_SESSION['user_name'] = $name;
