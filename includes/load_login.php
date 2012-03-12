@@ -14,24 +14,24 @@ if ($_POST) {
 }
 
 $myURL = $controller.'/'.$action; 
-$user = callAPI($myURL, $options, 'obj');
+$userobj = callAPI($myURL, $options, 'obj');
 
-if($user && is_object($user) && $user->id) {
-    $_SESSION['user'] = $user;
+if($userobj && is_object($userobj) && $userobj->id) {
+    $_SESSION['user'] = $userobj;
     
-    $name = $user->username; 
+    $name = $userobj->username; 
 
-    if($user->first_name!='' && !$user->last_name) {
-    	$name = $user->first_name;
-    } elseif($user->first_name!='' && $user->last_name!='') {
-    	$name = $user->first_name." ".$user->last_name;
-    } elseif($user->last_name!='') {
-    	$name = $user->last_name;
+    if($userobj->first_name!='' && !$userobj->last_name) {
+    	$name = $userobj->first_name;
+    } elseif($userobj->first_name!='' && $userobj->last_name!='') {
+    	$name = $userobj->first_name." ".$userobj->last_name;
+    } elseif($userobj->last_name!='') {
+    	$name = $userobj->last_name;
     }
     $_SESSION['user_name'] = $name;
-    echo(json_encode($user));
+    echo(json_encode($userobj));
 } else {
-    echo $user;
+    echo $userobj;
     die;
 }
   
