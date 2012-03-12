@@ -32,6 +32,7 @@ if(in_array($page,$admin_pages)) {
 //do required page
 switch($page) {
     case 'logout':
+            $_SESSION['survey']=NULL;
 	        $_SESSION['user']=NULL;
 	        $_SESSION['user_name']=NULL;
 	        header("Location: index.php"); 
