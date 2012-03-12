@@ -51,7 +51,7 @@
 						        <p class="button medium disabled" id="fakesave">Only owner can edit this card</p>
 						    <?php  }else{?>
 						        <input type="button" id="save" class="button medium blue" value="Save" />
-    						    <a href="index.php?event=<?php echo($event->id);?>" class="button medium">Cancel</a>
+    						    <a href="index.php?do=vote&event=<?php echo($event->id);?>" class="button medium">Cancel</a>
 						    <?php }?>
 						</div>
 					
