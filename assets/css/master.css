@@ -189,6 +189,9 @@ body {
 .push-down {
 	padding-bottom: 20px !important;
 }
+.push-top {
+	padding-top: 20px !important;
+}
 
 .header-wrap {   
 	margin: 0 25px;
