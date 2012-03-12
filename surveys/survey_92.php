@@ -7,7 +7,7 @@
 		</label>
 		
 		<!-- Text Field -->
-		<label class="align-left">
+		<label class="align-left m" for="Gender">
 			<span>Gender<strong class="red"></strong></span>
 			<select class="chosen" name="Gender" id="Gender">  
 			      <option value="">Select one...</option>
