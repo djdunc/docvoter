@@ -64,8 +64,8 @@
 	<div id="eyebrow-navigation">
 	    <div class="container_4">
         <div class="grid-wrap">
-            <div class="grid_2">
-	        <a class="home" href="<?php echo BASE_URL;?>"><span class="tab">vote</span><span>drivers of change</span></a>
+            <div class="grid_2 home">
+	          <a href="<?php echo BASE_URL;?>" class="tab">vote</a><span>drivers of change</span>
 	        </div>
 	        <div class="grid_2 align_right">
 	            <div class="user_nav">
@@ -114,8 +114,8 @@
 		<?php } else{?>
 
 	        <h1 class="grid_2">
-		            <a href="<?php echo BASE_URL;?>"><span class="org">vote</span>
-			        Drivers of Change Events</a>
+		            <span class="org">vote</span>
+			        Drivers of Change Events
 		    </h1>
     		<div class="grid_2 align_right">
 
