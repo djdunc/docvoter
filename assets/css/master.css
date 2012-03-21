@@ -843,15 +843,16 @@ div.pager .table-options {
 #vote-cloud li {
 	display: inline-block;
 	margin: 0 .3em .3em 0;
+	max-width: 100%;
 }
 
 #vote-cloud li a {
 	text-decoration: none;
 	display: block;
-	white-space: nowrap;
 	font-weight: bold;
 	border: 1px solid #ebebeb;
 	padding: 2px 8px 7px;
+	max-width: 100%;
 }
 
 /* TABS																			*/

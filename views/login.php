@@ -72,8 +72,6 @@ $(document).ready(function() {
    });
 
    function handleFormChanged() {
-        $('#login').show();
-        $('#fakelogin').hide();
         formChanged = true;
    }
 
@@ -114,8 +112,7 @@ $(document).ready(function() {
 						<!-- Buttons -->
 						<div class="non-label-section">
 						    <div class="buttons">
-						    <p class="button medium disabled" id="fakelogin">Login</p>
-						    <input type="submit" id="login" class="button medium blue" value="Login" style="display:none" />
+						    <input type="submit" id="login" class="button medium blue" value="Login" />
 						    </div>
 						    <br /><br />
 						    <p id="account_set">Don't have an account yet?, <a href="index.php?do=register">click here to register</a>.</p> 

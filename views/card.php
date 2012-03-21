@@ -36,7 +36,7 @@
 							        if ($key == $card->category_tag_id){
 							            $sel = " SELECTED";
 							        }
-							        echo('<option value='.$key.$sel.'>'.$cat.'</option>');} //TODO add collections under once is selecte?>
+							        echo('<option value='.$key.$sel.'>'.$cat.'</option>');}?>
 							</select>
 						</label>
 						<?php if (!$user->email||$user->email==''){?>
