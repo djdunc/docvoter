@@ -20,7 +20,12 @@ if ($_REQUEST) {
             $file = 'event_'.$value.'.csv';
         } else{
             $headers[] = $key;
-            $options[$key]=$value;
+            if(is_array($value)){
+                $options[$key] = implode(', ', $value);
+            } else{
+                $options[$key]=$value;
+            }
+            
         }
     }
 } else{

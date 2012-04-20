@@ -1133,6 +1133,7 @@ form.styled label span, form.styled .non-label-section span {
 	position: absolute;
 	top: 0;
 	left: -155px;
+	width: 130px;
 }
 
 form.styled label:after, form.styled .non-label-section:after {
@@ -1193,6 +1194,9 @@ form.styled .check-pair {
 	vertical-align: middle;
 }
 
+form.styled input[type=checkbox]{
+	margin-bottom: .5em;
+}
 form.styled label input.file {
 	cursor: pointer;
 	position: absolute;
