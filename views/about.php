@@ -2,7 +2,7 @@
 <!-- BEGIN HOMEPAGE -->
 <div class="container_4">
 	    <div class="grid-wrap m-top" class="clearfix">
-    		<div class="grid_3">
+    		<?php if(!isset($_SESSION['user']->id)){ echo('<div class="grid_3b">'); } else{ echo('<div class="grid_3">');}?>
     		    <?php if (isset($event->description)&&$event->description!=''){?>
     		    <div class="pad-r">
     		       <?php echo nl2br($event->description) ?>
@@ -31,7 +31,7 @@
             	 } ?>
     		    
     		</div>
-    		<div class="grid_1">
+    		<?php if(!isset($_SESSION['user']->id)){ echo('<div class="grid_1b">'); } else{ echo('<div class="grid_1">');}?>
     		    <?php if(!isset($_SESSION['user']->id)){?>
     			  <h3>Sign in to vote</h3>
     		       	<div class="panel form">

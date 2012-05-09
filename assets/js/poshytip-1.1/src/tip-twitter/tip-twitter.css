@@ -7,6 +7,7 @@
 	max-width:200px;
 	color:#fff;
 	background-color:#000;
+	border: 1px solid #fff;
 	/**
 	 * - If you set a background-image, border/padding/background-color will be ingnored.
 	 *   You can set any padding to .tip-inner instead if you need.
@@ -26,17 +27,17 @@
 	margin-left:-5px; /* approx. half the width to center it */
 	top:0;
 	left:50%;
-	width:9px;
+	width:11px;
 	height:5px;
 	background:url(tip-twitter_arrows.gif) no-repeat;
 }
 .tip-twitter .tip-arrow-right {
-	margin-top:-4px; /* approx. half the height to center it */
+	margin-top:-5px; /* approx. half the height to center it */
 	margin-left:0;
 	top:50%;
 	left:100%;
 	width:5px;
-	height:9px;
+	height:11px;
 	background:url(tip-twitter_arrows.gif) no-repeat -9px 0;
 }
 .tip-twitter .tip-arrow-bottom {
@@ -44,16 +45,16 @@
 	margin-left:-5px; /* approx. half the width to center it */
 	top:100%;
 	left:50%;
-	width:9px;
+	width:11px;
 	height:5px;
 	background:url(tip-twitter_arrows.gif) no-repeat -18px 0;
 }
 .tip-twitter .tip-arrow-left {
-	margin-top:-4px; /* approx. half the height to center it */
+	margin-top:-5px; /* approx. half the height to center it */
 	margin-left:-5px;
 	top:50%;
 	left:0;
 	width:5px;
-	height:9px;
+	height:11px;
 	background:url(tip-twitter_arrows.gif) no-repeat -27px 0;
 }

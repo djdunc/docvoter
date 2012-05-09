@@ -16,7 +16,7 @@
                      	       $steepclass = $clean_cat;
                      	       $style = 'style="color:#'.$cols[$count].'; border-color:#'.$cols[$count].';"';
                      	    }
-                           echo "<li><a href='' id='$clean_cat' class='$steepclass' $style>$category</a></li>";
+                           echo "<li><a href='' id='$clean_cat' class='tab $steepclass' $style>$category</a></li>";
                            $count++;
                        } unset($count); unset($style); ?>
     		       </ul>
@@ -55,6 +55,7 @@
     		       </ul>
     		       <?php } else { echo('<h3 class="content no-cap push-down">This event has no drivers yet. <a href="index.php?do=card&event='.$event->id.'">+ add your driver here</a>.</h3>');}?>
     		     </div>
+    		     <p>Click on the tabs above to see more drivers under each category.</p>
     		</div>
 	    </div>
 </div>
@@ -68,10 +69,25 @@ $(document).ready(function() {
 	var event_id=<?php echo $event->id;?>;
 	var owner=<?php echo $_SESSION['user']->id;?>;
 	//navigation
+	$('#category-nav li a').poshytip({
+        content: 'click tab to see more drivers',
+        className: 'tip-twitter',
+        alignTo: 'target',
+    	alignX: 'center',
+    	alignY: 'bottom',
+    	showTimeout: 1500,
+    	timeOnScreen:3000,
+    	allowTipHover: false,
+    	offsetY: 8,	
+        slide: false
+    });
+    $('#top50').poshytip('disable');
 	$('#category-nav li a').click(function(){
         if(!$(this).hasClass('active')) {
             $('#category-nav li a').removeClass('active');
+            $('#category-nav li a').poshytip('enable');
             $(this).addClass('active');
+            $(this).poshytip('disable');
             $('#vote-cloud li').hide();   
             var class_to_show = $(this).attr('id');
             $('#vote-cloud li.'+class_to_show).show();
@@ -79,7 +95,7 @@ $(document).ready(function() {
     });
     //tooltip
     $('.card').poshytip({
-        content: 'click to vote',
+        content: 'click title to vote',
         className: 'tip-twitter',
         alignTo: 'target',
     	alignX: 'center',
@@ -99,7 +115,7 @@ $(document).ready(function() {
 	            url: query_url,
 	            success: function(data){/*... it worked*/
 	                currcard.addClass('voted');
-	                currcard.poshytip('update', 'click to cancel');
+	                currcard.poshytip('update', 'click title to cancel');
 	            },
 	            error: function(data){/*... it didn't: reverse tip*/
 	                currcard.poshytip('update', 'click to vote');

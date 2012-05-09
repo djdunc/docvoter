@@ -65,10 +65,26 @@
 <link rel="stylesheet" href="assets/js/poshytip-1.1/src/tip-twitter/tip-twitter.css" type="text/css" media="screen" />
 <script type="text/javascript">
 $(document).ready(function() {
+    //nav
+    $('#category-nav li a').poshytip({
+        content: 'click tab to see more drivers',
+        className: 'tip-twitter',
+        alignTo: 'target',
+    	alignX: 'center',
+    	alignY: 'bottom',
+    	showTimeout: 1500,
+    	timeOnScreen:3000,
+    	allowTipHover: false,
+    	offsetY: 8,	
+        slide: false
+    });
+    $('#top50').poshytip('disable');
     $('#category-nav li a').click(function(){
         if(!$(this).hasClass('active')) {
             $('#category-nav li a').removeClass('active');
+            $('#category-nav li a').poshytip('enable');
             $(this).addClass('active');
+            $(this).poshytip('disable');
             $('#vote-cloud li').hide();   
             var class_to_show = $(this).attr('id');
             $('#vote-cloud li.'+class_to_show).show();
@@ -81,8 +97,8 @@ $(document).ready(function() {
     Array.min = function( array ){
         return Math.min.apply( Math, array );
     };
-    minSize =1;
-    maxSize =3;
+    minSize =.8;
+    maxSize =2.5;
     function resizeCards(cards){
         var votes = [];
         $(cards).each(function () {
@@ -110,6 +126,7 @@ $(document).ready(function() {
             fontSize = minSize+(val-minVote)*(maxSize-minSize)/spread+'em';
             $(this).css("font-size",fontSize);
             $(this).css("line-height",'1.2em');
+            $(this).css("cursor","default");
             $(this).poshytip({
                 content: txt,
                 className: 'tip-twitter',
