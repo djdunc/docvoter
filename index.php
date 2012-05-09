@@ -238,7 +238,6 @@ switch($page) {
                     //404 error
                     show_error("Sorry, the event you have requested does not exist.", "Make sure that you have the correct URL and that the owner hasn't deleted it.");
                 }
-                
                 if(isset($event->owner_user)) {
                     $event_org_id = $event->owner_user->organisation_id;
                     if(isset($event_org_id) && $event_org_id) {
@@ -261,8 +260,12 @@ switch($page) {
                 $data['top50'] = top(50, $votes);
                 $data['steep'] = $steep;
             }
-            view('vote',$data);
-        break;    
+            if($event->end!=0 && $event->end < time() && $event->auto_close){
+                $page = 'results';
+            } else{
+                view('vote',$data);
+                break;
+            }   
     case 'results':
             $event_id = get('event');
             if (isset($event_id)) {

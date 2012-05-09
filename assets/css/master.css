@@ -789,14 +789,14 @@ div.pager .table-options {
 	width: 345px;
 	height: 190px;
 	text-align: center;
-	font-size: 1.5em;
-	line-height: 1.5em;
+	font-size: 14px;
 	overflow: hidden;
 	margin-bottom: 0;
+	line-height: 17px;
 }
 #event-gallery li .drivers .pad-t{
 	display: block;
-	padding: 40px;
+	padding: 12px;
 }
 #event-gallery li .say{
 	display: block;
@@ -806,9 +806,14 @@ div.pager .table-options {
 	border-color: #000;
 }
 
-#event-gallery li .drivers span.card{
+#event-gallery li .drivers p.card{
  	background-color: #266eaa;	
  	color: #fff!important;
+   	text-transform: lowercase;
+	margin: 0;
+	padding: 10px 0 0;
+	height: 28px;
+	font-weight: bold;
 }
 
 #event-gallery li .footer{

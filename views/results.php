@@ -72,7 +72,6 @@ $(document).ready(function() {
         alignTo: 'target',
     	alignX: 'center',
     	alignY: 'bottom',
-    	showTimeout: 1500,
     	timeOnScreen:3000,
     	allowTipHover: false,
     	offsetY: 8,	
@@ -82,7 +81,7 @@ $(document).ready(function() {
     $('#category-nav li a').click(function(){
         if(!$(this).hasClass('active')) {
             $('#category-nav li a').removeClass('active');
-            $('#category-nav li a').poshytip('enable');
+             $('#category-nav li a').poshytip('enable');
             $(this).addClass('active');
             $(this).poshytip('disable');
             $('#vote-cloud li').hide();   

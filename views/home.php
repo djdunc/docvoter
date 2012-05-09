@@ -14,15 +14,26 @@
     		       <ul id="event-gallery">
     		           <?php foreach ($events as $event){?>
     		          <li><a href="<?php echo (BASE_URL.'index.php?event='.$event->id);?>"> 
-    		                  <?php if($event->end!=0 && $event->end < time()) { ?>
+    		                  <?php if($event->end!=0 && $event->end < time() && $event->auto_close) {  ?>
     		                        <div class="drivers">
-    		                            <div class="pad-t">
+    		                            
     		                            <?php if (isset($event->top5)){
-    		                                foreach ($event->top5 as $card){
-    		                                    echo('<span class="card cat-'.$card->category_tag_id.'">'.$card->card_title.'</span> ');
+    		                                
+                                             foreach($event->top5 as $card){
+                                                    $sorted[$card->category_tag_id] = $card;
+                                                }
+                                                ksort($sorted);
+                                            unset($card);
+    		                                foreach ($sorted as $card){
+    		                                    if (strlen($card->card_title) > 40){
+    		                                        $trimmed_title = preg_replace('/\s+?(\S+)?$/', '', substr($card->card_title, 0, 40)).'...';
+    		                                    }else{
+    		                                        $trimmed_title = $card->card_title;
+    		                                    }
+    		                                    echo('<p class="card cat-'.$card->category_tag_id.'"><span>'.$trimmed_title.'</span></p> ');
     		                                }
     		                            }?>
-    		                            </div>
+    		                            
     		                        </div>
     		                  <?php } else { 
     		                      $cols = array('aadae5','529ec7','124576','9fbfc3','7f96a6','55b2ca');

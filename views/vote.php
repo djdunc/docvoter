@@ -1,4 +1,4 @@
-<?php //var_dump($top50);?>
+<?php //var_dump($event); ?>
 <div class="container_4">
 	<div id="page-heading" class="clearfix">
 	    <div class="grid-wrap">
@@ -75,7 +75,6 @@ $(document).ready(function() {
         alignTo: 'target',
     	alignX: 'center',
     	alignY: 'bottom',
-    	showTimeout: 1500,
     	timeOnScreen:3000,
     	allowTipHover: false,
     	offsetY: 8,	
