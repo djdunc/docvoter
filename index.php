@@ -119,10 +119,16 @@ switch($page) {
                     show_error("Sorry, the event you have requested does not exist.", "Make sure that you have the correct URL and that the owner hasn't deleted it. You can create your own event below:");
                 }
                 $event_cards = callAPI("card", array('event_id'=>$event_id,'include_owner'=>1), 'obj');
+                $votes = callAPI("vote", array('event_id'=>$event_id,'include_owner'=>1), 'obj');
+                $event_votes= array();
+                foreach ($votes as $vote){
+                    $event_votes[$vote->card_id] = $vote->total;
+                }
                 
                 $data['event'] = $event;
                 $data['edit_event_id'] = $event->id;
                 $data['event_cards'] = $event_cards;
+                $data['event_votes'] =  $event_votes;
             }
     	    $collections = callAPI('collection', array(), 'obj');
     	    foreach($collections as $collection) {

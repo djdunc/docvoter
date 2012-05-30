@@ -1,4 +1,4 @@
-<?php //var_dump($event);?>
+<?php //var_dump($event_votes);?>
 <!-- BEGIN PAGE BREADCRUMBS/TITLE -->
 <div class="container_4">
 	<div id="page-heading" class="clearfix">
@@ -163,6 +163,7 @@
 					<tr> 
 						<th>Name</th>
 						<th>Category</th>
+						<th>Votes</th>
 						<th>Owner</th>
 						<th class="{sorter: 'shortDate'}">Created</th>
 						<th class="options-row">Options</th> 
@@ -172,12 +173,14 @@
 				    	<?php
 						    foreach ($data['event_cards'] as $card):
 						    $owner_name = get_name($card->owner_user);
+						    $card_votes = $event_votes[$card->id];
 						?>
 					<tr id='<?php echo $card->id ?>'> 
 						<td><a href="index.php?do=eventcard&id=<?php echo $card->id ?>&event_id=<?php echo $event->id;?>"><?php echo $card->name ?></a></td> 
 						<td class="center <?php if ($event->collection_id==1){echo $data['steep'][$card->category_tag_id].'-b';} ?>"><?php if(isset($collections[$event->collection_id]['categories'][$card->category_tag_id])){ echo $collections[$event->collection_id]['categories'][$card->category_tag_id]; }  ?></td>
+						<td class="center"><?php echo $card_votes ?></td> 
 						<td class="center"><?php echo $owner_name ?></td> 
-						<td class="center"><?php echo(date( "d-m-Y", $card->ctime)); ?></td>
+						<td class="center" style="white-space: nowrap;"><?php echo(date( "d-m-Y", $card->ctime)); ?></td>
 						<td class="center options-row"><a class="icon-button edit" title="edit card" href="index.php?do=eventcard&id=<?php echo $card->id ?>&event_id=<?php echo $event->id;?>">Edit</a><a class="icon-button delete" title="remove card from this event" href="#">Remove</a></td> 
 					</tr>
 					<?php
