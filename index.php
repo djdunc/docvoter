@@ -269,7 +269,15 @@ switch($page) {
             if($event->end!=0 && $event->end < time() && $event->auto_close){
                 $page = 'results';
             } else{
-                view('vote',$data);
+                if (!isset($event->password)){
+                    view('vote',$data);
+                } else{
+                    if ($event->password==$_SESSION['code']){
+                        view('vote',$data);
+                    } else{
+                        view('event_login', $data);
+                    }
+                }
                 break;
             }   
     case 'results':
@@ -280,7 +288,7 @@ switch($page) {
                     //404 error
                     show_error("Sorry, the event you have requested does not exist.", "Make sure that you have the correct URL and that the owner hasn't deleted it.");
                 }
-                
+
                 if(isset($event->owner_user)) {
                     $event_org_id = $event->owner_user->organisation_id;
                     if(isset($event_org_id) && $event_org_id) {
@@ -304,13 +312,24 @@ switch($page) {
                 $data['votes'] = $votes;
                 $data['steep'] = $steep;
             }
-    	    view('results',$data);
+            if (!isset($event->password)){
+                view('results',$data);
+            } else{
+                if ($event->password==$_SESSION['code']){
+                    view('results',$data);
+                } else{
+                    view('event_login', $data);
+                }
+            }
         break;
     case 'about':
     case 'home':
     default:
     	    $event_id = get('event');
     	    $event_pass = get('pass');
+    	    if (isset($event_pass)){
+    	        $_SESSION['code'] = $event_pass;
+    	    }
     	    if(isset($event_id)) {
     	    	$event = callAPI("event/get?id=$event_id&include_owner=1", array(), 'obj');
     	        if (!empty($event) && $event->id) {
@@ -324,7 +343,7 @@ switch($page) {
                     	}
                     }
                     if (isset($event->password)){
-                        if ($event->password==$event_pass){
+                        if ($event->password==$_SESSION['code']){
                             $data['event'] = $event;
             	        	view('about', $data);
                         } else{
