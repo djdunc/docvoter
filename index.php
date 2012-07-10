@@ -310,6 +310,7 @@ switch($page) {
     case 'home':
     default:
     	    $event_id = get('event');
+    	    $event_pass = get('pass');
     	    if(isset($event_id)) {
     	    	$event = callAPI("event/get?id=$event_id&include_owner=1", array(), 'obj');
     	        if (!empty($event) && $event->id) {
@@ -322,9 +323,19 @@ switch($page) {
                     		}
                     	}
                     }
+                    if (isset($event->password)){
+                        if ($event->password==$event_pass){
+                            $data['event'] = $event;
+            	        	view('about', $data);
+                        } else{
+                            $data['event'] = $event;
+            	        	view('event_login', $data);
+                        }
+                    } else{
+                        $data['event'] = $event;
+        	        	view('about', $data);
+                    }
     	        	
-    	        	$data['event'] = $event;
-    	        	view('about', $data);
                 }
     	    }
     	    //if no event is set, do home
