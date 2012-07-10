@@ -89,7 +89,7 @@
 						<label class="align-left" for="password">
 							<span>Secret code</span>
 							<input type="hidden" name="private" id="private" value="false" />
-							<input class="textbox s editable" name="password" id="password" type="text" value="<?php if(isset($edit_event)){echo($event->password);}?>" /> <?php if(isset($edit_event)&&$event->private){echo("(private event)");}?>
+							<input class="textbox s editable" name="password" id="password" type="text" value="<?php if(isset($event)){echo($event->password);}?>" /> <?php if(isset($edit_event)&&$event->private){echo("(private event)");}?>
 						</label>
 						
 						<!-- Buttons -->
