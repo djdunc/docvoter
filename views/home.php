@@ -12,7 +12,8 @@
 	        </div>
     		<div class="grid_4">
     		       <ul id="event-gallery">
-    		           <?php foreach ($events as $event){?>
+    		           <?php foreach ($events as $event){ 
+    		               if (!$event->password){?>
     		          <li><a href="<?php echo (BASE_URL.'index.php?event='.$event->id);?>"> 
     		                  <?php if($event->end!=0 && $event->end < time() && $event->auto_close) {  ?>
     		                        <div class="drivers">
@@ -47,7 +48,7 @@
     		              <?php if($event->org){ echo ('<span class="org">by '.$event->org.'</span>' ); }?>&nbsp;&nbsp;<?php if(isset($event->totalvotes)&&$event->totalvotes>1){ echo('<span class="votes">'.$event->totalvotes.' votes</span>'); }elseif($event->totalvotes==1){echo('<span class="votes">1 vote</span>');}else{echo('<span class="votes">no votes</span>'); }?></p>
     		              </a>
     		          </li>
-    		          <?php }?>
+    		          <?php }}?>
     		       </ul>
     		</div>
 	    </div>
