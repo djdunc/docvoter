@@ -1,4 +1,4 @@
-<?php if(is('super') || is('owner', $edit_deck )) {
+<?php if(is('admin') || is('owner', $edit_deck )) {
     $editable = true;
 }else{
     $editable = false;
